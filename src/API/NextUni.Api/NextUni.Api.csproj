@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+        <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Common\NextUni.Common.Api\NextUni.Common.Api.csproj" />
+      <ProjectReference Include="..\..\Common\NextUni.Common.Application\NextUni.Common.Application.csproj" />
+      <ProjectReference Include="..\..\Common\NextUni.Common.Domain\NextUni.Common.Domain.csproj" />
+      <ProjectReference Include="..\..\Common\NextUni.Common.Infrastructure\NextUni.Common.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Modules\Users\NextUni.Modules.Users.Api\NextUni.Modules.Users.Api.csproj" />
+      <ProjectReference Include="..\..\Modules\Users\NextUni.Modules.Users.Application\NextUni.Modules.Users.Application.csproj" />
+      <ProjectReference Include="..\..\Modules\Users\NextUni.Modules.Users.Domain\NextUni.Modules.Users.Domain.csproj" />
+      <ProjectReference Include="..\..\Modules\Users\NextUni.Modules.Users.Infrastructure\NextUni.Modules.Users.Infrastructure.csproj" />
+    </ItemGroup>
+
+
+
+</Project>

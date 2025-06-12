@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\NextUni.Common.Application\NextUni.Common.Application.csproj" />
+      <ProjectReference Include="..\NextUni.Modules.Academic.Domain\NextUni.Modules.Academic.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
