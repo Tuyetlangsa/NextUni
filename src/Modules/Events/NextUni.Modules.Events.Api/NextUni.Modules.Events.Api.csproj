@@ -8,7 +8,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\NextUni.Common.Api\NextUni.Common.Api.csproj" />
+      <ProjectReference Include="..\..\Users\NextUni.Modules.Users.IntegrationEvents\NextUni.Modules.Users.IntegrationEvents.csproj" />
       <ProjectReference Include="..\NextUni.Modules.Events.Application\NextUni.Modules.Events.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="EventRegistrations\" />
+      <Folder Include="Events\" />
     </ItemGroup>
 
 </Project>

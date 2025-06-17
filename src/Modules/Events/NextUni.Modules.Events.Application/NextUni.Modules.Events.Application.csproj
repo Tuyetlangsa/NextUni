@@ -11,4 +11,13 @@
       <ProjectReference Include="..\NextUni.Modules.Events.Domain\NextUni.Modules.Events.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="EventRegistrations\" />
+      <Folder Include="Events\" />
+    </ItemGroup>
+
 </Project>

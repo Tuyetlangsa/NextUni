@@ -1,4 +1,4 @@
-﻿using Evently.Modules.Users.Presentation;
+﻿using FluentValidation;
 using NextUni.Common.Domain;
 using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;

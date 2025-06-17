@@ -1,4 +1,4 @@
-﻿namespace Evently.Modules.Users.Presentation;
+﻿namespace NextUni.Modules.Users.Api;
 
 internal static class Tags
 {

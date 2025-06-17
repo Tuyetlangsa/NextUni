@@ -1,6 +1,7 @@
+using FluentValidation;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Domain;
-using NextUni.Modules.Users.Application.Abstraction.Data;
+using NextUni.Modules.Users.Application.Abstractions.Data;
 using NextUni.Modules.Users.Application.Abstractions.Identity;
 using NextUni.Modules.Users.Domain.Users;
 
@@ -33,10 +34,25 @@ public abstract class RegisterUser
                 PhoneNumber = command.PhoneNumber,
                 IdentityId = identityId.Value,
             };
-             
+            var studentRole = dbContext.Roles.Attach(Role.Student);
+            user.Roles.Add(studentRole.Entity);
+            user.Raise(new UserRegisteredDomainEvent(user.Id));
             dbContext.Users.Add(user);
             await dbContext.SaveChangesAsync(cancellationToken);
             return Result.Success(user.Id);
         }
     }
+
+    internal sealed class Validator : AbstractValidator<Command>
+    {
+        public Validator()
+        {
+            RuleFor(c => c.FirstName).NotEmpty();
+            RuleFor(c => c.LastName).NotEmpty();
+            RuleFor(c => c.Email).EmailAddress();
+            RuleFor(c => c.Password).MinimumLength(6);
+            RuleFor(c => c.PhoneNumber).MinimumLength(10);
+        }
+    }
+    
 }

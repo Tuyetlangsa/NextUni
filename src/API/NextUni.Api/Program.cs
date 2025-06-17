@@ -7,6 +7,7 @@ using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Application;
 using NextUni.Common.Infrastructure;
 using NextUni.Common.Infrastructure.Configuration;
+using NextUni.Modules.Events.Infrastructure;
 using NextUni.Modules.Users.Infrastructure;
 using Serilog;
 
@@ -20,7 +21,8 @@ builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDocumentation();
 
-Assembly[] moduleApplicationAssemblies = [NextUni.Modules.Users.Application.AssemblyReference.Assembly];
+Assembly[] moduleApplicationAssemblies = [NextUni.Modules.Users.Application.AssemblyReference.Assembly,
+                                          NextUni.Modules.Events.Application.AssemblyReference.Assembly];
 
 builder.Services.AddApplication(moduleApplicationAssemblies);
 
@@ -28,9 +30,10 @@ string databaseConnectionString = builder.Configuration.GetConnectionStringOrThr
 string redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache");
 
 builder.Services.AddInfrastructure(
-    [], 
-    databaseConnectionString,
-    redisConnectionString);
+    [
+        EventModule.ConfigureConsumers], 
+        databaseConnectionString,
+        redisConnectionString);
 
 Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
 
@@ -39,9 +42,10 @@ builder.Services.AddHealthChecks()
     .AddRedis(redisConnectionString)
     .AddKeyCloak(keyCloakHealthUrl);
 
-builder.Configuration.AddModuleConfiguration(["users"]);
+builder.Configuration.AddModuleConfiguration(["users", "events"]);
 
-builder.Services.AddUsersModule(builder.Configuration);
+UsersModule.AddUsersModule(builder.Services, builder.Configuration);
+EventModule.AddEventModule(builder.Services, builder.Configuration);
 
 WebApplication app = builder.Build();
 

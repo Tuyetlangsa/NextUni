@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\NextUni.Common.Application\NextUni.Common.Application.csproj" />
       <ProjectReference Include="..\NextUni.Modules.Users.Domain\NextUni.Modules.Users.Domain.csproj" />
+      <ProjectReference Include="..\NextUni.Modules.Users.IntegrationEvents\NextUni.Modules.Users.IntegrationEvents.csproj" />
     </ItemGroup>
 
     <ItemGroup>

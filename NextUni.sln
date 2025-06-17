@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Academic.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Academic.Infrastructure", "src\Modules\Academic\NextUni.Modules.Academic.Infrastructure\NextUni.Modules.Academic.Infrastructure.csproj", "{ABA46FAD-9120-4F30-A329-E1220A84C23E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Users.IntegrationEvents", "src\Modules\Users\NextUni.Modules.Users.IntegrationEvents\NextUni.Modules.Users.IntegrationEvents.csproj", "{B7030106-D739-4BF8-9451-0F4185C2DC45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,7 @@ Global
 		{D2E817AA-B0A2-4FA8-B28B-805980EC6F10} = {3C4DC374-5960-4037-AFE5-77CF743AAB17}
 		{B42350FF-6DD1-4101-A546-6E7A22B5068B} = {3C4DC374-5960-4037-AFE5-77CF743AAB17}
 		{ABA46FAD-9120-4F30-A329-E1220A84C23E} = {3C4DC374-5960-4037-AFE5-77CF743AAB17}
+		{B7030106-D739-4BF8-9451-0F4185C2DC45} = {E859B888-1042-4D72-83C5-4F3594ECE05D}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3443DF87-7177-4438-8A67-043D41791CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -183,5 +186,9 @@ Global
 		{ABA46FAD-9120-4F30-A329-E1220A84C23E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABA46FAD-9120-4F30-A329-E1220A84C23E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABA46FAD-9120-4F30-A329-E1220A84C23E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7030106-D739-4BF8-9451-0F4185C2DC45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7030106-D739-4BF8-9451-0F4185C2DC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7030106-D739-4BF8-9451-0F4185C2DC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7030106-D739-4BF8-9451-0F4185C2DC45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

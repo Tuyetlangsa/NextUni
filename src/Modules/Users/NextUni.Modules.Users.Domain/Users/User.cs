@@ -15,4 +15,6 @@ public class User : Entity
     public string PhoneNumber { get; set; } = null!;
 
     public string IdentityId { get; set; } = null!;
+    
+    public ICollection<Role> Roles { get; set; }  = new List<Role>();
 }
