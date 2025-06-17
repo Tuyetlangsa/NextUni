@@ -65,6 +65,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Academic.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Users.IntegrationEvents", "src\Modules\Users\NextUni.Modules.Users.IntegrationEvents\NextUni.Modules.Users.IntegrationEvents.csproj", "{B7030106-D739-4BF8-9451-0F4185C2DC45}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak-export", "keycloak-export", "{FE3B602A-C806-40A4-8500-20566FBD01F9}"
+	ProjectSection(SolutionItems) = preProject
+		keycloak-export\realm-export.json = keycloak-export\realm-export.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

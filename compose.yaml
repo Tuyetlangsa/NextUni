@@ -25,10 +25,31 @@
     ports:
       - 5432:5432
 
+#  nextuni.identity:
+#    image: quay.io/keycloak/keycloak:latest
+#    container_name: NextUni.Identity
+#    command: start-dev
+#    environment:
+#      - KC_DB=postgres
+#      - KC_DB_URL=jdbc:postgresql://nextuni.database:5432/nextuni
+#      - KC_DB_USERNAME=postgres
+#      - KC_DB_PASSWORD=postgres
+#      - KC_HEALTH_ENABLED=true
+#      - KEYCLOAK_ADMIN=admin
+#      - KEYCLOAK_ADMIN_PASSWORD=admin
+#    depends_on:
+#      - nextuni.database
+#    volumes:
+#      - ./.files:/opt/keycloak/data/import
+#    ports:
+#      - 18080:8080
+  
   nextuni.identity:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:24.0.4
     container_name: NextUni.Identity
-    command: start-dev
+    command:
+      - start-dev
+      - --import-realm
     environment:
       - KC_DB=postgres
       - KC_DB_URL=jdbc:postgresql://nextuni.database:5432/nextuni
@@ -40,7 +61,7 @@
     depends_on:
       - nextuni.database
     volumes:
-      - ./.files:/opt/keycloak/data/import
+      - ./keycloak-export:/opt/keycloak/data/import
     ports:
       - 18080:8080
 
