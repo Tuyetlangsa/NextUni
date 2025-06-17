@@ -23,7 +23,7 @@ public class UserRegistedDomainEventHandler(ISender sender, IEventBus bus) : Dom
             throw new NextUniException(nameof(GetUserQuery), user.Error);
         }
 
-        await bus.PublishAsync(new UserRegistedIntegrationEvent
+        await bus.PublishAsync(new UserRegisteredIntegrationEvent
             (domainEvent.Id, 
             domainEvent.OccurredOnUtc,
             user.Value.Id,

@@ -2,9 +2,9 @@ using NextUni.Common.Application.EventBus;
 
 namespace NextUni.Modules.Users.IntegrationEvents;
 
-public class UserRegistedIntegrationEvent : IntegrationEvent
+public class UserRegisteredIntegrationEvent : IntegrationEvent
 {
-    public UserRegistedIntegrationEvent
+    public UserRegisteredIntegrationEvent
         (Guid id, 
         DateTime occurredOnUtc,
         Guid userId,

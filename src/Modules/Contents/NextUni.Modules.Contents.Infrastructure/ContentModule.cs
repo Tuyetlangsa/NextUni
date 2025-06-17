@@ -8,19 +8,16 @@ using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Application.EventBus;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Infrastructure.Outbox;
-using NextUni.Modules.Events.Application.Abstractions.Data;
-using NextUni.Modules.Events.Infrastructure.Database;
-using NextUni.Modules.Events.Infrastructure.Inbox;
-using NextUni.Modules.Events.Infrastructure.Outbox;
-using NextUni.Modules.Users.Infrastructure.Inbox;
-using NextUni.Modules.Users.Infrastructure.Outbox;
-using NextUni.Modules.Users.IntegrationEvents;
+using NextUni.Modules.Contents.Application.Abstractions.Data;
+using NextUni.Modules.Contents.Infrastructure.Database;
+using NextUni.Modules.Contents.Infrastructure.Inbox;
+using NextUni.Modules.Contents.Infrastructure.Outbox;
 
-namespace NextUni.Modules.Events.Infrastructure;
+namespace NextUni.Modules.Contents.Infrastructure;
 
-public static class EventModule
+public static class ContentModule
 {
-    public static IServiceCollection AddEventModule(
+    public static IServiceCollection AddContentModule(
         this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -35,26 +32,25 @@ public static class EventModule
 
     public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
     {
-        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
         
     }
 
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<IEventDbContext, EventDbContext>((sp, options) =>
+        services.AddDbContext<IContentDbContext, ContentDbContext>((sp, options) =>
             options
                 .UseNpgsql(
                     configuration.GetConnectionString("Database"),
                     npgsqlOptions => npgsqlOptions
-                        .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
+                        .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Contents))
                 .UseSnakeCaseNamingConvention()
                 .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>()));;
         
-        services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
+        services.Configure<OutboxOptions>(configuration.GetSection("Contents:Outbox"));
 
         services.ConfigureOptions<ConfigureProcessOutboxJob>();
 
-        services.Configure<InboxOptions>(configuration.GetSection("Events:Inbox"));
+        services.Configure<InboxOptions>(configuration.GetSection("Contents:Inbox"));
 
         services.ConfigureOptions<ConfigureProcessInboxJob>();
     }

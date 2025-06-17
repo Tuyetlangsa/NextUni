@@ -7,9 +7,9 @@ using NextUni.Modules.Users.IntegrationEvents;
 
 namespace NextUni.Modules.Events.Api.Users;
 
-public class UserRegistedIntegrationEventHandler(ISender sender) : IntegrationEventHandler<UserRegistedIntegrationEvent>
+public class UserRegisteredIntegrationEventHandler(ISender sender) : IntegrationEventHandler<UserRegisteredIntegrationEvent>
 {
-    public override async Task Handle(UserRegistedIntegrationEvent integrationEvent, CancellationToken cancellationToken = default)
+    public override async Task Handle(UserRegisteredIntegrationEvent integrationEvent, CancellationToken cancellationToken = default)
     {
         Result result = await sender.Send(
             new CreateUser.Command(

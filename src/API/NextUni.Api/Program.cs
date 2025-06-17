@@ -7,6 +7,7 @@ using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Application;
 using NextUni.Common.Infrastructure;
 using NextUni.Common.Infrastructure.Configuration;
+using NextUni.Modules.Contents.Infrastructure;
 using NextUni.Modules.Events.Infrastructure;
 using NextUni.Modules.Users.Infrastructure;
 using Serilog;
@@ -22,7 +23,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDocumentation();
 
 Assembly[] moduleApplicationAssemblies = [NextUni.Modules.Users.Application.AssemblyReference.Assembly,
-                                          NextUni.Modules.Events.Application.AssemblyReference.Assembly];
+                                          NextUni.Modules.Events.Application.AssemblyReference.Assembly,
+                                          NextUni.Modules.Contents.Application.AssemblyReference.Assembly];
 
 builder.Services.AddApplication(moduleApplicationAssemblies);
 
@@ -42,10 +44,11 @@ builder.Services.AddHealthChecks()
     .AddRedis(redisConnectionString)
     .AddKeyCloak(keyCloakHealthUrl);
 
-builder.Configuration.AddModuleConfiguration(["users", "events"]);
+builder.Configuration.AddModuleConfiguration(["users", "events","contents"]);
 
-UsersModule.AddUsersModule(builder.Services, builder.Configuration);
-EventModule.AddEventModule(builder.Services, builder.Configuration);
+builder.Services.AddUsersModule(builder.Configuration);
+builder.Services.AddEventModule(builder.Configuration);
+builder.Services.AddContentModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 
