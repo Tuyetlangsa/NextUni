@@ -7,6 +7,7 @@ using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Application;
 using NextUni.Common.Infrastructure;
 using NextUni.Common.Infrastructure.Configuration;
+using NextUni.Modules.Academic.Infrastructure;
 using NextUni.Modules.Contents.Infrastructure;
 using NextUni.Modules.Events.Infrastructure;
 using NextUni.Modules.Users.Infrastructure;
@@ -24,7 +25,8 @@ builder.Services.AddSwaggerDocumentation();
 
 Assembly[] moduleApplicationAssemblies = [NextUni.Modules.Users.Application.AssemblyReference.Assembly,
                                           NextUni.Modules.Events.Application.AssemblyReference.Assembly,
-                                          NextUni.Modules.Contents.Application.AssemblyReference.Assembly];
+                                          NextUni.Modules.Contents.Application.AssemblyReference.Assembly,
+                                          NextUni.Modules.Academic.Application.AssemblyReference.Assembly];
 
 builder.Services.AddApplication(moduleApplicationAssemblies);
 
@@ -44,12 +46,12 @@ builder.Services.AddHealthChecks()
     .AddRedis(redisConnectionString)
     .AddKeyCloak(keyCloakHealthUrl);
 
-builder.Configuration.AddModuleConfiguration(["users", "events","contents"]);
+builder.Configuration.AddModuleConfiguration(["users", "events","contents", "academic"]);
 
 builder.Services.AddUsersModule(builder.Configuration);
 builder.Services.AddEventModule(builder.Configuration);
 builder.Services.AddContentModule(builder.Configuration);
-
+builder.Services.AddAcademicModule(builder.Configuration);
 WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())

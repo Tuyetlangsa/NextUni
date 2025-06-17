@@ -11,4 +11,8 @@
       <ProjectReference Include="..\NextUni.Modules.Academic.Api\NextUni.Modules.Academic.Api.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Database\Migrations\" />
+    </ItemGroup>
+
 </Project>

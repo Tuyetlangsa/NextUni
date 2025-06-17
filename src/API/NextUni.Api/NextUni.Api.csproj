@@ -30,6 +30,7 @@
       <ProjectReference Include="..\..\Common\NextUni.Common.Application\NextUni.Common.Application.csproj" />
       <ProjectReference Include="..\..\Common\NextUni.Common.Domain\NextUni.Common.Domain.csproj" />
       <ProjectReference Include="..\..\Common\NextUni.Common.Infrastructure\NextUni.Common.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Modules\Academic\NextUni.Modules.Academic.Infrastructure\NextUni.Modules.Academic.Infrastructure.csproj" />
       <ProjectReference Include="..\..\Modules\Contents\NextUni.Modules.Contents.Infrastructure\NextUni.Modules.Contents.Infrastructure.csproj" />
       <ProjectReference Include="..\..\Modules\Events\NextUni.Modules.Events.Api\NextUni.Modules.Events.Api.csproj" />
       <ProjectReference Include="..\..\Modules\Events\NextUni.Modules.Events.Application\NextUni.Modules.Events.Application.csproj" />

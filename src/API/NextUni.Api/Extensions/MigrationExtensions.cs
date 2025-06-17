@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NextUni.Modules.Academic.Infrastructure.Database;
 using NextUni.Modules.Contents.Infrastructure.Database;
 using NextUni.Modules.Events.Infrastructure.Database;
 using NextUni.Modules.Users.Infrastructure.Database;
@@ -13,6 +14,7 @@ public static class MigrationExtensions
         ApplyMigration<UserDbContext>(scope);
         ApplyMigration<EventDbContext>(scope);
         ApplyMigration<ContentDbContext>(scope);
+        ApplyMigration<AcademicDbContext>(scope);
     }
 
     private static void ApplyMigration<TDbContext>(IServiceScope scope)
