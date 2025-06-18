@@ -11,4 +11,8 @@
       <ProjectReference Include="..\NextUni.Modules.Contents.Domain\NextUni.Modules.Contents.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+    </ItemGroup>
+
 </Project>

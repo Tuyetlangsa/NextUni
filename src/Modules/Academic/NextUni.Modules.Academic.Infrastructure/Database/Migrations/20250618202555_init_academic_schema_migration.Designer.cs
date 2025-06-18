@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextUni.Modules.Academic.Infrastructure.Database;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(AcademicDbContext))]
-    partial class AcademicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250618202555_init_academic_schema_migration")]
+    partial class init_academic_schema_migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,16 +250,16 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .HasColumnName("year");
 
                     b.HasKey("Id")
-                        .HasName("pk_major_subject_group_by_year");
+                        .HasName("pk_major_subject_group_by_years");
 
                     b.HasIndex("SubjectGroupId")
-                        .HasDatabaseName("ix_major_subject_group_by_year_subject_group_id");
+                        .HasDatabaseName("ix_major_subject_group_by_years_subject_group_id");
 
                     b.HasIndex("MajorId", "SubjectGroupId", "Year")
                         .IsUnique()
-                        .HasDatabaseName("ix_major_subject_group_by_year_major_id_subject_group_id_year");
+                        .HasDatabaseName("ix_major_subject_group_by_years_major_id_subject_group_id_year");
 
-                    b.ToTable("major_subject_group_by_year", "academic");
+                    b.ToTable("majorSubjectGroupByYears", "academic");
                 });
 
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Subjects.Subject", b =>
@@ -310,7 +313,7 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_subject_groups_code");
 
-                    b.ToTable("subject_groups", "academic");
+                    b.ToTable("subjectGroups", "academic");
                 });
 
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Universities.University", b =>
@@ -450,14 +453,14 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .HasForeignKey("MajorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_major_subject_group_by_year_majors_major_id");
+                        .HasConstraintName("fk_major_subject_group_by_years_majors_major_id");
 
                     b.HasOne("NextUni.Modules.Academic.Domain.Subjects.SubjectGroup", null)
                         .WithMany()
                         .HasForeignKey("SubjectGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_major_subject_group_by_year_subject_groups_subject_group_id");
+                        .HasConstraintName("fk_major_subject_group_by_years_subject_groups_subject_group_id");
                 });
 
             modelBuilder.Entity("SubjectSubjectGroup", b =>

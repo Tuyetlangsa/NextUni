@@ -8,4 +8,5 @@ public class AdmissionExamScore : Entity
     public Guid MajorId { get; set; }
     public DateOnly Year { get; set; }
     public float Score { get; set; }
+    public virtual Major Major { get; set; } = null!;
 }
