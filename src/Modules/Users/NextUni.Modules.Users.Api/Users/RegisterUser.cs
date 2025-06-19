@@ -22,7 +22,7 @@ internal sealed class RegisterUser : IEndpoint
                 request.LastName,
                 request.PhoneNumber));
 
-            return result.Match(Results.Ok, ApiResults.Problem);
+            return result.Match(Results.Ok, CustomResults.Problem);
         })
         .AllowAnonymous()
         .WithTags(Tags.Users);
