@@ -18,6 +18,9 @@ public class SubjectConfiguration :  IEntityTypeConfiguration<Subject>
         builder.Property(s => s.Name)
             .IsRequired()
             .HasMaxLength(255);
+        
+        builder.HasIndex(s => s.Name)
+            .IsUnique();
 
         builder.Property(s => s.IsDeleted)
             .IsRequired()
