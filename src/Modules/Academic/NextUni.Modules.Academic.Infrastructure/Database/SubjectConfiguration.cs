@@ -25,5 +25,7 @@ public class SubjectConfiguration :  IEntityTypeConfiguration<Subject>
         builder.Property(s => s.IsDeleted)
             .IsRequired()
             .HasDefaultValue(false);
+
+        builder.HasQueryFilter(s => !s.IsDeleted);
     }
 }

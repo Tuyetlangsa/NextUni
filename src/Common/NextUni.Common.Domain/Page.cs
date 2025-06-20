@@ -3,7 +3,7 @@ namespace NextUni.Common.Domain;
 
 public class Page<T>
 {
-    public ICollection<T> Items { get; } = [];
+    public ICollection<T> Items { get; set; } = [];
     public int? PageNumber { get; set; }
     public int? TotalPages { get; set; }
     public int TotalCount { get; set; }
