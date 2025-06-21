@@ -18,10 +18,10 @@ public class SubjectGroupConfiguration : IEntityTypeConfiguration<SubjectGroup>
         builder.Property(sg => sg.Code)
             .IsRequired()
             .HasMaxLength(50);
-
-        builder.Property(sg => sg.Name)
-            .IsRequired()
-            .HasMaxLength(255);
+        //
+        // builder.Property(sg => sg.Name)
+        //     .IsRequired()
+        //     .HasMaxLength(255);
 
         builder.HasMany(sg => sg.Subjects)
             .WithMany(sg => sg.SubjectGroups);

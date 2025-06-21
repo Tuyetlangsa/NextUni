@@ -2,22 +2,25 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NextUni.Modules.Contents.Infrastructure.Database;
+using NextUni.Modules.Events.Infrastructure.Database;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace NextUni.Modules.Contents.Infrastructure.Database.Migrations
+namespace NextUni.Modules.Events.Infrastructure.Database.Migrations
 {
-    [DbContext(typeof(ContentDbContext))]
-    partial class ContentDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(EventDbContext))]
+    [Migration("20250621070922_add_introduction_blog_in_event_module")]
+    partial class add_introduction_blog_in_event_module
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("contents")
+                .HasDefaultSchema("events")
                 .HasAnnotation("ProductVersion", "9.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -56,7 +59,7 @@ namespace NextUni.Modules.Contents.Infrastructure.Database.Migrations
                     b.HasKey("Id")
                         .HasName("pk_inbox_messages");
 
-                    b.ToTable("inbox_messages", "contents");
+                    b.ToTable("inbox_messages", "events");
                 });
 
             modelBuilder.Entity("NextUni.Common.Infrastructure.Inbox.InboxMessageConsumer", b =>
@@ -73,7 +76,7 @@ namespace NextUni.Modules.Contents.Infrastructure.Database.Migrations
                     b.HasKey("InboxMessageId", "Name")
                         .HasName("pk_inbox_message_consumers");
 
-                    b.ToTable("inbox_message_consumers", "contents");
+                    b.ToTable("inbox_message_consumers", "events");
                 });
 
             modelBuilder.Entity("NextUni.Common.Infrastructure.Outbox.OutboxMessage", b =>
@@ -109,7 +112,7 @@ namespace NextUni.Modules.Contents.Infrastructure.Database.Migrations
                     b.HasKey("Id")
                         .HasName("pk_outbox_messages");
 
-                    b.ToTable("outbox_messages", "contents");
+                    b.ToTable("outbox_messages", "events");
                 });
 
             modelBuilder.Entity("NextUni.Common.Infrastructure.Outbox.OutboxMessageConsumer", b =>
@@ -126,10 +129,84 @@ namespace NextUni.Modules.Contents.Infrastructure.Database.Migrations
                     b.HasKey("OutboxMessageId", "Name")
                         .HasName("pk_outbox_message_consumers");
 
-                    b.ToTable("outbox_message_consumers", "contents");
+                    b.ToTable("outbox_message_consumers", "events");
                 });
 
-            modelBuilder.Entity("NextUni.Modules.Contents.Domain.CounsellingArticles.CounsellingArticle", b =>
+            modelBuilder.Entity("NextUni.Modules.Events.Domain.Events.Event", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("address");
+
+                    b.Property<bool>("IsOnline")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_online");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date")
+                        .HasColumnName("start_date");
+
+                    b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasDefaultValue((byte)0)
+                        .HasColumnName("status");
+
+                    b.Property<Guid>("UniversityId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("university_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_events");
+
+                    b.ToTable("events", "events");
+                });
+
+            modelBuilder.Entity("NextUni.Modules.Events.Domain.Events.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
+
+                    b.HasKey("Id")
+                        .HasName("pk_users");
+
+                    b.ToTable("users", "events");
+                });
+
+            modelBuilder.Entity("NextUni.Modules.Events.Domain.IntroductionBlogs.IntroductionBlog", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,13 +218,17 @@ namespace NextUni.Modules.Contents.Infrastructure.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("content");
 
-                    b.Property<DateTime>("PublishAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("publish_at");
+                    b.Property<byte>("IntroductionType")
+                        .HasColumnType("smallint")
+                        .HasColumnName("introduction_type");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
-                        .HasColumnName("status");
+                    b.Property<DateTime>("PublishedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("published_at");
+
+                    b.Property<Guid>("TargetId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("target_id");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -155,18 +236,10 @@ namespace NextUni.Modules.Contents.Infrastructure.Database.Migrations
                         .HasColumnType("character varying(500)")
                         .HasColumnName("title");
 
-                    b.Property<byte>("Type")
-                        .HasColumnType("smallint")
-                        .HasColumnName("type");
-
-                    b.Property<Guid?>("UniversityId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("university_id");
-
                     b.HasKey("Id")
-                        .HasName("pk_counselling_articles");
+                        .HasName("pk_introduction_blogs");
 
-                    b.ToTable("counselling_articles", "contents");
+                    b.ToTable("introduction_blogs", "events");
                 });
 #pragma warning restore 612, 618
         }

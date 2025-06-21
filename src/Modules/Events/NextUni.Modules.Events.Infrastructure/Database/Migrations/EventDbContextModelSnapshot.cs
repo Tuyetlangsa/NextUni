@@ -202,6 +202,42 @@ namespace NextUni.Modules.Events.Infrastructure.Database.Migrations
 
                     b.ToTable("users", "events");
                 });
+
+            modelBuilder.Entity("NextUni.Modules.Events.Domain.IntroductionBlogs.IntroductionBlog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("content");
+
+                    b.Property<byte>("IntroductionType")
+                        .HasColumnType("smallint")
+                        .HasColumnName("introduction_type");
+
+                    b.Property<DateTime>("PublishedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("published_at");
+
+                    b.Property<Guid>("TargetId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("target_id");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("title");
+
+                    b.HasKey("Id")
+                        .HasName("pk_introduction_blogs");
+
+                    b.ToTable("introduction_blogs", "events");
+                });
 #pragma warning restore 612, 618
         }
     }

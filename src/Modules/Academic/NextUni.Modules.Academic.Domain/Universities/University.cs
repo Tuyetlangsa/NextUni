@@ -1,4 +1,5 @@
 using NextUni.Common.Domain;
+using NextUni.Modules.Academic.Domain.IntroductionBlogs;
 using NextUni.Modules.Academic.Domain.Majors;
 
 namespace NextUni.Modules.Academic.Domain.Universities;
@@ -18,4 +19,5 @@ public class University : Entity
     
     //navigation property
     public virtual List<Major> Majors { get; set; } = new  List<Major>();
+    
 }
