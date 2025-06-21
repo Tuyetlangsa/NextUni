@@ -13,17 +13,17 @@
 #    depends_on:
 #      - nextuni.identity
 #
-#  nextuni.database:
-#    image: postgres:latest
-#    container_name: NextUni.Database
-#    environment:
-#      - POSTGRES_DB=nextuni
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=postgres
-#    volumes:
-#      - ./.containers/db:/var/lib/postgresql/data
-#    ports:
-#      - 5432:5432
+  nextuni.database:
+    image: postgres:latest
+    container_name: NextUni.Database
+    environment:
+      - POSTGRES_DB=nextuni
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
 
   nextuni.identity:
     image: quay.io/keycloak/keycloak:latest
