@@ -55,5 +55,6 @@ public class UniversityConfiguration : IEntityTypeConfiguration<University>
         builder.Property(u => u.IsDeleted)
             .IsRequired()
             .HasDefaultValue(false);
+
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextUni.Modules.Academic.Infrastructure.Database;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(AcademicDbContext))]
-    partial class AcademicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250620200822_add_introduction_blog_migration")]
+    partial class add_introduction_blog_migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,15 +152,15 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("published_at");
 
-                    b.Property<Guid>("TargetId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("target_id");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)")
                         .HasColumnName("title");
+
+                    b.Property<Guid?>("UniversityId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("university_id");
 
                     b.HasKey("Id")
                         .HasName("pk_introduction_blogs");
@@ -336,6 +339,12 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("code");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("name");
 
                     b.HasKey("Id")
                         .HasName("pk_subject_groups");

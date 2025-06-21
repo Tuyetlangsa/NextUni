@@ -1,4 +1,5 @@
 using NextUni.Common.Domain;
+using NextUni.Modules.Academic.Domain.IntroductionBlogs;
 using NextUni.Modules.Academic.Domain.Subjects;
 using NextUni.Modules.Academic.Domain.Universities;
 
@@ -18,4 +19,5 @@ public class Major : Entity
     
     public virtual ICollection<AdmissionGPAScore> AdmissionGPAScores { get; set; } = new List<AdmissionGPAScore>();
     public virtual ICollection<AdmissionExamScore> AdmissionExamScores { get; set; } = new List<AdmissionExamScore>();
+    
 }

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NextUni.Modules.Contents.Domain.IntroductionBlogs;
+using NextUni.Modules.Academic.Domain.IntroductionBlogs;
 
-namespace NextUni.Modules.Contents.Infrastructure.Database;
+namespace NextUni.Modules.Academic.Infrastructure.Database;
 
 public class IntroductionBlogConfiguration : IEntityTypeConfiguration<IntroductionBlog>
 {
@@ -16,8 +16,8 @@ public class IntroductionBlogConfiguration : IEntityTypeConfiguration<Introducti
             .HasConversion<byte>() 
             .IsRequired();
 
-        builder.Property(b => b.UniversityId)
-            .IsRequired(false); 
+        builder.Property(b => b.TargetId)
+            .IsRequired(true); 
 
         builder.Property(b => b.Title)
             .IsRequired()

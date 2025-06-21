@@ -15,4 +15,6 @@ public class CounsellingArticle : Entity
     public DateTime PublishAt { get; set; }
 
     public CounsellingArticleType Type { get; set; }
+    
+    public CounsellingArticleStatus Status { get; set; }
 }

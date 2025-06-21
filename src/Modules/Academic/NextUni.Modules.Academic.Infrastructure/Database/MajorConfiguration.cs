@@ -58,5 +58,6 @@ public class MajorConfiguration : IEntityTypeConfiguration<Major>
                 });
         builder.HasIndex(m => new { m.Code, m.UniversityId })
             .IsUnique();
+        
     }
 } 

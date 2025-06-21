@@ -1,4 +1,4 @@
-namespace NextUni.Modules.Contents.Domain.IntroductionBlogs;
+namespace NextUni.Modules.Academic.Domain.IntroductionBlogs;
 
 public enum IntroductionType
 { 

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NextUni.Modules.Academic.Domain.IntroductionBlogs;
 using NextUni.Modules.Academic.Domain.Majors;
 using NextUni.Modules.Academic.Domain.Subjects;
 using NextUni.Modules.Academic.Domain.Universities;
@@ -14,6 +15,7 @@ public interface IAcademicDbContext
     DbSet<MajorSubjectGroupByYear> MajorSubjectGroupByYear { get; set; }
     DbSet<AdmissionExamScore> AdmissionExamScores { get; set; }
     DbSet<AdmissionGPAScore> AdmissionGPAScores { get; set; }
-    
+    DbSet<IntroductionBlog>   IntroductionBlogs { get; set; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
