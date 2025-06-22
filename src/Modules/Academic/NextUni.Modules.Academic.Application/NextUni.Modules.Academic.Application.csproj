@@ -16,7 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="IntroductionBlogs\CreateMajorIntroductionBlog\" />
       <Folder Include="Universities\GetUniversities\" />
       <Folder Include="Universities\UpdateUniversity\" />
     </ItemGroup>
