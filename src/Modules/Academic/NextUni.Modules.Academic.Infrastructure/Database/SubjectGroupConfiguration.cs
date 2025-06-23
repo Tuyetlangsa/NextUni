@@ -28,6 +28,7 @@ public class SubjectGroupConfiguration : IEntityTypeConfiguration<SubjectGroup>
 
         builder.HasIndex(sg => sg.Code)
             .IsUnique();
-        
+
+        builder.HasQueryFilter(sg => !sg.IsDeleted);
     }
 }

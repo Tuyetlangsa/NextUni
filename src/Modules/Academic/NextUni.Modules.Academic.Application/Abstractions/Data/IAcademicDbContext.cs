@@ -13,8 +13,9 @@ public interface IAcademicDbContext
     DbSet<Subject> Subjects { get; set; }
     DbSet<SubjectGroup> SubjectGroups { get; set; }
     DbSet<MajorSubjectGroupByYear> MajorSubjectGroupByYear { get; set; }
-    DbSet<AdmissionExamScore> AdmissionExamScores { get; set; }
-    DbSet<AdmissionGPAScore> AdmissionGPAScores { get; set; }
+    // DbSet<AdmissionExamScore> AdmissionExamScores { get; set; }
+    // DbSet<AdmissionGPAScore> AdmissionGPAScores { get; set; }
+    DbSet<AdmissionScore> AdmissionScores { get; set; }
     DbSet<IntroductionBlog>   IntroductionBlogs { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

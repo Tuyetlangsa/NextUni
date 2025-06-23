@@ -10,7 +10,7 @@ namespace NextUni.Modules.Academic.Application.Universities.GetUniversities;
 
 public abstract class GetUniversity
 {
-    public record Query(int PageNumber, int PageSize, QueryFilter QueryFilter) : IPageable, IQuery<Page<ResponseItem>>;
+    public record Query(int PageNumber, int PageSize, QueryFilter QueryFilter, bool IsAdmin) : IPageable, IQuery<Page<ResponseItem>>;
 
     public enum QueryFilter
     {
@@ -28,7 +28,11 @@ public abstract class GetUniversity
             
 
             var query = dbContext.Universities.AsNoTracking().AsQueryable();
-            
+
+            if (request.IsAdmin)
+            {
+                query = query.IgnoreQueryFilters();
+            }
             query = request.QueryFilter switch
             {
                 QueryFilter.North => query.Where(u => u.Region == Region.North),
@@ -47,7 +51,8 @@ public abstract class GetUniversity
                 university.Region, 
                 university.Email, 
                 university.WebsiteUrl, 
-                university.FacebookUrl)).ToListAsync(cancellationToken);
+                university.FacebookUrl,
+                university.IsDeleted)).ToListAsync(cancellationToken);
             
             var universityIds = responses.Select(u => u.Id).ToList();
             var universityIdToIntroductionBlog = await dbContext.IntroductionBlogs
@@ -80,7 +85,8 @@ public abstract class GetUniversity
         Region Region,
         string Email,
         string WebsiteUrl,
-        string FacebookUrl
+        string FacebookUrl,
+        bool IsDeleted
     )
     {
         public string Title { get; set; } = null!;

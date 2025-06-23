@@ -50,5 +50,6 @@ public class UniversityConfiguration : IEntityTypeConfiguration<University>
             .IsRequired()
             .HasDefaultValue(false);
 
+        builder.HasQueryFilter(u => !u.IsDeleted);
     }
 }

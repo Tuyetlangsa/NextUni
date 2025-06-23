@@ -15,7 +15,15 @@ internal sealed class GetUniversities : IEndpoint
     {
         app.MapGet("/universities", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, [FromQuery] GetUniversity.QueryFilter queryFilter, ISender sender) =>
             {
-                var result = await sender.Send(new GetUniversity.Query(pageNumber,  pageSize, queryFilter));
+                var result = await sender.Send(new GetUniversity.Query(pageNumber,  pageSize, queryFilter, false));
+                return result.MatchOk();
+            })
+            .AllowAnonymous()
+            .WithTags(Tags.Academic);
+        
+        app.MapGet("admin/universities", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, [FromQuery] GetUniversity.QueryFilter queryFilter, ISender sender) =>
+            {
+                var result = await sender.Send(new GetUniversity.Query(pageNumber,  pageSize, queryFilter, true));
                 return result.MatchOk();
             })
             .AllowAnonymous()

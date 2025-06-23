@@ -58,6 +58,6 @@ public class MajorConfiguration : IEntityTypeConfiguration<Major>
                 });
         builder.HasIndex(m => new { m.Code, m.UniversityId })
             .IsUnique();
-        
+        builder.HasQueryFilter(m => !m.IsDeleted && !m.University.IsDeleted);
     }
 } 

@@ -17,7 +17,8 @@ public class Major : Entity
     public virtual University University { get; set; } = null!;
     public virtual ICollection<SubjectGroup> SubjectGroups { get; set; } = new List<SubjectGroup>();
     
-    public virtual ICollection<AdmissionGPAScore> AdmissionGPAScores { get; set; } = new List<AdmissionGPAScore>();
-    public virtual ICollection<AdmissionExamScore> AdmissionExamScores { get; set; } = new List<AdmissionExamScore>();
+    // public virtual ICollection<AdmissionGPAScore> AdmissionGPAScores { get; set; } = new List<AdmissionGPAScore>();
+    // public virtual ICollection<AdmissionExamScore> AdmissionExamScores { get; set; } = new List<AdmissionExamScore>();
+    public ICollection<AdmissionScore> AdmissionScore { get; set; } = new  List<AdmissionScore>();
     
 }
