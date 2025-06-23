@@ -9,13 +9,13 @@ namespace NextUni.Modules.Academic.Application.Majors.GetMajors;
 
 public abstract class GetMajors
 {
-    public record Query(int PageNumber, int PageSize, bool IsAdmin) : IQuery<Page<MajorResponse>>, IPageable;
+    public record Query(int PageNumber, int PageSize, Guid UniversityId, bool IsAdmin) : IQuery<Page<MajorResponse>>, IPageable;
 
     internal sealed class Handler(IAcademicDbContext dbContext) : IQueryHandler<Query, Page<MajorResponse>>
     {
         public async Task<Result<Page<MajorResponse>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var query = dbContext.Majors.AsQueryable();
+            var query = dbContext.Majors.Where(m => m.UniversityId == request.UniversityId).AsQueryable();
             if (request.IsAdmin)
             {
                 query = query.IgnoreQueryFilters();

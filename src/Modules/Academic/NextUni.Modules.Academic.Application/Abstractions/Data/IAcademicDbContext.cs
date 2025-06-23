@@ -17,6 +17,5 @@ public interface IAcademicDbContext
     // DbSet<AdmissionGPAScore> AdmissionGPAScores { get; set; }
     DbSet<AdmissionScore> AdmissionScores { get; set; }
     DbSet<IntroductionBlog>   IntroductionBlogs { get; set; }
-
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

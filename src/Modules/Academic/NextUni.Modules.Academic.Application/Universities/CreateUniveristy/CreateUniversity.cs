@@ -32,7 +32,7 @@ public abstract class CreateUniversity
 
             if (isExisted)
             {
-                return Result.Failure<Guid>(UniversityErrors.SubjectExisted(command.Code));
+                return Result.Failure<Guid>(UniversityErrors.UniversityExisted(command.Code));
             }
 
             var university = new University()

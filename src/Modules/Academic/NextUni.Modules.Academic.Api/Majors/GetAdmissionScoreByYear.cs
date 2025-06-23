@@ -12,7 +12,7 @@ internal sealed class GetAdmissionScoreByYear : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/majors/admission-scores", async ([FromBody] DateOnly year, ISender sender) =>
+        app.MapGet("/majors/admission-scores/{year}", async ([FromRoute] DateOnly year, ISender sender) =>
             {
                 var result =
                     await sender.Send(

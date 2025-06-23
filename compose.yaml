@@ -37,6 +37,7 @@
       - KC_HEALTH_ENABLED=true
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB_SCHEMA_UPDATE=true
     depends_on:
       - nextuni.database
     volumes:
@@ -49,6 +50,7 @@
     container_name: NextUni.Seq
     environment:
       - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_NOAUTHENTICATION=true
     ports:
       - 5341:5341
       - 8081:80

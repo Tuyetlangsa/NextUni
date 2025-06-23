@@ -24,7 +24,7 @@ namespace NextUni.Modules.Academic.Api.Majors
                         request.Title,
                         request.Content));
 
-                return result.MatchCreated(id => $"/majors/update/{id}");
+                return result.MatchOk();
             })
                 .AllowAnonymous()
                 .WithTags(Tags.Academic);

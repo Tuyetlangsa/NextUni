@@ -22,8 +22,23 @@ public abstract class CreateAdmissionScoreByYear
             
             var majorIds = request.AdmissionScores.Keys.ToList();
 
+            var existingMajorIds = await dbContext.Majors
+                .Where(m => majorIds.Contains(m.Id))
+                .Select(m => m.Id)
+                .ToListAsync(cancellationToken);
+
+            var notFoundIds = majorIds.Except(existingMajorIds).ToList();
+
+            if (notFoundIds.Any())
+            {
+                return Result.Failure(new Error(
+                    "Major.NotExisted",
+                    $"The following majors do not exist: {string.Join(", ", notFoundIds)}",
+                    ErrorType.Conflict));
+            }
+            
             var existingScores = await dbContext.AdmissionScores
-                .Where(a => a.Year == request.Year && majorIds.Contains(a.MajorId))
+                .Where(a => a.Year.Year == request.Year.Year && majorIds.Contains(a.MajorId))
                 .ToListAsync(cancellationToken);
 
             var duplicatedMajorIds = existingScores.Select(x => x.MajorId).Distinct().ToList();
@@ -32,7 +47,7 @@ public abstract class CreateAdmissionScoreByYear
             {
                 return Result.Failure(new Error(
                     "AdmissionScore.Existed", 
-                    $"Admission scores for majors already exist for year {request.Year}: {string.Join(", ", duplicatedMajorIds)}", 
+                    $"Admission scores for majors already exist for year {request.Year.Year}: {string.Join(", ", duplicatedMajorIds)}", 
                     ErrorType.Conflict));
             }
 

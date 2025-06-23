@@ -38,24 +38,26 @@ public class MajorConfiguration : IEntityTypeConfiguration<Major>
         //     }
         // );
         
-        builder.HasMany(m => m.SubjectGroups)
-            .WithMany(sg => sg.Majors)
-            .UsingEntity<MajorSubjectGroupByYear>(
-                join => join
-                    .HasOne<SubjectGroup>()
-                    .WithMany()
-                    .HasForeignKey(ms => ms.SubjectGroupId),
-                join => join
-                    .HasOne<Major>()
-                    .WithMany()
-                    .HasForeignKey(ms => ms.MajorId),
-                join =>
-                {
-                    join.HasKey(ms => ms.Id); 
-                    join.Property(ms => ms.Year).IsRequired();
-                    join.HasIndex(ms => new { ms.MajorId, ms.SubjectGroupId, ms.Year }).IsUnique();
-                    join.ToTable("major_subject_group_by_year");
-                });
+        // builder.HasMany(m => m.SubjectGroups)
+        //     .WithMany(sg => sg.Majors)
+        //     .UsingEntity<MajorSubjectGroupByYear>(
+        //         join => join
+        //             .HasOne<SubjectGroup>()
+        //             .WithMany()
+        //             .HasForeignKey(ms => ms.SubjectGroupId),
+        //         join => join
+        //             .HasOne<Major>()
+        //             .WithMany()
+        //             .HasForeignKey(ms => ms.MajorId),
+        //         join =>
+        //         {
+        //             join.HasKey(ms => ms.Id); 
+        //             join.Property(ms => ms.Year).IsRequired();
+        //             join.HasIndex(ms => new { ms.MajorId, ms.SubjectGroupId, ms.Year }).IsUnique();
+        //             join.ToTable("major_subject_group_by_year");
+        //         });
+        
+        builder.HasMany(m => m.SubjectGroupsByYear).WithOne().HasForeignKey(m => m.MajorId);
         builder.HasIndex(m => new { m.Code, m.UniversityId })
             .IsUnique();
         builder.HasQueryFilter(m => !m.IsDeleted && !m.University.IsDeleted);
