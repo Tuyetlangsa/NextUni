@@ -58,8 +58,8 @@ public abstract class CreateMajor
     {
         public Validator()
         {
-           RuleFor(c => c.Code).NotNull().NotEmpty();
-           RuleFor(c => c.Name).NotNull().NotEmpty();
+           RuleFor(c => c.Code).NotNull().NotEmpty().MaximumLength(50);
+           RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(255);
            RuleFor(c => c.UniversityId).NotNull().NotEmpty();
         }
     }

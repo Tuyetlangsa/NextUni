@@ -21,7 +21,7 @@
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./.containers/db:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
 
@@ -59,4 +59,5 @@
     restart: always
     ports:
       - 6379:6379
-
+volumes:
+  pg_data:

@@ -16,8 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Majors\CreateAdmissionScoreByYear\" />
-      <Folder Include="Majors\GetAdmissionScoresByYear\" />
       <Folder Include="Universities\UpdateUniversity\" />
     </ItemGroup>
 

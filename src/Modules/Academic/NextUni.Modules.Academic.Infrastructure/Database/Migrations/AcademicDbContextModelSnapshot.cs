@@ -189,13 +189,13 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .HasColumnName("year");
 
                     b.HasKey("Id")
-                        .HasName("pk_admission_gpa_scores");
+                        .HasName("pk_admission_scores");
 
                     b.HasIndex("MajorId", "Year")
                         .IsUnique()
-                        .HasDatabaseName("ix_admission_gpa_scores_major_id_year");
+                        .HasDatabaseName("ix_admission_scores_major_id_year");
 
-                    b.ToTable("admission_gpa_scores", "academic");
+                    b.ToTable("admission_scores", "academic");
                 });
 
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.Major", b =>
@@ -419,7 +419,7 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .HasForeignKey("MajorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_admission_gpa_scores_majors_major_id");
+                        .HasConstraintName("fk_admission_scores_majors_major_id");
 
                     b.Navigation("Major");
                 });

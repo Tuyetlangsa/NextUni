@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Domain;
@@ -57,6 +58,14 @@ public abstract class CreateSubjectGroup
             await dbContext.SaveChangesAsync(cancellationToken);
             
             return subjectGroup.Id;
+        }
+    }
+    
+    internal sealed class Validator : AbstractValidator<Command>
+    {
+        public Validator()
+        {
+           RuleFor(s => s.Code).NotNull().NotEmpty().MaximumLength(50);
         }
     }
 }

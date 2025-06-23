@@ -61,14 +61,14 @@ public abstract class CreateUniversity
     {
         public Validator()
         {
-            RuleFor(x => x.Code).NotNull().NotEmpty();
-            RuleFor(c => c.Name).NotNull().NotEmpty();
+            RuleFor(x => x.Code).NotNull().NotEmpty().MaximumLength(50);
+            RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.Region).NotNull().NotEmpty().IsInEnum();
-            RuleFor(c => c.Address).NotNull().NotEmpty();
-            RuleFor(c => c.Email).NotNull().NotEmpty();
-            RuleFor(c => c.WebsiteUrl).NotNull().NotEmpty();
-            RuleFor(c => c.FacebookUrl).NotNull().NotEmpty();
-            RuleFor(c => c.Title).NotNull().NotEmpty();
+            RuleFor(c => c.Address).NotNull().NotEmpty().MaximumLength(500);
+            RuleFor(c => c.Email).NotNull().NotEmpty().MaximumLength(255);
+            RuleFor(c => c.WebsiteUrl).NotNull().NotEmpty().MaximumLength(255);
+            RuleFor(c => c.FacebookUrl).NotNull().NotEmpty().MaximumLength(255);
+            RuleFor(c => c.Title).NotNull().NotEmpty().MaximumLength(500);
             RuleFor(c => c.Content).NotNull().NotEmpty();
             RuleFor(c => c.Type).NotNull().NotEmpty().IsInEnum();
         }

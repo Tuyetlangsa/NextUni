@@ -8,7 +8,7 @@ public class AdmissionScoreConfiguration : IEntityTypeConfiguration<AdmissionSco
 {
     public void Configure(EntityTypeBuilder<AdmissionScore> builder)
     {
-        builder.ToTable("admission_gpa_scores");
+        builder.ToTable("admission_scores");
 
         builder.HasKey(a => a.Id);
 
