@@ -4,11 +4,11 @@ using NextUni.Modules.Academic.Domain.Majors;
 
 namespace NextUni.Modules.Academic.Infrastructure.Database;
 
-public class AdmissionGPAScoreConfiguration : IEntityTypeConfiguration<AdmissionGPAScore>
+public class AdmissionScoreConfiguration : IEntityTypeConfiguration<AdmissionScore>
 {
-    public void Configure(EntityTypeBuilder<AdmissionGPAScore> builder)
+    public void Configure(EntityTypeBuilder<AdmissionScore> builder)
     {
-        builder.ToTable("admission_gpa_scores");
+        builder.ToTable("admission_scores");
 
         builder.HasKey(a => a.Id);
 
@@ -21,13 +21,17 @@ public class AdmissionGPAScoreConfiguration : IEntityTypeConfiguration<Admission
         builder.Property(a => a.Year)
             .IsRequired();
 
-        builder.Property(a => a.Score)
+        builder.Property(a => a.GpaScore)
             .IsRequired();
-
+        builder.Property(a => a.ExamScore)
+            .IsRequired();
+        
         builder.HasOne(a => a.Major)
-            .WithMany(m => m.AdmissionGPAScores) 
+            .WithMany(m => m.AdmissionScore) 
             .HasForeignKey(a => a.MajorId);
 
         builder.HasIndex(a => new { a.MajorId, a.Year }).IsUnique();
+
+        builder.HasQueryFilter(s => !s.Major.IsDeleted);
     }
 }

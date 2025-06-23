@@ -165,62 +165,37 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                     b.ToTable("introduction_blogs", "academic");
                 });
 
-            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionExamScore", b =>
+            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionScore", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<float>("ExamScore")
+                        .HasColumnType("real")
+                        .HasColumnName("exam_score");
+
+                    b.Property<float>("GpaScore")
+                        .HasColumnType("real")
+                        .HasColumnName("gpa_score");
+
                     b.Property<Guid>("MajorId")
                         .HasColumnType("uuid")
                         .HasColumnName("major_id");
-
-                    b.Property<float>("Score")
-                        .HasColumnType("real")
-                        .HasColumnName("score");
 
                     b.Property<DateOnly>("Year")
                         .HasColumnType("date")
                         .HasColumnName("year");
 
                     b.HasKey("Id")
-                        .HasName("pk_admission_exam_scores");
+                        .HasName("pk_admission_scores");
 
                     b.HasIndex("MajorId", "Year")
                         .IsUnique()
-                        .HasDatabaseName("ix_admission_exam_scores_major_id_year");
+                        .HasDatabaseName("ix_admission_scores_major_id_year");
 
-                    b.ToTable("admission_exam_scores", "academic");
-                });
-
-            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionGPAScore", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("MajorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("major_id");
-
-                    b.Property<float>("Score")
-                        .HasColumnType("real")
-                        .HasColumnName("score");
-
-                    b.Property<DateOnly>("Year")
-                        .HasColumnType("date")
-                        .HasColumnName("year");
-
-                    b.HasKey("Id")
-                        .HasName("pk_admission_gpa_scores");
-
-                    b.HasIndex("MajorId", "Year")
-                        .IsUnique()
-                        .HasDatabaseName("ix_admission_gpa_scores_major_id_year");
-
-                    b.ToTable("admission_gpa_scores", "academic");
+                    b.ToTable("admission_scores", "academic");
                 });
 
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.Major", b =>
@@ -285,12 +260,11 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                     b.HasKey("Id")
                         .HasName("pk_major_subject_group_by_year");
 
+                    b.HasIndex("MajorId")
+                        .HasDatabaseName("ix_major_subject_group_by_year_major_id");
+
                     b.HasIndex("SubjectGroupId")
                         .HasDatabaseName("ix_major_subject_group_by_year_subject_group_id");
-
-                    b.HasIndex("MajorId", "SubjectGroupId", "Year")
-                        .IsUnique()
-                        .HasDatabaseName("ix_major_subject_group_by_year_major_id_subject_group_id_year");
 
                     b.ToTable("major_subject_group_by_year", "academic");
                 });
@@ -336,6 +310,10 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("code");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.HasKey("Id")
                         .HasName("pk_subject_groups");
@@ -411,14 +389,6 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_universities_code");
 
-                    b.HasIndex("FacebookUrl")
-                        .IsUnique()
-                        .HasDatabaseName("ix_universities_facebook_url");
-
-                    b.HasIndex("WebsiteUrl")
-                        .IsUnique()
-                        .HasDatabaseName("ix_universities_website_url");
-
                     b.ToTable("universities", "academic");
                 });
 
@@ -441,26 +411,14 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                     b.ToTable("subject_subject_group", "academic");
                 });
 
-            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionExamScore", b =>
+            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionScore", b =>
                 {
                     b.HasOne("NextUni.Modules.Academic.Domain.Majors.Major", "Major")
-                        .WithMany("AdmissionExamScores")
+                        .WithMany("AdmissionScore")
                         .HasForeignKey("MajorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_admission_exam_scores_majors_major_id");
-
-                    b.Navigation("Major");
-                });
-
-            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionGPAScore", b =>
-                {
-                    b.HasOne("NextUni.Modules.Academic.Domain.Majors.Major", "Major")
-                        .WithMany("AdmissionGPAScores")
-                        .HasForeignKey("MajorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_admission_gpa_scores_majors_major_id");
+                        .HasConstraintName("fk_admission_scores_majors_major_id");
 
                     b.Navigation("Major");
                 });
@@ -480,14 +438,14 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.MajorSubjectGroupByYear", b =>
                 {
                     b.HasOne("NextUni.Modules.Academic.Domain.Majors.Major", null)
-                        .WithMany()
+                        .WithMany("SubjectGroupsByYear")
                         .HasForeignKey("MajorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_major_subject_group_by_year_majors_major_id");
 
                     b.HasOne("NextUni.Modules.Academic.Domain.Subjects.SubjectGroup", null)
-                        .WithMany()
+                        .WithMany("MajorSubjectGroupByYears")
                         .HasForeignKey("SubjectGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -513,9 +471,14 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.Major", b =>
                 {
-                    b.Navigation("AdmissionExamScores");
+                    b.Navigation("AdmissionScore");
 
-                    b.Navigation("AdmissionGPAScores");
+                    b.Navigation("SubjectGroupsByYear");
+                });
+
+            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Subjects.SubjectGroup", b =>
+                {
+                    b.Navigation("MajorSubjectGroupByYears");
                 });
 
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Universities.University", b =>

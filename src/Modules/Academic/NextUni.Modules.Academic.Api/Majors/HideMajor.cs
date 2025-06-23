@@ -18,7 +18,7 @@ namespace NextUni.Modules.Academic.Api.Majors
                 Result<Guid> result = await sender.Send(
                     new Application.Majors.HideMajor.HideMajor.Command(id));
 
-                return result.MatchCreated(id => $"/majors/status/{id}");
+                return result.MatchOk();
             })
                 .AllowAnonymous()
                 .WithTags(Tags.Academic);

@@ -6,19 +6,99 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class init_academic_schema_migration : Migration
+    public partial class initial_academic_schema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "academic");
+
             migrationBuilder.CreateTable(
-                name: "subjectGroups",
+                name: "inbox_message_consumers",
+                schema: "academic",
+                columns: table => new
+                {
+                    inbox_message_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_inbox_message_consumers", x => new { x.inbox_message_id, x.name });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "inbox_messages",
+                schema: "academic",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    type = table.Column<string>(type: "text", nullable: false),
+                    content = table.Column<string>(type: "jsonb", maxLength: 2000, nullable: false),
+                    occurred_on_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    processed_on_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    error = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_inbox_messages", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "introduction_blogs",
+                schema: "academic",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    introduction_type = table.Column<byte>(type: "smallint", nullable: false),
+                    target_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    title = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    content = table.Column<string>(type: "text", nullable: false),
+                    published_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_introduction_blogs", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "outbox_message_consumers",
+                schema: "academic",
+                columns: table => new
+                {
+                    outbox_message_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_outbox_message_consumers", x => new { x.outbox_message_id, x.name });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "outbox_messages",
+                schema: "academic",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    type = table.Column<string>(type: "text", nullable: false),
+                    content = table.Column<string>(type: "jsonb", maxLength: 2000, nullable: false),
+                    occurred_on_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    processed_on_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    error = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_outbox_messages", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "subject_groups",
                 schema: "academic",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,7 +155,7 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         name: "fk_subject_subject_group_subject_groups_subject_groups_id",
                         column: x => x.subject_groups_id,
                         principalSchema: "academic",
-                        principalTable: "subjectGroups",
+                        principalTable: "subject_groups",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -111,20 +191,21 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "admission_exam_scores",
+                name: "admission_scores",
                 schema: "academic",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     major_id = table.Column<Guid>(type: "uuid", nullable: false),
                     year = table.Column<DateOnly>(type: "date", nullable: false),
-                    score = table.Column<float>(type: "real", nullable: false)
+                    gpa_score = table.Column<float>(type: "real", nullable: false),
+                    exam_score = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_admission_exam_scores", x => x.id);
+                    table.PrimaryKey("pk_admission_scores", x => x.id);
                     table.ForeignKey(
-                        name: "fk_admission_exam_scores_majors_major_id",
+                        name: "fk_admission_scores_majors_major_id",
                         column: x => x.major_id,
                         principalSchema: "academic",
                         principalTable: "majors",
@@ -133,29 +214,7 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "admission_gpa_scores",
-                schema: "academic",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    major_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    year = table.Column<DateOnly>(type: "date", nullable: false),
-                    score = table.Column<float>(type: "real", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_admission_gpa_scores", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_admission_gpa_scores_majors_major_id",
-                        column: x => x.major_id,
-                        principalSchema: "academic",
-                        principalTable: "majors",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "majorSubjectGroupByYears",
+                name: "major_subject_group_by_year",
                 schema: "academic",
                 columns: table => new
                 {
@@ -166,36 +225,42 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_major_subject_group_by_years", x => x.id);
+                    table.PrimaryKey("pk_major_subject_group_by_year", x => x.id);
                     table.ForeignKey(
-                        name: "fk_major_subject_group_by_years_majors_major_id",
+                        name: "fk_major_subject_group_by_year_majors_major_id",
                         column: x => x.major_id,
                         principalSchema: "academic",
                         principalTable: "majors",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_major_subject_group_by_years_subject_groups_subject_group_id",
+                        name: "fk_major_subject_group_by_year_subject_groups_subject_group_id",
                         column: x => x.subject_group_id,
                         principalSchema: "academic",
-                        principalTable: "subjectGroups",
+                        principalTable: "subject_groups",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_admission_exam_scores_major_id_year",
+                name: "ix_admission_scores_major_id_year",
                 schema: "academic",
-                table: "admission_exam_scores",
+                table: "admission_scores",
                 columns: new[] { "major_id", "year" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_admission_gpa_scores_major_id_year",
+                name: "ix_major_subject_group_by_year_major_id_subject_group_id_year",
                 schema: "academic",
-                table: "admission_gpa_scores",
-                columns: new[] { "major_id", "year" },
+                table: "major_subject_group_by_year",
+                columns: new[] { "major_id", "subject_group_id", "year" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_major_subject_group_by_year_subject_group_id",
+                schema: "academic",
+                table: "major_subject_group_by_year",
+                column: "subject_group_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_majors_code_university_id",
@@ -211,17 +276,11 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                 column: "university_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_major_subject_group_by_years_major_id_subject_group_id_year",
+                name: "ix_subject_groups_code",
                 schema: "academic",
-                table: "majorSubjectGroupByYears",
-                columns: new[] { "major_id", "subject_group_id", "year" },
+                table: "subject_groups",
+                column: "code",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "ix_major_subject_group_by_years_subject_group_id",
-                schema: "academic",
-                table: "majorSubjectGroupByYears",
-                column: "subject_group_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_subject_subject_group_subjects_id",
@@ -230,10 +289,10 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                 column: "subjects_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_subject_groups_code",
+                name: "ix_subjects_name",
                 schema: "academic",
-                table: "subjectGroups",
-                column: "code",
+                table: "subjects",
+                column: "name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -242,35 +301,37 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                 table: "universities",
                 column: "code",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "ix_universities_facebook_url",
-                schema: "academic",
-                table: "universities",
-                column: "facebook_url",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "ix_universities_website_url",
-                schema: "academic",
-                table: "universities",
-                column: "website_url",
-                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "admission_exam_scores",
+                name: "admission_scores",
                 schema: "academic");
 
             migrationBuilder.DropTable(
-                name: "admission_gpa_scores",
+                name: "inbox_message_consumers",
                 schema: "academic");
 
             migrationBuilder.DropTable(
-                name: "majorSubjectGroupByYears",
+                name: "inbox_messages",
+                schema: "academic");
+
+            migrationBuilder.DropTable(
+                name: "introduction_blogs",
+                schema: "academic");
+
+            migrationBuilder.DropTable(
+                name: "major_subject_group_by_year",
+                schema: "academic");
+
+            migrationBuilder.DropTable(
+                name: "outbox_message_consumers",
+                schema: "academic");
+
+            migrationBuilder.DropTable(
+                name: "outbox_messages",
                 schema: "academic");
 
             migrationBuilder.DropTable(
@@ -282,7 +343,7 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                 schema: "academic");
 
             migrationBuilder.DropTable(
-                name: "subjectGroups",
+                name: "subject_groups",
                 schema: "academic");
 
             migrationBuilder.DropTable(
