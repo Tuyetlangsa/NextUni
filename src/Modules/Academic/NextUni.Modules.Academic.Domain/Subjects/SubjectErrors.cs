@@ -9,6 +9,8 @@ public class SubjectErrors
     
     public static Error SubjectExisted(string subjectName) =>
         Error.Conflict("Subject.Existed", $"The subject with the name {subjectName} already exists");
-    
+
+    public static Error DuplicatedNewSubjects() =>
+        Error.Conflict("SubjectGroup.Duplicated", "Subjects is duplicatied");
 }
 
