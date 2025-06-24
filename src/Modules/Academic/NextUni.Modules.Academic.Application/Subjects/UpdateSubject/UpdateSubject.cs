@@ -15,7 +15,7 @@ namespace NextUni.Modules.Academic.Application.Subjects.UpdateSubject
         {
             public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
             {
-                bool isExisted = await dbContext.Subjects.AnyAsync(s => s.Name == command.Name, cancellationToken);
+                bool isExisted = await dbContext.Subjects.AnyAsync(s => s.Name == command.Name && s.Id != command.Id, cancellationToken);
                 if (isExisted)
                 {
                     return Result.Failure<Guid>(SubjectErrors.SubjectExisted(command.Name));
