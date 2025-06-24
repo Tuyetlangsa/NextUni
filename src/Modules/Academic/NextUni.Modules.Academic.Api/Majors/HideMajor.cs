@@ -21,7 +21,7 @@ namespace NextUni.Modules.Academic.Api.Majors
                 return result.MatchOk();
             })
                 .AllowAnonymous()
-                .WithTags(Tags.Academic);
+                .WithTags(Tags.Major);
         }
     }
 }

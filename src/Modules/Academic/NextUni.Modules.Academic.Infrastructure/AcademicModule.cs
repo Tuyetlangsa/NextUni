@@ -12,6 +12,8 @@ using NextUni.Modules.Academic.Application.Abstractions.Data;
 using NextUni.Modules.Academic.Infrastructure.Database;
 using NextUni.Modules.Academic.Infrastructure.Inbox;
 using NextUni.Modules.Academic.Infrastructure.Outbox;
+using NextUni.Modules.Academic.Infrastructure.PublicApi;
+using NextUni.Modules.Academic.PublicApi;
 
 namespace NextUni.Modules.Academic.Infrastructure;
 
@@ -45,6 +47,7 @@ public static class AcademicModule
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Academic))
                 .UseSnakeCaseNamingConvention()
                 .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>()));;
+        services.TryAddScoped<IUniversityApi, UniversityApi>();
         
         services.Configure<OutboxOptions>(configuration.GetSection("Academic:Outbox"));
 

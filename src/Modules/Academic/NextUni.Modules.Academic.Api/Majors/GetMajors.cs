@@ -18,7 +18,7 @@ internal sealed class GetMajors : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
         
         app.MapGet("admin/universities/{universityId}/majors", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, Guid universityId, ISender sender) =>
             {
@@ -26,6 +26,6 @@ internal sealed class GetMajors : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
     }
 }
