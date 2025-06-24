@@ -23,7 +23,7 @@ namespace NextUni.Modules.Academic.Api.Subjects
                 return result.MatchCreated(id => $"/subjects/update/{id}");
             })
                 .AllowAnonymous()
-                .WithTags(Tags.Academic);
+                .WithTags(Tags.Major);
         }
 
         internal sealed class Request

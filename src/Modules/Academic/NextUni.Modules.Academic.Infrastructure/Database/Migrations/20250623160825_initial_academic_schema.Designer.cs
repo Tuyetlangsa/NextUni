@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(AcademicDbContext))]
-    [Migration("20250621065144_fix_migration")]
-    partial class fix_migration
+    [Migration("20250623160825_initial_academic_schema")]
+    partial class initial_academic_schema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,62 +168,37 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                     b.ToTable("introduction_blogs", "academic");
                 });
 
-            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionExamScore", b =>
+            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionScore", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<float>("ExamScore")
+                        .HasColumnType("real")
+                        .HasColumnName("exam_score");
+
+                    b.Property<float>("GpaScore")
+                        .HasColumnType("real")
+                        .HasColumnName("gpa_score");
+
                     b.Property<Guid>("MajorId")
                         .HasColumnType("uuid")
                         .HasColumnName("major_id");
-
-                    b.Property<float>("Score")
-                        .HasColumnType("real")
-                        .HasColumnName("score");
 
                     b.Property<DateOnly>("Year")
                         .HasColumnType("date")
                         .HasColumnName("year");
 
                     b.HasKey("Id")
-                        .HasName("pk_admission_exam_scores");
+                        .HasName("pk_admission_scores");
 
                     b.HasIndex("MajorId", "Year")
                         .IsUnique()
-                        .HasDatabaseName("ix_admission_exam_scores_major_id_year");
+                        .HasDatabaseName("ix_admission_scores_major_id_year");
 
-                    b.ToTable("admission_exam_scores", "academic");
-                });
-
-            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionGPAScore", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("MajorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("major_id");
-
-                    b.Property<float>("Score")
-                        .HasColumnType("real")
-                        .HasColumnName("score");
-
-                    b.Property<DateOnly>("Year")
-                        .HasColumnType("date")
-                        .HasColumnName("year");
-
-                    b.HasKey("Id")
-                        .HasName("pk_admission_gpa_scores");
-
-                    b.HasIndex("MajorId", "Year")
-                        .IsUnique()
-                        .HasDatabaseName("ix_admission_gpa_scores_major_id_year");
-
-                    b.ToTable("admission_gpa_scores", "academic");
+                    b.ToTable("admission_scores", "academic");
                 });
 
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.Major", b =>
@@ -340,11 +315,9 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("code");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("name");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.HasKey("Id")
                         .HasName("pk_subject_groups");
@@ -420,14 +393,6 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_universities_code");
 
-                    b.HasIndex("FacebookUrl")
-                        .IsUnique()
-                        .HasDatabaseName("ix_universities_facebook_url");
-
-                    b.HasIndex("WebsiteUrl")
-                        .IsUnique()
-                        .HasDatabaseName("ix_universities_website_url");
-
                     b.ToTable("universities", "academic");
                 });
 
@@ -450,26 +415,14 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
                     b.ToTable("subject_subject_group", "academic");
                 });
 
-            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionExamScore", b =>
+            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionScore", b =>
                 {
                     b.HasOne("NextUni.Modules.Academic.Domain.Majors.Major", "Major")
-                        .WithMany("AdmissionExamScores")
+                        .WithMany("AdmissionScore")
                         .HasForeignKey("MajorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_admission_exam_scores_majors_major_id");
-
-                    b.Navigation("Major");
-                });
-
-            modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.AdmissionGPAScore", b =>
-                {
-                    b.HasOne("NextUni.Modules.Academic.Domain.Majors.Major", "Major")
-                        .WithMany("AdmissionGPAScores")
-                        .HasForeignKey("MajorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_admission_gpa_scores_majors_major_id");
+                        .HasConstraintName("fk_admission_scores_majors_major_id");
 
                     b.Navigation("Major");
                 });
@@ -522,9 +475,7 @@ namespace NextUni.Modules.Academic.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Majors.Major", b =>
                 {
-                    b.Navigation("AdmissionExamScores");
-
-                    b.Navigation("AdmissionGPAScores");
+                    b.Navigation("AdmissionScore");
                 });
 
             modelBuilder.Entity("NextUni.Modules.Academic.Domain.Universities.University", b =>

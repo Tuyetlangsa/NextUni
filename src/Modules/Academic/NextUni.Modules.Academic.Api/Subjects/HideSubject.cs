@@ -19,7 +19,7 @@ internal sealed class HideSubject : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
     }
 
     internal sealed class Request

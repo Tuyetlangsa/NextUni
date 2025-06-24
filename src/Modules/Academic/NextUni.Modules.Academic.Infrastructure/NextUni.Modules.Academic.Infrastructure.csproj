@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\NextUni.Common.Infrastructure\NextUni.Common.Infrastructure.csproj" />
       <ProjectReference Include="..\NextUni.Modules.Academic.Api\NextUni.Modules.Academic.Api.csproj" />
+      <ProjectReference Include="..\NextUni.Modules.Academic.PublicApi\NextUni.Modules.Academic.PublicApi.csproj" />
     </ItemGroup>
 
     <ItemGroup>

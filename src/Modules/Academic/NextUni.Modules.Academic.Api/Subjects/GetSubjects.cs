@@ -14,10 +14,18 @@ internal sealed class GetSubjects : IEndpoint
     {
         app.MapGet("/subjects", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, ISender sender) =>
             {
-                var result = await sender.Send(new Application.Subjects.GetSubjects.CreateSubject.Query(pageNumber,  pageSize));
+                var result = await sender.Send(new Application.Subjects.GetSubjects.GetSubjects.Query(pageNumber,  pageSize, false));
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
+        
+        app.MapGet("admin/subjects", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, ISender sender) =>
+            {
+                var result = await sender.Send(new Application.Subjects.GetSubjects.GetSubjects.Query(pageNumber,  pageSize, true));
+                return result.MatchOk();
+            })
+            .AllowAnonymous()
+            .WithTags(Tags.Major);
     }
 }

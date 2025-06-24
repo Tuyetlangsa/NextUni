@@ -6,12 +6,14 @@ using NextUni.Common.Application.Caching;
 using NextUni.Common.Application.Clock;
 using NextUni.Common.Application.Data;
 using NextUni.Common.Application.EventBus;
+using NextUni.Common.Application.User;
 using NextUni.Common.Infrastructure.Authentication;
 using NextUni.Common.Infrastructure.Authorization;
 using NextUni.Common.Infrastructure.Caching;
 using NextUni.Common.Infrastructure.Clock;
 using NextUni.Common.Infrastructure.Data;
 using NextUni.Common.Infrastructure.Outbox;
+using NextUni.Common.Infrastructure.User;
 using Npgsql;
 using Quartz;
 using StackExchange.Redis;
@@ -34,6 +36,7 @@ public static class DependencyInjection
         services.TryAddSingleton<IEventBus, EventBus.EventBus>();
 
         services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
+        services.TryAddSingleton<ICurrentUser, CurrentUser>();
         
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConnectionString).Build();
         services.TryAddSingleton(npgsqlDataSource);

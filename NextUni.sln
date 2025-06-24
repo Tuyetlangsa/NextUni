@@ -70,6 +70,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak-export", "keycloak
 		keycloak-export\realm-export.json = keycloak-export\realm-export.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Academic.PublicApi", "src\Modules\Academic\NextUni.Modules.Academic.PublicApi\NextUni.Modules.Academic.PublicApi.csproj", "{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,7 @@ Global
 		{B42350FF-6DD1-4101-A546-6E7A22B5068B} = {3C4DC374-5960-4037-AFE5-77CF743AAB17}
 		{ABA46FAD-9120-4F30-A329-E1220A84C23E} = {3C4DC374-5960-4037-AFE5-77CF743AAB17}
 		{B7030106-D739-4BF8-9451-0F4185C2DC45} = {E859B888-1042-4D72-83C5-4F3594ECE05D}
+		{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73} = {3C4DC374-5960-4037-AFE5-77CF743AAB17}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3443DF87-7177-4438-8A67-043D41791CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -195,5 +198,9 @@ Global
 		{B7030106-D739-4BF8-9451-0F4185C2DC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7030106-D739-4BF8-9451-0F4185C2DC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7030106-D739-4BF8-9451-0F4185C2DC45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

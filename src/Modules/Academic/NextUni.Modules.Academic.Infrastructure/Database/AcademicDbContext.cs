@@ -22,8 +22,9 @@ public class AcademicDbContext(DbContextOptions<AcademicDbContext> options) : Db
         modelBuilder.ApplyConfiguration(new MajorConfiguration());
         modelBuilder.ApplyConfiguration(new SubjectConfiguration());
         modelBuilder.ApplyConfiguration(new SubjectGroupConfiguration());
-        modelBuilder.ApplyConfiguration(new AdmissionExamScoreConfiguration());
-        modelBuilder.ApplyConfiguration(new AdmissionGPAScoreConfiguration());
+        // modelBuilder.ApplyConfiguration(new AdmissionExamScoreConfiguration());
+        // modelBuilder.ApplyConfiguration(new AdmissionGPAScoreConfiguration());
+        modelBuilder.ApplyConfiguration(new AdmissionScoreConfiguration());
         modelBuilder.ApplyConfiguration(new IntroductionBlogConfiguration());
     }
 
@@ -32,7 +33,10 @@ public class AcademicDbContext(DbContextOptions<AcademicDbContext> options) : Db
     public DbSet<Subject> Subjects { get; set; }
     public DbSet<SubjectGroup> SubjectGroups { get; set; }
     public DbSet<MajorSubjectGroupByYear> MajorSubjectGroupByYear { get; set; }
-    public DbSet<AdmissionExamScore> AdmissionExamScores { get; set; }
-    public DbSet<AdmissionGPAScore> AdmissionGPAScores { get; set; }
+
+    public DbSet<AdmissionScore> AdmissionScores { get; set; }
+
+    // public DbSet<AdmissionExamScore> AdmissionExamScores { get; set; }
+    // public DbSet<AdmissionGPAScore> AdmissionGPAScores { get; set; }
     public DbSet<IntroductionBlog> IntroductionBlogs { get; set; }
 }

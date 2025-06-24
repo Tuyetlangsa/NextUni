@@ -20,7 +20,7 @@ internal sealed class CreateSubject : IEndpoint
                 return result.MatchCreated(id => $"/subjects/{id}");
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
     }
 
     internal sealed class Request

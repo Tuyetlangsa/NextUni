@@ -28,6 +28,9 @@ public class SubjectGroupConfiguration : IEntityTypeConfiguration<SubjectGroup>
 
         builder.HasIndex(sg => sg.Code)
             .IsUnique();
-        
+        builder.HasMany(sg => sg.MajorSubjectGroupByYears).WithOne()
+            .HasForeignKey(m => m.SubjectGroupId);
+
+        builder.HasQueryFilter(sg => !sg.IsDeleted);
     }
 }

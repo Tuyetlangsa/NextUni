@@ -24,7 +24,7 @@ namespace NextUni.Modules.Academic.Api.SubjectGroups
                 return result.MatchCreated(id => $"/subject-groups/update/{id}");
             })
                 .AllowAnonymous()
-                .WithTags(Tags.Academic);
+                .WithTags(Tags.SubjectGroup);
         }
 
         internal sealed class Request

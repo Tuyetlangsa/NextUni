@@ -43,18 +43,13 @@ public class UniversityConfiguration : IEntityTypeConfiguration<University>
         builder.Property(u => u.WebsiteUrl)
             .HasMaxLength(255);
         
-        builder.HasIndex(u => u.WebsiteUrl)
-            .IsUnique();
-        
         builder.Property(u => u.FacebookUrl)
             .HasMaxLength(255);
-        
-        builder.HasIndex(u => u.FacebookUrl)
-            .IsUnique();
         
         builder.Property(u => u.IsDeleted)
             .IsRequired()
             .HasDefaultValue(false);
 
+        builder.HasQueryFilter(u => !u.IsDeleted);
     }
 }

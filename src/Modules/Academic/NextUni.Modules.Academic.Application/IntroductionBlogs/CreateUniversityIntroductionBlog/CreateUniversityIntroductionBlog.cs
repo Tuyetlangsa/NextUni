@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using NextUni.Common.Application.Clock;
 using NextUni.Common.Application.Messaging;
@@ -19,7 +20,8 @@ public abstract class CreateUniversityIntroductionBlog
     {
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
-            bool isExisted = await dbContext.Universities.AnyAsync(u => u.Id == command.UniversityId, cancellationToken);
+            bool isExisted = await dbContext.Universities
+                .AnyAsync(u => u.Id == command.UniversityId, cancellationToken);
 
             if (!isExisted)
             {
@@ -40,6 +42,16 @@ public abstract class CreateUniversityIntroductionBlog
             await dbContext.SaveChangesAsync(cancellationToken);
 
             return blog.Id;
+        }
+    }
+    
+    internal sealed class Validator : AbstractValidator<Command>
+    {
+        public Validator()
+        {
+            RuleFor(c => c.Title).NotNull().NotEmpty().MaximumLength(500);
+            RuleFor(c => c.Content).NotNull().NotEmpty();
+            RuleFor(c => c.UniversityId).NotNull().NotEmpty();
         }
     }
 }
