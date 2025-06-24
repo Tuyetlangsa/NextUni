@@ -18,8 +18,6 @@
 
     <ItemGroup>
       <Folder Include="ApproveUniversityCounsellingArticle\" />
-      <Folder Include="GetCounsellingArticlesByUniversity\" />
-      <Folder Include="GetUniversityCounsellingArticles\" />
       <Folder Include="HideCounsellingArticle\" />
       <Folder Include="RejectUniversityCounsellingArticle\" />
       <Folder Include="SubmitUniversityCounsellingArticle\" />
