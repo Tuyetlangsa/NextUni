@@ -11,8 +11,4 @@
       <ProjectReference Include="..\NextUni.Modules.Contents.Application\NextUni.Modules.Contents.Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="UnivesrityCounsellingArticles\" />
-    </ItemGroup>
-
 </Project>

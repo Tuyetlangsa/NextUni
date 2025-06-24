@@ -26,7 +26,7 @@ internal sealed class CreateMajor : IEndpoint
                 return result.MatchCreated(id => $"/majors/{id}");
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
     }
 
     internal sealed class Request

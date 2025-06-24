@@ -18,7 +18,7 @@ internal sealed class GetSubjects : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
         
         app.MapGet("admin/subjects", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, ISender sender) =>
             {
@@ -26,6 +26,6 @@ internal sealed class GetSubjects : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
     }
 }

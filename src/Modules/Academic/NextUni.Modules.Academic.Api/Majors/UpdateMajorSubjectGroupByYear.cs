@@ -23,7 +23,7 @@ internal sealed class UpdateMajorSubjectGroupByYear : IEndpoint
                             majorId, request.GroupIds, year));
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
     }
 
     internal sealed class Request

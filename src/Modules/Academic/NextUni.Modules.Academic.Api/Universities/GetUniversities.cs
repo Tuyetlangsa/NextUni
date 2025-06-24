@@ -19,7 +19,7 @@ internal sealed class GetUniversities : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.University);
         
         app.MapGet("admin/universities", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, [FromQuery] GetUniversity.QueryFilter queryFilter, ISender sender) =>
             {
@@ -27,6 +27,6 @@ internal sealed class GetUniversities : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.University);
     }
 }

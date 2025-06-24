@@ -33,7 +33,7 @@ internal sealed class UpdateUniversity : IEndpoint
             })
             .AllowAnonymous()
             .WithName("UpdateUniversity")
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.University);
     }
 
     internal sealed class Request

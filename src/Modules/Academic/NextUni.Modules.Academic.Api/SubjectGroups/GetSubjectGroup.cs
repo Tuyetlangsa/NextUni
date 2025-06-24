@@ -23,7 +23,7 @@ public class GetSubjectGroups : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.SubjectGroup);
 
         app.MapGet("admin/subject-groups", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, ISender sender) =>
             {
@@ -36,7 +36,7 @@ public class GetSubjectGroups : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.SubjectGroup);
     }
 }
 

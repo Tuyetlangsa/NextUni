@@ -22,7 +22,7 @@ public class GetMasterCounsellingArticles : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Contents);
+            .WithTags(Tags.SystemContent);
         
         app.MapGet("admin/master-counselling-articles", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, ISender sender) =>
             {
@@ -33,6 +33,6 @@ public class GetMasterCounsellingArticles : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Contents);
+            .WithTags(Tags.SystemContent);
     }
 }

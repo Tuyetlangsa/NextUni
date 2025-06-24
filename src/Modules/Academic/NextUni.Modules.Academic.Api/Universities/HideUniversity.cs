@@ -21,7 +21,7 @@ namespace NextUni.Modules.Academic.Api.Universities
                 return result.MatchCreated(id => $"/universities/status/{id}");
             })
                 .AllowAnonymous()
-                .WithTags(Tags.Academic);
+                .WithTags(Tags.University);
         }
     }
 }

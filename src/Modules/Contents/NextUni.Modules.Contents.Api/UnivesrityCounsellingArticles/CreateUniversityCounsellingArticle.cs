@@ -7,26 +7,29 @@ using NextUni.Common.Api.Results;
 using NextUni.Common.Domain;
 using NextUni.Modules.Academic.Api;
 
-namespace NextUni.Modules.Contents.Api.MasterCounsellingArticles;
+namespace NextUni.Modules.Contents.Api.UnivesrityCounsellingArticles;
 
-public class CreateMasterCounsellingArticle : IEndpoint
+public class CreateUniversityCounsellingArticle : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("master-counselling-articles", async (Request request, ISender sender) =>
+        app.MapPost("university-counselling-articles", async (Request request, ISender sender) =>
             {
                 Result<Guid> result = await sender.Send(
-                    new Application.CreateMasterCounsellingArticle.CreateMasterCounsellingArticle.Command(
+                    new Application.CreateUniversityCounsellingArticle.CreateUniversityCounsellingArticle.Command(
+                        request.UniversityId,
                         request.Title,
                         request.Content));
 
-                return result.MatchCreated(id => $"/master-counselling-articles/{id}");
+                return result.MatchCreated(id => $"/university-counselling-articles/{id}");
             })
-            .WithTags(Tags.SystemContent);
+            .WithTags(Tags.UniversityContent);
     }
-
+    
+    
     public class Request
     {
+        public Guid UniversityId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
     }

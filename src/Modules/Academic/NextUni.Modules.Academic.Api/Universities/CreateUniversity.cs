@@ -33,7 +33,7 @@ internal sealed class CreateUniversity : IEndpoint
             })
             .AllowAnonymous()
             .WithName("CreateUniversity")
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.University);
     }
 
     internal sealed class Request

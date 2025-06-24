@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\NextUni.Common.Application\NextUni.Common.Application.csproj" />
+      <ProjectReference Include="..\..\Academic\NextUni.Modules.Academic.PublicApi\NextUni.Modules.Academic.PublicApi.csproj" />
       <ProjectReference Include="..\NextUni.Modules.Contents.Domain\NextUni.Modules.Contents.Domain.csproj" />
     </ItemGroup>
 
@@ -17,7 +18,6 @@
 
     <ItemGroup>
       <Folder Include="ApproveUniversityCounsellingArticle\" />
-      <Folder Include="CreateUniversityCounsellingArticle\" />
       <Folder Include="GetCounsellingArticlesByUniversity\" />
       <Folder Include="GetUniversityCounsellingArticles\" />
       <Folder Include="HideCounsellingArticle\" />

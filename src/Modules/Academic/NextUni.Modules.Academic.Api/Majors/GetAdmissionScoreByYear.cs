@@ -20,6 +20,6 @@ internal sealed class GetAdmissionScoreByYear : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .WithTags(Tags.Academic);
+            .WithTags(Tags.Major);
     }
 }
