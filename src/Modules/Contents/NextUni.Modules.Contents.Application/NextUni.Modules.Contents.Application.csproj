@@ -15,4 +15,14 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ApproveUniversityCounsellingArticle\" />
+      <Folder Include="CreateUniversityCounsellingArticle\" />
+      <Folder Include="GetCounsellingArticlesByUniversity\" />
+      <Folder Include="GetUniversityCounsellingArticles\" />
+      <Folder Include="HideCounsellingArticle\" />
+      <Folder Include="RejectUniversityCounsellingArticle\" />
+      <Folder Include="SubmitUniversityCounsellingArticle\" />
+    </ItemGroup>
+
 </Project>
