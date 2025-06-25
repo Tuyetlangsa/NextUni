@@ -1,0 +1,78 @@
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using NextUni.Common.Api.Endpoints;
+using NextUni.Common.Api.Results;
+using NextUni.Modules.Academic.Api;
+
+namespace NextUni.Modules.Contents.Api.UniversityCounsellingArticles;
+
+public class GetCounsellingArticlesByUniversity : IEndpoint
+{
+    public void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapGet("universities/{universityId}/university-counselling-articles/{status}", async (
+                [FromRoute] Guid universityId,
+                [FromQuery] int pageNumber, 
+                [FromQuery] int pageSize, 
+                [FromRoute] string status, 
+                ISender sender) => 
+            {
+                Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus queryStatus;
+                queryStatus = status switch
+                {
+                    "All" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus.All,
+                    "Published" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus
+                        .Published,
+                    "Draft" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus.Draft,
+                    "Pending" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus
+                        .Pending,
+                };
+
+                var result =
+                    await sender.Send(
+                        new Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.Query(
+                            universityId,
+                            pageNumber, 
+                            pageSize, 
+                            queryStatus, 
+                            false));
+                return result.MatchOk();
+            })
+            .AllowAnonymous()
+            .WithTags(Tags.UniversityContent);
+        
+        app.MapGet("admin/universities/{universityId}/university-counselling-articles/{status}", async (
+                [FromRoute] Guid universityId,
+                [FromQuery] int pageNumber, 
+                [FromQuery] int pageSize, 
+                [FromRoute] string status, 
+                ISender sender) => 
+            {
+                Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus queryStatus;
+                queryStatus = status switch
+                {
+                    "All" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus.All,
+                    "Published" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus
+                        .Published,
+                    "Draft" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus.Draft,
+                    "Pending" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus
+                        .Pending,
+                };
+
+                var result =
+                    await sender.Send(
+                        new Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.Query(
+                            universityId,
+                            pageNumber, 
+                            pageSize, 
+                            queryStatus, 
+                            true));
+                return result.MatchOk();
+            })
+            .AllowAnonymous()
+            .WithTags(Tags.UniversityContent);
+    }
+}
