@@ -12,6 +12,7 @@ public class EventDbContext(DbContextOptions<EventDbContext> options) : DbContex
 {
     public DbSet<Event> Events { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<EventRegistration> EventRegistrations { get; set; }
     public DbSet<IntroductionBlog> IntroductionBlogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,5 +25,6 @@ public class EventDbContext(DbContextOptions<EventDbContext> options) : DbContex
         modelBuilder.ApplyConfiguration(new InboxMessageConfiguration());
         modelBuilder.ApplyConfiguration(new InboxMessageConsumerConfiguration());
         modelBuilder.ApplyConfiguration(new IntroductionBlogConfiguration());
+        modelBuilder.ApplyConfiguration(new EventRegistrationConfiguration());
     }
 }
