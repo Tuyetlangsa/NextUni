@@ -8,7 +8,7 @@ using NextUni.Common.Api.Results;
 using NextUni.Common.Domain;
 using NextUni.Modules.Academic.Api;
 
-namespace NextUni.Modules.Contents.Api.UnivesrityCounsellingArticles
+namespace NextUni.Modules.Contents.Api.UniversityCounsellingArticles
 {
     public class ApproveUniversityCounsellingArticle : IEndpoint
     {

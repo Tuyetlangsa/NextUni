@@ -1,14 +1,14 @@
-﻿using NextUni.Common.Domain;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using NextUni.Common.Api.Endpoints;
-using NextUni.Modules.Academic.Api;
-using Microsoft.AspNetCore.Mvc;
 using NextUni.Common.Api.Results;
-using Microsoft.AspNetCore.Http;
+using NextUni.Common.Domain;
+using NextUni.Modules.Academic.Api;
 
-namespace NextUni.Modules.Contents.Api.UnivesrityCounsellingArticles
+namespace NextUni.Modules.Contents.Api.UniversityCounsellingArticles
 {
     public class RejectUniversityCounsellingArticle : IEndpoint
     {
