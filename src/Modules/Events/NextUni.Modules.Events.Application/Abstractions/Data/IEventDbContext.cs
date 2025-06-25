@@ -8,7 +8,7 @@ public interface IEventDbContext
 {
     DbSet<Event> Events { get; set; }
     DbSet<User> Users { get; set; }
-    
+    DbSet<EventRegistration> EventRegistrations { get; set; }
     public DbSet<IntroductionBlog> IntroductionBlogs { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
