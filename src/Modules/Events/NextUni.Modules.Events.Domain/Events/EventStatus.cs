@@ -2,9 +2,9 @@ namespace NextUni.Modules.Events.Domain.Events;
 
 public enum EventStatus
 {
-    Draft,
     Pending,
     Published,
+    Rejected,
     Ongoing,
     Completed,
     Cancelled
