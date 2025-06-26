@@ -28,6 +28,14 @@ public static class DependencyInjection
         string databaseConnectionString,
         string redisConnectionString)
     {
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policy =>
+                policy.WithOrigins("http://localhost:3000") // Allow the frontend's origin
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()); // If you're using credentials (cookies, Authorization headers, etc.)
+        });
         services.AddAuthenticationInternal();
         services.AddAuthorizationInternal();
         

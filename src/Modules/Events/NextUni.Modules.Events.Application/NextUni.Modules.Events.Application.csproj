@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\NextUni.Common.Application\NextUni.Common.Application.csproj" />
+      <ProjectReference Include="..\..\Academic\NextUni.Modules.Academic.PublicApi\NextUni.Modules.Academic.PublicApi.csproj" />
       <ProjectReference Include="..\NextUni.Modules.Events.Domain\NextUni.Modules.Events.Domain.csproj" />
     </ItemGroup>
 
@@ -17,6 +18,7 @@
 
     <ItemGroup>
       <Folder Include="EventRegistrations\" />
+      <Folder Include="Events\" />
     </ItemGroup>
 
 </Project>
