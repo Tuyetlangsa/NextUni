@@ -4,6 +4,7 @@ using NextUni.Common.Application.Messaging;
 using NextUni.Common.Domain;
 using NextUni.Modules.Academic.Application.Abstractions.Data;
 using NextUni.Modules.Academic.Domain.Majors;
+using NextUni.Modules.Academic.Domain.Subjects;
 
 namespace NextUni.Modules.Academic.Application.Majors.UpdateMajorSubjectGroupsByYear;
 
@@ -19,6 +20,11 @@ public abstract class UpdateMajorSubjectGroupByYear
             if (major is null)
             {
                 return Result.Failure(MajorErrors.NotFound(request.MajorId));
+            }
+
+            if (request.GroupIds.Distinct().Count() != request.GroupIds.Count)
+            {
+                return Result.Failure<Guid>(SubjectGroupErrors.DuplicatedRequestSubjects());
             }
 
             var existingGroupIds = await dbContext.SubjectGroups

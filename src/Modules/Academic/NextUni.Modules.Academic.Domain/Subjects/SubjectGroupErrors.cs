@@ -9,5 +9,7 @@ public class SubjectGroupErrors
     
     public static Error SubjectExisted(string code) =>
         Error.Conflict("SubjectGroup.Existed", $"The subject with the code {code} already exists");
+    public static Error DuplicatedRequestSubjects() =>
+        Error.Conflict("SubjectGroup.Duplicated", "Request subject groups is duplicatied");
 
 }
