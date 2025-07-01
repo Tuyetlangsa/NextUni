@@ -41,8 +41,8 @@ public abstract class GetUniversity
                 QueryFilter.None => query
             };
 
-            
-            var count = await dbContext.Universities.CountAsync(cancellationToken);
+
+            var count = await query.CountAsync(cancellationToken);
 
             var responses = await query.Applypagination(request.PageNumber, request.PageSize).Select(university => new ResponseItem(
                 university.Id, 
