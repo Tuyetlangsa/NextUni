@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\NextUni.Common.Api\NextUni.Common.Api.csproj" />
+      <ProjectReference Include="..\..\Academic\NextUni.Modules.Academic.IntegrationEvents\NextUni.Modules.Academic.IntegrationEvents.csproj" />
+      <ProjectReference Include="..\NextUni.Modules.Chatbot.Application\NextUni.Modules.Chatbot.Application.csproj" />
+    </ItemGroup>
+
+</Project>

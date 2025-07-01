@@ -31,6 +31,10 @@
       <ProjectReference Include="..\..\Common\NextUni.Common.Domain\NextUni.Common.Domain.csproj" />
       <ProjectReference Include="..\..\Common\NextUni.Common.Infrastructure\NextUni.Common.Infrastructure.csproj" />
       <ProjectReference Include="..\..\Modules\Academic\NextUni.Modules.Academic.Infrastructure\NextUni.Modules.Academic.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Modules\Chatbot\NextUni.Modules.Chatbot.Api\NextUni.Modules.Chatbot.Api.csproj" />
+      <ProjectReference Include="..\..\Modules\Chatbot\NextUni.Modules.Chatbot.Application\NextUni.Modules.Chatbot.Application.csproj" />
+      <ProjectReference Include="..\..\Modules\Chatbot\NextUni.Modules.Chatbot.Domain\NextUni.Modules.Chatbot.Domain.csproj" />
+      <ProjectReference Include="..\..\Modules\Chatbot\NextUni.Modules.Chatbot.Infrastructure\NextUni.Modules.Chatbot.Infrastructure.csproj" />
       <ProjectReference Include="..\..\Modules\Contents\NextUni.Modules.Contents.Infrastructure\NextUni.Modules.Contents.Infrastructure.csproj" />
       <ProjectReference Include="..\..\Modules\Events\NextUni.Modules.Events.Api\NextUni.Modules.Events.Api.csproj" />
       <ProjectReference Include="..\..\Modules\Events\NextUni.Modules.Events.Application\NextUni.Modules.Events.Application.csproj" />
