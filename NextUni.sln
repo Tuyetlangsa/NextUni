@@ -72,6 +72,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak-export", "keycloak
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Academic.PublicApi", "src\Modules\Academic\NextUni.Modules.Academic.PublicApi\NextUni.Modules.Academic.PublicApi.csproj", "{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chatbot", "Chatbot", "{23EE22BF-2004-4D81-A5CB-C21015C8C6DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Chatbot.Domain", "src\Modules\Chatbot\NextUni.Modules.Chatbot.Domain\NextUni.Modules.Chatbot.Domain.csproj", "{132A53F2-6F21-4C35-ADE9-C87620BA9D86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Chatbot.Application", "src\Modules\Chatbot\NextUni.Modules.Chatbot.Application\NextUni.Modules.Chatbot.Application.csproj", "{ECE9BBA3-60D7-4155-94D9-B00659179AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Chatbot.Api", "src\Modules\Chatbot\NextUni.Modules.Chatbot.Api\NextUni.Modules.Chatbot.Api.csproj", "{355BE3EB-1153-4109-9B89-E8FE416CF0B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Chatbot.Infrastructure", "src\Modules\Chatbot\NextUni.Modules.Chatbot.Infrastructure\NextUni.Modules.Chatbot.Infrastructure.csproj", "{BD399A4A-6C81-408E-B1E4-387817401CAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextUni.Modules.Academic.IntegrationEvents", "src\Modules\Academic\NextUni.Modules.Academic.IntegrationEvents\NextUni.Modules.Academic.IntegrationEvents.csproj", "{8AD47665-727C-4041-9C16-884F9DD47F46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +120,12 @@ Global
 		{ABA46FAD-9120-4F30-A329-E1220A84C23E} = {3C4DC374-5960-4037-AFE5-77CF743AAB17}
 		{B7030106-D739-4BF8-9451-0F4185C2DC45} = {E859B888-1042-4D72-83C5-4F3594ECE05D}
 		{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73} = {3C4DC374-5960-4037-AFE5-77CF743AAB17}
+		{23EE22BF-2004-4D81-A5CB-C21015C8C6DC} = {B1197F2D-8360-472A-9298-09E302C1AAAB}
+		{132A53F2-6F21-4C35-ADE9-C87620BA9D86} = {23EE22BF-2004-4D81-A5CB-C21015C8C6DC}
+		{ECE9BBA3-60D7-4155-94D9-B00659179AA0} = {23EE22BF-2004-4D81-A5CB-C21015C8C6DC}
+		{355BE3EB-1153-4109-9B89-E8FE416CF0B0} = {23EE22BF-2004-4D81-A5CB-C21015C8C6DC}
+		{BD399A4A-6C81-408E-B1E4-387817401CAB} = {23EE22BF-2004-4D81-A5CB-C21015C8C6DC}
+		{8AD47665-727C-4041-9C16-884F9DD47F46} = {3C4DC374-5960-4037-AFE5-77CF743AAB17}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3443DF87-7177-4438-8A67-043D41791CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -202,5 +220,25 @@ Global
 		{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DBF14D8-1FEC-4326-ACCF-3133CCF54E73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132A53F2-6F21-4C35-ADE9-C87620BA9D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132A53F2-6F21-4C35-ADE9-C87620BA9D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132A53F2-6F21-4C35-ADE9-C87620BA9D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132A53F2-6F21-4C35-ADE9-C87620BA9D86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECE9BBA3-60D7-4155-94D9-B00659179AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECE9BBA3-60D7-4155-94D9-B00659179AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECE9BBA3-60D7-4155-94D9-B00659179AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECE9BBA3-60D7-4155-94D9-B00659179AA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{355BE3EB-1153-4109-9B89-E8FE416CF0B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{355BE3EB-1153-4109-9B89-E8FE416CF0B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{355BE3EB-1153-4109-9B89-E8FE416CF0B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{355BE3EB-1153-4109-9B89-E8FE416CF0B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD399A4A-6C81-408E-B1E4-387817401CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD399A4A-6C81-408E-B1E4-387817401CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD399A4A-6C81-408E-B1E4-387817401CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD399A4A-6C81-408E-B1E4-387817401CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AD47665-727C-4041-9C16-884F9DD47F46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AD47665-727C-4041-9C16-884F9DD47F46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AD47665-727C-4041-9C16-884F9DD47F46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AD47665-727C-4041-9C16-884F9DD47F46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

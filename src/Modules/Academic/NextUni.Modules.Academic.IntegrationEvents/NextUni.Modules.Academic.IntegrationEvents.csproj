@@ -8,12 +8,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\NextUni.Common.Application\NextUni.Common.Application.csproj" />
-      <ProjectReference Include="..\NextUni.Modules.Academic.Domain\NextUni.Modules.Academic.Domain.csproj" />
-      <ProjectReference Include="..\NextUni.Modules.Academic.IntegrationEvents\NextUni.Modules.Academic.IntegrationEvents.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
     </ItemGroup>
 
 </Project>

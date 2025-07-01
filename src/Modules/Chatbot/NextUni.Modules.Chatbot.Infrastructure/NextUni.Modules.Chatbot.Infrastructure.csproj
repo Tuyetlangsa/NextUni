@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\NextUni.Common.Infrastructure\NextUni.Common.Infrastructure.csproj" />
+      <ProjectReference Include="..\NextUni.Modules.Chatbot.Api\NextUni.Modules.Chatbot.Api.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Database\Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.AI" Version="9.6.0" />
+      <PackageReference Include="OllamaSharp" Version="5.2.3" />
+      <PackageReference Include="Qdrant.Client" Version="1.14.1" />
+    </ItemGroup>
+
+</Project>
