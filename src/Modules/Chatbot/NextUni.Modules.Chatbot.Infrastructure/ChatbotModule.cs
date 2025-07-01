@@ -1,6 +1,7 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -8,19 +9,21 @@ using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Application.EventBus;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Infrastructure.Outbox;
-using NextUni.Modules.Academic.Application.Abstractions.Data;
-using NextUni.Modules.Academic.Application.Abstractions.FormatService;
-using NextUni.Modules.Academic.Infrastructure.Database;
-using NextUni.Modules.Academic.Infrastructure.Inbox;
-using NextUni.Modules.Academic.Infrastructure.Outbox;
-using NextUni.Modules.Academic.Infrastructure.PublicApi;
-using NextUni.Modules.Academic.PublicApi;
+using NextUni.Modules.Academic.IntegrationEvents;
+using NextUni.Modules.Chatbot.Application.Abstractions.Data;
+using NextUni.Modules.Chatbot.Infrastructure.Database;
+using NextUni.Modules.Chatbot.Infrastructure.Inbox;
+using NextUni.Modules.Chatbot.Infrastructure.OllamaEmbeddingGenerator;
+using NextUni.Modules.Chatbot.Infrastructure.Outbox;
+using OllamaSharp;
+using Qdrant.Client;
+using IEmbeddingGenerator = NextUni.Modules.Chatbot.Application.Abstractions.EmbeddingGenerator.IEmbeddingGenerator;
 
-namespace NextUni.Modules.Academic.Infrastructure;
+namespace NextUni.Modules.Chatbot.Infrastructure;
 
-public static class AcademicModule
+public static class ChatbotModule
 {
-    public static IServiceCollection AddAcademicModule(
+    public static IServiceCollection AddChatbotModule(
         this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -30,32 +33,47 @@ public static class AcademicModule
         
         services.AddEndpoints(Api.AssemblyReference.Assembly);
         
+        IChatClient client = new OllamaApiClient(
+            new Uri("http://localhost:11434/"),
+            "qwen3");
+    
+        services.AddChatClient(client);
+
+        services.AddEmbeddingGenerator<string, Embedding<float>>(sp =>
+        {
+            return new OllamaApiClient(
+                new Uri("http://localhost:11434/"),
+                "nomic-embed-text");
+        });
+        
+        services.AddSingleton(new QdrantClient("localhost"));
+        
+        services.AddScoped<IEmbeddingGenerator, MyEmbeddingGenerator>();
         return services;
     }
 
     public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
     {
-        
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UniversityCreatedIntegrationEvent>>();
     }
 
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<IAcademicDbContext, AcademicDbContext>((sp, options) =>
+        services.AddDbContext<IVectorDbContext, VectorDbContext>((sp, options) =>
             options
                 .UseNpgsql(
                     configuration.GetConnectionString("Database"),
                     npgsqlOptions => npgsqlOptions
-                        .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Academic))
+                        .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Chatbot))
                 .UseSnakeCaseNamingConvention()
                 .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>()));;
-        services.TryAddScoped<IUniversityApi, UniversityApi>();
-        services.TryAddScoped<IFormatService, FormatService.FormatService>();
+
         
-        services.Configure<OutboxOptions>(configuration.GetSection("Academic:Outbox"));
+        services.Configure<OutboxOptions>(configuration.GetSection("Chatbot:Outbox"));
 
         services.ConfigureOptions<ConfigureProcessOutboxJob>();
 
-        services.Configure<InboxOptions>(configuration.GetSection("Academic:Inbox"));
+        services.Configure<InboxOptions>(configuration.GetSection("Chatbot:Inbox"));
 
         services.ConfigureOptions<ConfigureProcessInboxJob>();
     }

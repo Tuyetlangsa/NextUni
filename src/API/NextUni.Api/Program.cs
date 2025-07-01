@@ -8,6 +8,7 @@ using NextUni.Common.Application;
 using NextUni.Common.Infrastructure;
 using NextUni.Common.Infrastructure.Configuration;
 using NextUni.Modules.Academic.Infrastructure;
+using NextUni.Modules.Chatbot.Infrastructure;
 using NextUni.Modules.Contents.Infrastructure;
 using NextUni.Modules.Events.Infrastructure;
 using NextUni.Modules.Users.Infrastructure;
@@ -26,16 +27,21 @@ builder.Services.AddSwaggerDocumentation();
 Assembly[] moduleApplicationAssemblies = [NextUni.Modules.Users.Application.AssemblyReference.Assembly,
                                           NextUni.Modules.Events.Application.AssemblyReference.Assembly,
                                           NextUni.Modules.Contents.Application.AssemblyReference.Assembly,
-                                          NextUni.Modules.Academic.Application.AssemblyReference.Assembly];
+                                          NextUni.Modules.Academic.Application.AssemblyReference.Assembly,
+                                          NextUni.Modules.Chatbot.Application.AssemblyReference.Assembly];
+                                          
+
 
 builder.Services.AddApplication(moduleApplicationAssemblies);
 
 string databaseConnectionString = builder.Configuration.GetConnectionStringOrThrow("Database");
+// string vectorDatabaseConnectionString = builder.Configuration.GetConnectionStringOrThrow("VectorDatabase");
 string redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache");
 
 builder.Services.AddInfrastructure(
     [
-        EventModule.ConfigureConsumers], 
+        EventModule.ConfigureConsumers,
+        ChatbotModule.ConfigureConsumers], 
         databaseConnectionString,
         redisConnectionString);
 
@@ -46,12 +52,14 @@ builder.Services.AddHealthChecks()
     .AddRedis(redisConnectionString)
     .AddKeyCloak(keyCloakHealthUrl);
 
-builder.Configuration.AddModuleConfiguration(["users", "events","contents", "academic"]);
+builder.Configuration.AddModuleConfiguration(["users", "events","contents", "academic", "chatbot"]);
 
 builder.Services.AddUsersModule(builder.Configuration);
 builder.Services.AddEventModule(builder.Configuration);
 builder.Services.AddContentModule(builder.Configuration);
 builder.Services.AddAcademicModule(builder.Configuration);
+builder.Services.AddChatbotModule(builder.Configuration);
+
 WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
