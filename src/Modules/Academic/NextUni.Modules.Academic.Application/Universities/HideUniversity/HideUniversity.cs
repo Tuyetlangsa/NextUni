@@ -16,6 +16,7 @@ namespace NextUni.Modules.Academic.Application.Universities.HideUniversity
             public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
             {
                 var university = await dbContext.Universities
+                    .IgnoreQueryFilters()
                     .SingleOrDefaultAsync(m => m.Id == command.Id, cancellationToken);
                 if (university is null)
                 {

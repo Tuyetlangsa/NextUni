@@ -18,7 +18,7 @@ internal sealed class HideSubject : IEndpoint
                 Result result = await sender.Send(new Application.Subjects.HideSubject.HideSubject.Command(subjectId));
                 return result.MatchOk();
             })
-            .AllowAnonymous()
+            .RequireAuthorization(Permissions.ModifySubject)
             .WithTags(Tags.Major);
     }
 

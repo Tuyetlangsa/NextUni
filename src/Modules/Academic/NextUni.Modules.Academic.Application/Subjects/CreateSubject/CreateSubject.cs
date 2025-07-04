@@ -15,7 +15,7 @@ public abstract class CreateSubject
     {
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
-            bool isExisted = await dbContext.Subjects.AnyAsync(s => s.Name == command.Name, cancellationToken);
+            bool isExisted = await dbContext.Subjects.IgnoreQueryFilters().AnyAsync(s => s.Name == command.Name, cancellationToken);
             if (isExisted)
             {
                 return Result.Failure<Guid>(SubjectErrors.SubjectExisted(command.Name));

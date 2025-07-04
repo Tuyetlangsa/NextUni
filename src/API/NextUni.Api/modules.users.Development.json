@@ -12,7 +12,7 @@
       "AdminUrl": "http://localhost:18080/admin/realms/nextuni/",
       "TokenUrl": "http://localhost:18080/realms/nextuni/protocol/openid-connect/token",
       "ConfidentialClientId": "nextuni-confidential-client",
-      "ConfidentialClientSecret": "MdAIgNWyNZ4rXA1QCiPqB8129etIyHk3",
+      "ConfidentialClientSecret": "lGE8ZAel7YHNhDZ7DOkvN5VRJeZsmr3S",
       "PublicClientId": "nextuni-public-client"
     }
   }

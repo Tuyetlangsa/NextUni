@@ -24,7 +24,7 @@ namespace NextUni.Modules.Contents.Application.HideCounsellingArticle
 
                 if (article.Status != CounsellingArticleStatus.Published)
                 {
-                    if(article.Status != CounsellingArticleStatus.Inactive)
+                    if(article.Status != CounsellingArticleStatus.Draft)
                     {
                         return Result.Failure<Guid>(CounsellingArticleErrors.IncorrectStatus(command.Id, article.Status));
                     }
@@ -32,7 +32,7 @@ namespace NextUni.Modules.Contents.Application.HideCounsellingArticle
                 }
                 else
                 {
-                    article.Status = CounsellingArticleStatus.Inactive;
+                    article.Status = CounsellingArticleStatus.Draft;
                 }
 
                 dbContext.CounsellingArticles.Update(article);

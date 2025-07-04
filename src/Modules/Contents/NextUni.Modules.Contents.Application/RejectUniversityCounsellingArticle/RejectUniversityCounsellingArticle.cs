@@ -28,7 +28,7 @@ namespace NextUni.Modules.Contents.Application.RejectUniversityCounsellingArticl
                     return Result.Failure<Guid>(CounsellingArticleErrors.IncorrectStatus(command.Id, article.Status));
                 }
 
-                article.Status = CounsellingArticleStatus.Rejected;
+                article.Status = CounsellingArticleStatus.Draft;
                 dbContext.CounsellingArticles.Update(article);
                 await dbContext.SaveChangesAsync(cancellationToken);
                 return article.Id;

@@ -16,6 +16,7 @@ namespace NextUni.Modules.Academic.Application.Majors.HideMajor
             public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
             {
                 var major = await dbContext.Majors
+                    .IgnoreQueryFilters()
                     .SingleOrDefaultAsync(m => m.Id == command.Id, cancellationToken);
                 if (major is null)
                 {

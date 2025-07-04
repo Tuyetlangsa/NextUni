@@ -4,7 +4,5 @@ public enum  CounsellingArticleStatus
 {
     Draft,
     Pending,
-    Published,
-    Rejected,
-    Inactive
+    Published
 }

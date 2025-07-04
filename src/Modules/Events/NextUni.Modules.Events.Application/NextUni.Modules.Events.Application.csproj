@@ -18,7 +18,6 @@
 
     <ItemGroup>
       <Folder Include="EventRegistrations\" />
-      <Folder Include="Events\" />
     </ItemGroup>
 
 </Project>

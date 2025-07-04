@@ -31,7 +31,7 @@ internal sealed class UpdateUniversity : IEndpoint
                         request.Content));
                 return result.MatchOk();
             })
-            .AllowAnonymous()
+            .RequireAuthorization(Permissions.ModifyUniversity)
             .WithName("UpdateUniversity")
             .WithTags(Tags.University);
     }

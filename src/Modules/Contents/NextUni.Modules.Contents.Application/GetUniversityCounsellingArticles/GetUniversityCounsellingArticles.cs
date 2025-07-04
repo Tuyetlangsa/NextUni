@@ -13,12 +13,12 @@ public abstract class GetUniversityCounsellingArticles
     public record Query(
         int PageNumber, 
         int PageSize, 
-        QueryStatus Status,
-        bool IsAdmin) : IQuery<Page<Response>>, IPageable;
+        QueryStatus? Status,
+        bool? IsAdmin,
+        bool? IsStaff) : IQuery<Page<Response>>, IPageable;
     
     public enum QueryStatus
     {
-        All,
         Published,
         Draft,
         Pending,
@@ -37,23 +37,27 @@ public abstract class GetUniversityCounsellingArticles
                 .OrderByDescending(c => c.PublishAt)
                 .AsQueryable();
 
-           query = request.Status switch
+            if (request.IsAdmin.HasValue && request.IsAdmin.Value)
             {
-                QueryStatus.All => query,
-                QueryStatus.Published => query.Where(x => x.Status == CounsellingArticleStatus.Published),
-                QueryStatus.Draft => query.Where(x => x.Status == CounsellingArticleStatus.Draft),
-                QueryStatus.Pending => query.Where(x => x.Status == CounsellingArticleStatus.Pending),
-            };
-            
-            if (!request.IsAdmin)
-            {
-                query = query.Where(x => x.Status == CounsellingArticleStatus.Published);
-            }
-            else
-            {
-                query = query.Where(x => x.Status != CounsellingArticleStatus.Draft);
+                query = query.IgnoreQueryFilters();
+                query = request.Status switch
+                {
+                    QueryStatus.Published => query.Where(x => x.Status == CounsellingArticleStatus.Published),
+                    QueryStatus.Pending => query.Where(x => x.Status == CounsellingArticleStatus.Pending),
+                };
             }
 
+            if (request.IsStaff.HasValue && request.IsStaff.Value)
+            {
+                query = query.IgnoreQueryFilters();
+                query = request.Status switch
+                {
+                    QueryStatus.Published => query.Where(x => x.Status == CounsellingArticleStatus.Published),
+                    QueryStatus.Draft => query.Where(x => x.Status == CounsellingArticleStatus.Draft),
+                    QueryStatus.Pending => query.Where(x => x.Status == CounsellingArticleStatus.Pending),
+                };
+            }
+            
             int count = await query.CountAsync();
             var result = query.Applypagination(request.PageNumber, request.PageSize)
                 .Select(c => new Response(

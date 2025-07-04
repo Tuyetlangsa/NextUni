@@ -18,7 +18,7 @@ public abstract class CreateSubjectGroup
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
             // code is unique
-            bool isExisted = await dbContext.SubjectGroups.AnyAsync(x => x.Code == command.Code, cancellationToken);
+            bool isExisted = await dbContext.SubjectGroups.IgnoreQueryFilters().AnyAsync(x => x.Code == command.Code, cancellationToken);
 
             if (isExisted)
             {

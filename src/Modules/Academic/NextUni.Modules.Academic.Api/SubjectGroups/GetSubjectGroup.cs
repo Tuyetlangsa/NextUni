@@ -35,7 +35,7 @@ public class GetSubjectGroups : IEndpoint
                             true));
                 return result.MatchOk();
             })
-            .AllowAnonymous()
+            .RequireAuthorization(Permissions.GetAdministrativeSubjectGroups)
             .WithTags(Tags.SubjectGroup);
     }
 }

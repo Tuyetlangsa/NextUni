@@ -31,5 +31,6 @@ public class CounsellingArticleConfiguration : IEntityTypeConfiguration<Counsell
         builder.Property(a => a.Type)
             .HasConversion<byte>()
             .IsRequired();
+        builder.HasQueryFilter(c => c.Status != CounsellingArticleStatus.Draft && c.Status != CounsellingArticleStatus.Pending);
     }
 }

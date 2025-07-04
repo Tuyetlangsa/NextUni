@@ -5,11 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using NextUni.Common.Api.Endpoints;
+using NextUni.Common.Application.Authorization;
 using NextUni.Common.Application.EventBus;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Infrastructure.Outbox;
 using NextUni.Modules.Users.Application.Abstractions.Data;
 using NextUni.Modules.Users.Application.Abstractions.Identity;
+using NextUni.Modules.Users.Infrastructure.Authorization;
 using NextUni.Modules.Users.Infrastructure.Database;
 using NextUni.Modules.Users.Infrastructure.Identity;
 using NextUni.Modules.Users.Infrastructure.Inbox;
@@ -38,7 +40,7 @@ public static class UsersModule
         services.Configure<KeyCloakOptions>(configuration.GetSection("Users:KeyCloak"));
 
         services.AddTransient<KeyCloakAuthDelegatingHandler>();
-
+        services.AddScoped<IPermissionService, PermissionService>();
         services
             .AddHttpClient<KeyCloakClient>((serviceProvider, httpClient) =>
             {

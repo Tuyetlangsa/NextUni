@@ -31,7 +31,7 @@ internal sealed class CreateUniversity : IEndpoint
                 
                 return result.MatchCreated(id => $"/universities/{id}");
             })
-            .AllowAnonymous()
+            .RequireAuthorization(Permissions.CreateUniversity)
             .WithName("CreateUniversity")
             .WithTags(Tags.University);
     }

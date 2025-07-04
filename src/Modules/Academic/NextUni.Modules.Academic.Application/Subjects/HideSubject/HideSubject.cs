@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Domain;
 using NextUni.Modules.Academic.Application.Abstractions.Data;
@@ -14,7 +15,7 @@ public abstract class HideSubject
     {
         public async Task<Result> Handle(Command command, CancellationToken cancellationToken)
         {
-           Subject? subject  = await dbContext.Subjects.FindAsync(command.Id, cancellationToken);
+           Subject? subject  = await dbContext.Subjects.IgnoreQueryFilters().FirstOrDefaultAsync(s => s.Id == command.Id, cancellationToken);
            
            if (subject is null)
            {

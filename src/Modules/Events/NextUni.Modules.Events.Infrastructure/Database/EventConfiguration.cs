@@ -15,5 +15,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.Property(@event => @event.StartDate).IsRequired();
         builder.Property(@event => @event.UniversityId).IsRequired();
         builder.Property(@event => @event.Status).HasConversion<byte>().IsRequired().HasDefaultValue(EventStatus.Pending);
+        builder.HasQueryFilter(@event => @event.Status != EventStatus.Pending && 
+                                         @event.Status != EventStatus.Rejected);
     }
 }

@@ -33,6 +33,7 @@ public abstract class CreateMajor
             }
             
             bool isMajorExisted = await dbContext.Majors
+                .IgnoreQueryFilters()
                 .AnyAsync(m => m.Code == command.Code, cancellationToken);
 
             if (isMajorExisted)

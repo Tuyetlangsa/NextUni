@@ -32,7 +32,7 @@ public class GetMasterCounsellingArticles : IEndpoint
                             pageSize, true));
                 return result.MatchOk();
             })
-            .AllowAnonymous()
+            // .RequireAuthorization(Permissions.GetAdministrativeMasterArticles)
             .WithTags(Tags.SystemContent);
     }
 }

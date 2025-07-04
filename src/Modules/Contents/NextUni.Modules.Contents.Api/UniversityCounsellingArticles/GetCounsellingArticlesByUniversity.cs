@@ -23,7 +23,6 @@ public class GetCounsellingArticlesByUniversity : IEndpoint
                 Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus queryStatus;
                 queryStatus = status switch
                 {
-                    "All" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus.All,
                     "Published" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus
                         .Published,
                     "Draft" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus.Draft,
@@ -54,7 +53,6 @@ public class GetCounsellingArticlesByUniversity : IEndpoint
                 Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus queryStatus;
                 queryStatus = status switch
                 {
-                    "All" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus.All,
                     "Published" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus
                         .Published,
                     "Draft" => Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.QueryStatus.Draft,
@@ -72,7 +70,7 @@ public class GetCounsellingArticlesByUniversity : IEndpoint
                             true));
                 return result.MatchOk();
             })
-            .AllowAnonymous()
+            // .RequireAuthorization(Permissions.GetAdministrativeUniversityArticles)
             .WithTags(Tags.UniversityContent);
     }
 }

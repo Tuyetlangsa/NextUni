@@ -1,11 +1,9 @@
 ﻿using System.Data.Common;
 using Dapper;
-using Microsoft.EntityFrameworkCore;
 using NextUni.Common.Application.Authorization;
 using NextUni.Common.Application.Data;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Domain;
-using NextUni.Modules.Users.Application.Abstractions.Data;
 using NextUni.Modules.Users.Domain.Users;
 
 namespace NextUni.Modules.Users.Application.Users.GetUserPermissions;

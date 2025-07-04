@@ -19,7 +19,6 @@ public abstract class GetCounsellingArticlesByUniversity
 
     public enum QueryStatus
     {
-        All,
         Published,
         Draft,
         Pending,
@@ -36,7 +35,6 @@ public abstract class GetCounsellingArticlesByUniversity
 
             query = request.Status switch
             {
-                QueryStatus.All => query,
                 QueryStatus.Published => query.Where(x => x.Status == CounsellingArticleStatus.Published),
                 QueryStatus.Draft => query.Where(x => x.Status == CounsellingArticleStatus.Draft),
                 QueryStatus.Pending => query.Where(x => x.Status == CounsellingArticleStatus.Pending),

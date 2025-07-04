@@ -19,6 +19,7 @@ namespace NextUni.Modules.Events.Api.Events
                     new Application.Events.CancelEvent.CancelEvent.Command(id));
                 return result.MatchCreated(id => $"/events/cancel/{id}");
             })
+            // .RequireAuthorization(Permissions.ProcessEvents)
                 .WithTags(Tags.Events);
         }
     }

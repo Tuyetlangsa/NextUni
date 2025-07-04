@@ -28,7 +28,7 @@ public abstract class CreateUniversity
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
             // code is unique
-            bool isExisted = await dbContext.Universities.AnyAsync(x => x.Code == command.Code, cancellationToken);
+            bool isExisted = await dbContext.Universities.IgnoreQueryFilters().AnyAsync(x => x.Code == command.Code, cancellationToken);
 
             if (isExisted)
             {
