@@ -25,7 +25,7 @@ internal sealed class GetSubjects : IEndpoint
                 var result = await sender.Send(new Application.Subjects.GetSubjects.GetSubjects.Query(pageNumber,  pageSize, true));
                 return result.MatchOk();
             })
-            .RequireAuthorization(Permissions.GetAdministrativeSubjects)
+            // .RequireAuthorization(Permissions.GetAdministrativeSubjects)
             .WithTags(Tags.Major);
     }
 }

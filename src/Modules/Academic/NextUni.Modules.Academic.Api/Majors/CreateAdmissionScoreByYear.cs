@@ -28,7 +28,7 @@ internal sealed class CreateAdmissionScoreByYear : IEndpoint
                 var result = await sender.Send(command);
                 return result.MatchOk();
             })
-            .RequireAuthorization(Permissions.ModifyMajor)
+            // .RequireAuthorization(Permissions.ModifyMajor)
             .WithTags(Tags.Major);
     }
 

@@ -22,7 +22,7 @@ namespace NextUni.Modules.Academic.Api.Subjects
 
                 return result.MatchCreated(id => $"/subjects/update/{id}");
             })
-                .RequireAuthorization(Permissions.ModifySubject)
+                // .RequireAuthorization(Permissions.ModifySubject)
                 .WithTags(Tags.Major);
         }
 

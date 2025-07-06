@@ -14,10 +14,10 @@ public abstract class GetUniversity
 
     public enum QueryFilter
     {
+        None,
         North,
         Central,
         South,
-        None
     }
     
     internal sealed class Handler(IAcademicDbContext dbContext) : IQueryHandler<Query, Page<ResponseItem>>
@@ -49,6 +49,8 @@ public abstract class GetUniversity
                 university.Code,
                 university.Name, 
                 university.Region, 
+                university.UniversityType,
+                university.Address,
                 university.Email, 
                 university.WebsiteUrl, 
                 university.FacebookUrl,
@@ -83,6 +85,8 @@ public abstract class GetUniversity
         string Code,
         string Name,
         Region Region,
+        UniversityType UniversityType,
+        string Adress,
         string Email,
         string WebsiteUrl,
         string FacebookUrl,
