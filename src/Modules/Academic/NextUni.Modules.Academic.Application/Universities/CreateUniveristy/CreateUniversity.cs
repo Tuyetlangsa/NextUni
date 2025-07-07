@@ -63,14 +63,14 @@ public abstract class CreateUniversity
         {
             RuleFor(x => x.Code).NotNull().NotEmpty().MaximumLength(50);
             RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(255);
-            RuleFor(c => c.Region).NotNull().NotEmpty().IsInEnum();
+            RuleFor(c => c.Region).NotNull().IsInEnum();
             RuleFor(c => c.Address).NotNull().NotEmpty().MaximumLength(500);
             RuleFor(c => c.Email).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.WebsiteUrl).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.FacebookUrl).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.Title).NotNull().NotEmpty().MaximumLength(500);
             RuleFor(c => c.Content).NotNull().NotEmpty();
-            RuleFor(c => c.Type).NotNull().NotEmpty().IsInEnum();
+            RuleFor(c => c.Type).NotNull().IsInEnum();
         }
     }
 }

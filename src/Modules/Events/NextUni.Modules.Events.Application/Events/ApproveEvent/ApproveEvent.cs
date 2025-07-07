@@ -17,7 +17,7 @@ namespace NextUni.Modules.Events.Application.Events.ApproveEvent
         {
             public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
             {
-                var requestEvent = await dbContext.Events.FirstOrDefaultAsync(e => e.Id == command.Id, cancellationToken);
+                var requestEvent = await dbContext.Events.IgnoreQueryFilters().FirstOrDefaultAsync(e => e.Id == command.Id, cancellationToken);
                 if (requestEvent is null)
                 {
                     return Result.Failure<Guid>(EventErrors.NotFound(command.Id));

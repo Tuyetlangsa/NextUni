@@ -28,15 +28,19 @@ public abstract class UpdateUniversity
         public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
 
-            var university = await dbContext.Universities.FirstOrDefaultAsync(x => x.Code == request.Code, cancellationToken);
+            var university = await dbContext.Universities.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
             if (university is null)
             {
                 return Result.Failure(UniversityErrors.NotFound(request.Id));
             }
-            bool isExisted = await dbContext.Universities.AnyAsync(x => x.Code == request.Code, cancellationToken);
-            if (isExisted)
+
+            if (university.Code != request.Code)
             {
-                return Result.Failure(UniversityErrors.UniversityExisted(request.Code));
+                bool isExisted = await dbContext.Universities.AnyAsync(x => x.Code == request.Code, cancellationToken);
+                if (isExisted)
+                {
+                    return Result.Failure(UniversityErrors.UniversityExisted(request.Code));
+                }
             }
             
             //update new information for the old university
@@ -49,7 +53,7 @@ public abstract class UpdateUniversity
             university.WebsiteUrl = request.WebsiteUrl;
             university.FacebookUrl = request.FacebookUrl;
             university.Raise(new UniversityUpdatedDomainEvent(university.Id, request.Title, request.Content));
-            
+            await dbContext.SaveChangesAsync(cancellationToken);
             return Result.Success(); 
         }
     }
@@ -60,14 +64,14 @@ public abstract class UpdateUniversity
         {
             RuleFor(x => x.Code).NotNull().NotEmpty().MaximumLength(50);
             RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(255);
-            RuleFor(c => c.Region).NotNull().NotEmpty().IsInEnum();
+            RuleFor(c => c.Region).NotNull().IsInEnum();
             RuleFor(c => c.Address).NotNull().NotEmpty().MaximumLength(500);
             RuleFor(c => c.Email).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.WebsiteUrl).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.FacebookUrl).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.Title).NotNull().NotEmpty().MaximumLength(500);
             RuleFor(c => c.Content).NotNull().NotEmpty();
-            RuleFor(c => c.Type).NotNull().NotEmpty().IsInEnum();
+            RuleFor(c => c.Type).NotNull().IsInEnum();
         }
     }
     

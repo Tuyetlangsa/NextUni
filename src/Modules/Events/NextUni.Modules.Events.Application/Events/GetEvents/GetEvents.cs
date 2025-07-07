@@ -49,6 +49,7 @@ public abstract class GetEvents
 
               if (request.IsAdminOrStaff)
               {
+                  query = query.IgnoreQueryFilters();
                   query = request.Statustatus switch
                   {
                       QueryStatus.Pending => query.Where(x => x.Status == Domain.Events.EventStatus.Pending),

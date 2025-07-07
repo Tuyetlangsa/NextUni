@@ -86,7 +86,7 @@ public abstract class GetUniversity
         string Name,
         Region Region,
         UniversityType UniversityType,
-        string Adress,
+        string Address,
         string Email,
         string WebsiteUrl,
         string FacebookUrl,
