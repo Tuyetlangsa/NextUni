@@ -15,6 +15,7 @@ using NextUni.Modules.Academic.Infrastructure.Inbox;
 using NextUni.Modules.Academic.Infrastructure.Outbox;
 using NextUni.Modules.Academic.Infrastructure.PublicApi;
 using NextUni.Modules.Academic.PublicApi;
+using NextUni.Modules.Users.IntegrationEvents;
 
 namespace NextUni.Modules.Academic.Infrastructure;
 
@@ -35,7 +36,7 @@ public static class AcademicModule
 
     public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
     {
-        
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<StaffAccountCreatedIntegrationEvent>>();
     }
 
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)

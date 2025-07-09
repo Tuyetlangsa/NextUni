@@ -50,6 +50,8 @@ public class UniversityConfiguration : IEntityTypeConfiguration<University>
             .IsRequired()
             .HasDefaultValue(false);
 
+        builder.Property(u => u.StaffAccountId).IsRequired(false);
+        builder.HasIndex(u => u.StaffAccountId).IsUnique();
         builder.HasQueryFilter(u => !u.IsDeleted);
     }
 }

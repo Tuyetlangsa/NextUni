@@ -41,7 +41,8 @@ string redisConnectionString = builder.Configuration.GetConnectionStringOrThrow(
 builder.Services.AddInfrastructure(
     [
         EventModule.ConfigureConsumers,
-        ChatbotModule.ConfigureConsumers], 
+        ChatbotModule.ConfigureConsumers,
+        AcademicModule.ConfigureConsumers], 
         databaseConnectionString,
         redisConnectionString);
 

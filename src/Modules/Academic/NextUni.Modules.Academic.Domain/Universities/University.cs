@@ -17,6 +17,7 @@ public class University : Entity
     public string FacebookUrl { get; set; } = null!;
     public bool IsDeleted { get; set; }
     
+    public Guid? StaffAccountId { get; set;}
     //navigation property
     public virtual List<Major> Majors { get; set; } = new  List<Major>();
     

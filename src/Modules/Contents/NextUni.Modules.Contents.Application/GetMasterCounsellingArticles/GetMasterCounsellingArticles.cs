@@ -33,6 +33,7 @@ public abstract class GetMasterCounsellingArticles
                     c.Id,
                     c.Title,
                     c.Content,
+                    c.PublishAt,
                     c.Status))
                 .ToListAsync(cancellationToken);
 
@@ -47,5 +48,6 @@ public abstract class GetMasterCounsellingArticles
         Guid Id,
         string Title,
         string Content,
+        DateTime PublishedAt,
         CounsellingArticleStatus Status);
 }
