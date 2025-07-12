@@ -20,7 +20,7 @@ namespace NextUni.Modules.Academic.Api.Majors
                         id,
                         request.Code,
                         request.Name,
-                        request.UniversityId,
+                        // request.UniversityId,
                         request.Title,
                         request.Content));
 
@@ -34,7 +34,7 @@ namespace NextUni.Modules.Academic.Api.Majors
         {
             public string Code { get; set; }
             public string Name { get; set; }
-            public Guid UniversityId { get; set; }
+            // public Guid UniversityId { get; set; }
             public string Title { get; set; }
             public string Content { get; set; }
         }

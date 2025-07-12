@@ -7,7 +7,7 @@ namespace NextUni.Modules.Academic.Application.Majors.GetAdmissionScoresByYear;
 
 public abstract class GetAdmissionScoreByYear
 {
-    public record Query(DateOnly Year) : IQuery<Dictionary<Guid, AdmissionScore>>;
+    public record Query(DateOnly Year, Guid UniversityId) : IQuery<Dictionary<Guid, AdmissionScore>>;
 
     internal sealed class Handler(IAcademicDbContext dbContext) : IQueryHandler<Query, Dictionary<Guid, AdmissionScore>>
     {
@@ -22,6 +22,7 @@ public abstract class GetAdmissionScoreByYear
             // return result;
 
             var result = await dbContext.Majors
+                .Where(m => m.UniversityId == request.UniversityId)
                 .GroupJoin(
                     dbContext.AdmissionScores.Where(s => s.Year.Year == request.Year.Year),
                     major => major.Id,

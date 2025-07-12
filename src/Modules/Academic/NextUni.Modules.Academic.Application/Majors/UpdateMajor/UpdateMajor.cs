@@ -15,7 +15,7 @@ namespace NextUni.Modules.Academic.Application.Majors.UpdateMajor
         Guid Id,
         string Code,
         string Name,
-        Guid UniversityId,
+        // Guid UniversityId,
         string Title,
         string Content) : ICommand<Guid>;
 
@@ -23,12 +23,12 @@ namespace NextUni.Modules.Academic.Application.Majors.UpdateMajor
         {
             public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
             {
-                bool isUniversityExisted = await dbContext.Universities
-                    .AnyAsync(u => u.Id == command.UniversityId, cancellationToken);
-                if (!isUniversityExisted)
-                {
-                    return Result.Failure<Guid>(UniversityErrors.NotFound(command.UniversityId));
-                }
+                // bool isUniversityExisted = await dbContext.Universities
+                //     .AnyAsync(u => u.Id == command.UniversityId, cancellationToken);
+                // if (!isUniversityExisted)
+                // {
+                //     return Result.Failure<Guid>(UniversityErrors.NotFound(command.UniversityId));
+                // }
 
                 var major = await dbContext.Majors
                     .SingleAsync(m => m.Id == command.Id, cancellationToken);
@@ -46,7 +46,7 @@ namespace NextUni.Modules.Academic.Application.Majors.UpdateMajor
 
                 major.Code = command.Code;
                 major.Name = command.Name;
-                major.UniversityId = command.UniversityId;
+                // major.UniversityId = command.UniversityId;
 
                 var introductionBlog = await dbContext.IntroductionBlogs
                     .FirstOrDefaultAsync(b => b.TargetId == major.Id 
@@ -70,7 +70,7 @@ namespace NextUni.Modules.Academic.Application.Majors.UpdateMajor
                 RuleFor(c => c.Id).NotNull().NotEmpty();
                 RuleFor(c => c.Code).NotNull().NotEmpty();
                 RuleFor(c => c.Name).NotNull().NotEmpty();
-                RuleFor(c => c.UniversityId).NotNull().NotEmpty();
+                // RuleFor(c => c.UniversityId).NotNull().NotEmpty();
             }
         }
     }

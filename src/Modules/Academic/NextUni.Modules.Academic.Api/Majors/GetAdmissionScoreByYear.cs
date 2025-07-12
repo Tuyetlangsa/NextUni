@@ -12,11 +12,11 @@ internal sealed class GetAdmissionScoreByYear : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/majors/admission-scores/{year}", async ([FromRoute] DateOnly year, ISender sender) =>
+        app.MapGet("/universities/{universityId}/majors/admission-scores/{year}", async ([FromRoute] DateOnly year,[FromRoute] Guid universityId, ISender sender) =>
             {
                 var result =
                     await sender.Send(
-                        new Application.Majors.GetAdmissionScoresByYear.GetAdmissionScoreByYear.Query(year));
+                        new Application.Majors.GetAdmissionScoresByYear.GetAdmissionScoreByYear.Query(year, universityId));
                 return result.MatchOk();
             })
             .AllowAnonymous()
