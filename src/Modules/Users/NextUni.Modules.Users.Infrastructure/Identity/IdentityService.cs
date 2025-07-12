@@ -35,4 +35,9 @@ internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILo
             return Result.Failure<string>(IdentityProviderErrors.EmailIsNotUnique);
         }
     }
+
+    public async Task<Result<IIdentityProviderService.TokenResponse>> LoginUserAsync(string email, string password, CancellationToken cancellationToken = default)
+    {
+        return await  keyCloakClient.LoginUserAsync(email, password, cancellationToken);
+    }
 }
