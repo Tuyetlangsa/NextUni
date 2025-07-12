@@ -29,15 +29,15 @@ namespace NextUni.Modules.Academic.Application.Majors.UpdateMajor
                 // {
                 //     return Result.Failure<Guid>(UniversityErrors.NotFound(command.UniversityId));
                 // }
-
-                var major = await dbContext.Majors
-                    .SingleAsync(m => m.Id == command.Id, cancellationToken);
+                
+                var query = dbContext.Majors.AsNoTracking().AsQueryable().IgnoreQueryFilters();
+                var major = await query.FirstOrDefaultAsync(m => m.Id == command.Id, cancellationToken);
                 if (major is null)
                 {
                     return Result.Failure<Guid>(MajorErrors.NotFound(command.Id));
                 }
 
-                bool isCodeMajorExisted = await dbContext.Majors
+                bool isCodeMajorExisted = await query
                     .AnyAsync(m => m.Code == command.Code && m.Id != command.Id, cancellationToken);
                 if (isCodeMajorExisted)
                 {
