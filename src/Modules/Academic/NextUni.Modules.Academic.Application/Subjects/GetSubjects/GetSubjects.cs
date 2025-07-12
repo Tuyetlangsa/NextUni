@@ -23,11 +23,11 @@ public abstract class GetSubjects
             {
                 query = query.IgnoreQueryFilters();
             }
-
+            
             List<ResponseItem> subjects = await query
                 .ToListAsync(cancellationToken);
-            
-            int count = await dbContext.Subjects.CountAsync(cancellationToken: cancellationToken);
+
+            int count = await query.CountAsync(cancellationToken);
             
             return new Page<ResponseItem>(
                 subjects,
