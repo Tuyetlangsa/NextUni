@@ -12,4 +12,12 @@ public sealed class UniversityApi(IAcademicDbContext dbContext) : IUniversityApi
         return await dbContext.Universities
             .AnyAsync(x => x.Id == universityId);
     }
+    
+    public async Task<Guid> GetStaffIdByUniversityIdAsync(Guid universityId, CancellationToken cancellationToken = default)
+    {
+        var university = await dbContext.Universities
+            .FirstOrDefaultAsync(x => x.Id == universityId, cancellationToken);
+
+        return university?.StaffAccountId ?? Guid.Empty;
+    }
 }

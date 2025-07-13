@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;
+using NextUni.Common.Domain;
 using NextUni.Modules.Academic.Api;
 
 namespace NextUni.Modules.Contents.Api.MasterCounsellingArticles;
@@ -22,6 +23,7 @@ public class GetMasterCounsellingArticles : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
+            .Produces<Page<Application.GetMasterCounsellingArticles.GetMasterCounsellingArticles.Response>>()
             .WithTags(Tags.SystemContent);
         
         app.MapGet("admin/master-counselling-articles", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, ISender sender) =>
@@ -32,7 +34,8 @@ public class GetMasterCounsellingArticles : IEndpoint
                             pageSize, true));
                 return result.MatchOk();
             })
-            // .RequireAuthorization(Permissions.GetAdministrativeMasterArticles)
+            .RequireAuthorization()
+            .Produces<Page<Application.GetMasterCounsellingArticles.GetMasterCounsellingArticles.Response>>()
             .WithTags(Tags.SystemContent);
     }
 }

@@ -20,7 +20,7 @@ namespace NextUni.Modules.Academic.Api.Majors
 
                 return result.MatchOk();
             })
-                // .RequireAuthorization(Permissions.ModifyMajor)
+                .RequireAuthorization()
                 .WithTags(Tags.Major);
         }
     }

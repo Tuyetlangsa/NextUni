@@ -25,7 +25,7 @@ internal sealed class CreateMajor : IEndpoint
                 
                 return result.MatchCreated(id => $"/majors/{id}");
             })
-            // .RequireAuthorization(Permissions.CreateMajor)
+            .RequireAuthorization()
             .WithTags(Tags.Major);
     }
 

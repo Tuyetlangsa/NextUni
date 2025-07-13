@@ -25,7 +25,7 @@ internal sealed class GetMajors : IEndpoint
                 var result = await sender.Send(new Application.Majors.GetMajors.GetMajors.Query(pageNumber,  pageSize, universityId, true));
                 return result.MatchOk();
             })
-            // .RequireAuthorization(Permissions.GetAdministrativeMajors)
+            .RequireAuthorization()
             .WithTags(Tags.Major);
     }
 }

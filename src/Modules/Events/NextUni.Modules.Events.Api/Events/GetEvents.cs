@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;
+using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Events.Api.Events;
 
@@ -30,6 +31,8 @@ public class GetEvents : IEndpoint
                 var result = await sender.Send(new Application.Events.GetEvents.GetEvents.Query(pageNumber, pageSize, queryStatus , false));
                 return result.MatchOk();
             })
+            .AllowAnonymous()
+            .Produces<Page<Application.Events.GetEvents.GetEvents.Response>>()
             .WithTags(Tags.Events);
     
     
@@ -52,6 +55,7 @@ public class GetEvents : IEndpoint
                 var result = await sender.Send(new Application.Events.GetEvents.GetEvents.Query(pageNumber, pageSize, queryStatus , true));
                 return result.MatchOk();
             })
+            .RequireAuthorization()
             .WithTags(Tags.Events);
     }
 
