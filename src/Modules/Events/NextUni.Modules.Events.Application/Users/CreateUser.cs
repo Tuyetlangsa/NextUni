@@ -17,7 +17,7 @@ public abstract class CreateUser
         {
             User user = new User
             {
-                Id = Guid.NewGuid(),
+                Id = command.CustomerId,
                 Email = command.Email,
                 FirstName = command.FirstName,
                 LastName = command.LastName,

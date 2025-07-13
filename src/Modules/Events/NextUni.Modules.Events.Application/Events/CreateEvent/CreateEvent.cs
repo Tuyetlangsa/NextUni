@@ -5,7 +5,7 @@ using NextUni.Modules.Academic.PublicApi;
 using NextUni.Modules.Events.Application.Abstractions.Data;
 using NextUni.Modules.Events.Domain.Events;
 
-namespace NextUni.Modules.Events.Application.Events;
+namespace NextUni.Modules.Events.Application.Events.CreateEvent;
 
 public abstract class CreateEvent
 {

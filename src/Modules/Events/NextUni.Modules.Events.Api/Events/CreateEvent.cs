@@ -6,7 +6,7 @@ using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;
 using NextUni.Common.Domain;
 
-namespace NextUni.Modules.Events.Api.Events.CreateEvent;
+namespace NextUni.Modules.Events.Api.Events;
 
 public class CreateEvent : IEndpoint
 {
@@ -15,7 +15,7 @@ public class CreateEvent : IEndpoint
         app.MapPost("events", async (Request request, ISender sender) =>
             {
                 Result<Guid> result = await sender.Send(
-                    new Application.Events.CreateEvent.Command(
+                    new Application.Events.CreateEvent.CreateEvent.Command(
                         request.Name,
                        request.StartDate,
                         request.Address,

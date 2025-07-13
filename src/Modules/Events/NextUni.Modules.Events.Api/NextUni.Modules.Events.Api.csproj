@@ -12,8 +12,4 @@
       <ProjectReference Include="..\NextUni.Modules.Events.Application\NextUni.Modules.Events.Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="EventRegistrations\" />
-    </ItemGroup>
-
 </Project>

@@ -30,7 +30,7 @@ namespace NextUni.Modules.Academic.Application.Majors.UpdateMajor
                 //     return Result.Failure<Guid>(UniversityErrors.NotFound(command.UniversityId));
                 // }
                 
-                var query = dbContext.Majors.AsNoTracking().AsQueryable().IgnoreQueryFilters();
+                var query = dbContext.Majors.AsNoTracking().AsQueryable();
                 var major = await query.FirstOrDefaultAsync(m => m.Id == command.Id, cancellationToken);
                 if (major is null)
                 {
