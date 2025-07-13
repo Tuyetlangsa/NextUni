@@ -25,7 +25,8 @@ internal sealed class CreateStaffAccount : IEndpoint
 
                 return result.Match(Results.Ok, CustomResults.Problem);
             })
-            .AllowAnonymous()
+            .RequireAuthorization()
+            .Produces<Request>()
             .WithTags(Tags.Users);
     }
 

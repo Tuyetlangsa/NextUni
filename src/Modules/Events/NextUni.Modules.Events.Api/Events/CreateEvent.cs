@@ -27,6 +27,7 @@ public class CreateEvent : IEndpoint
             })
             .RequireAuthorization()
             .WithName("CreateEvent")
+            .Produces<Request>()
             .WithTags(Tags.Events);
     }
 

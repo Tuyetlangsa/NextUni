@@ -23,6 +23,7 @@ public class CreateMasterCounsellingArticle : IEndpoint
                 return result.MatchCreated(id => $"/master-counselling-articles/{id}");
             })
             .RequireAuthorization()
+            .Produces<Request>()
             .WithTags(Tags.SystemContent);
     }
 

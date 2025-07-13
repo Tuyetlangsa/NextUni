@@ -24,6 +24,7 @@ public class CreateUniversityCounsellingArticle : IEndpoint
                 return result.MatchCreated(id => $"/university-counselling-articles/{id}");
             })
             .RequireAuthorization()
+            .Produces<Request>()
             .WithTags(Tags.UniversityContent);
     }
     
