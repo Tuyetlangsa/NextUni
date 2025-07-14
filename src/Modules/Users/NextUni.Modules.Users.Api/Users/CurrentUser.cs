@@ -18,6 +18,7 @@ public class CurrentUser : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization()
+            .Produces<Application.Users.GetCurrentUser.GetCurrentUser.Response>()
             .WithTags(Tags.Users);
     }
 }

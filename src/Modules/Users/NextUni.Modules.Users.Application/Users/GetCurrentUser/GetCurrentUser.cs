@@ -10,8 +10,8 @@ namespace NextUni.Modules.Users.Application.Users.GetCurrentUser;
 
 public abstract class GetCurrentUser
 {
-    public record Query : IQuery<CurrentUser>;
-    public record CurrentUser
+    public record Query : IQuery<Response>;
+    public record Response
     (
         Guid Id,
         string Email,
@@ -22,9 +22,9 @@ public abstract class GetCurrentUser
         Guid? UniversityId
     );
     
-    internal sealed class Handler(IUserDbContext dbContext, ICurrentUser currentUser, IUniversityApi publicApi) : IQueryHandler<Query, CurrentUser>
+    internal sealed class Handler(IUserDbContext dbContext, ICurrentUser currentUser, IUniversityApi publicApi) : IQueryHandler<Query, Response>
     {
-        public async Task<Result<CurrentUser>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<Response>> Handle(Query request, CancellationToken cancellationToken)
         {
             var userId = currentUser.UserId;
             
@@ -34,7 +34,7 @@ public abstract class GetCurrentUser
             {
                  universityId = await publicApi.GetUniversityIdByStaffIdAsync(user.Id, cancellationToken);
             }
-            return new CurrentUser(
+            return new Response(
                 userId, 
                 user.Email, 
                 user.FirstName, 

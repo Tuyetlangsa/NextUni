@@ -19,6 +19,7 @@ public class Login : IEndpoint
                 return result.MatchOk();
             })
         .AllowAnonymous()
+        .Produces<Application.Users.LoginUser.Login.TokenResponse>()
         .WithTags(Tags.Users);
     }
 
