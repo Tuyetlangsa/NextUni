@@ -18,7 +18,7 @@ namespace NextUni.Modules.Academic.Application.IntroductionBlogs.UpdateUniversit
         {
             public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
             {
-                bool isExisted = await dbContext.Majors.AnyAsync(u => u.Id == command.UniversityId, cancellationToken);
+                bool isExisted = await dbContext.Universities.IgnoreQueryFilters().AnyAsync(u => u.Id == command.UniversityId, cancellationToken);
 
                 if (!isExisted)
                 {

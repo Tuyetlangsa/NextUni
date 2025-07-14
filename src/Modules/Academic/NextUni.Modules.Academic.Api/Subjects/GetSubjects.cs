@@ -19,6 +19,7 @@ internal sealed class GetSubjects : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
+            .Produces<Page<Application.Subjects.GetSubjects.GetSubjects.ResponseItem>>()
             .WithTags(Tags.Major);
         
         app.MapGet("admin/subjects", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, ISender sender) =>

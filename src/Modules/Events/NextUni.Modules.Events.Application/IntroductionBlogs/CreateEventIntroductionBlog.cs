@@ -21,7 +21,7 @@ public abstract class CreateEventIntroductionBlog
     {
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
-            bool isExisted = await dbContext.Events.AnyAsync(u => u.Id == command.EventId, cancellationToken);
+            bool isExisted = await dbContext.Events.IgnoreQueryFilters().AnyAsync(u => u.Id == command.EventId, cancellationToken);
 
             if (!isExisted)
             {
