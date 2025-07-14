@@ -69,4 +69,26 @@ public class KeyCloakClient(HttpClient httpClient, ILogger<KeyCloakClient> logge
 
         return token;
     }
+    
+    public async Task ResetPasswordAsync(string userId, string newPassword, CancellationToken cancellationToken = default)
+    {
+        var resetPasswordPayload = new
+        {
+            type = "password",
+            value = newPassword,
+            temporary = false // set true if you want the user to change it on next login
+        };
+
+        var response = await httpClient.PutAsJsonAsync(
+            $"/admin/realms/nextuni/users/{userId}/reset-password",
+            resetPasswordPayload,
+            cancellationToken);
+
+        response.EnsureSuccessStatusCode();
+    }
+    public async Task DeleteUserAsync(string userId, CancellationToken cancellationToken = default)
+    {
+        var response = await httpClient.DeleteAsync($"/admin/realms/nextuni/users/{userId}", cancellationToken);
+        response.EnsureSuccessStatusCode(); // Throws if 4xx or 5xx
+    }
 }

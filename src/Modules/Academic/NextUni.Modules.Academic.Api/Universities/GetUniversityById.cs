@@ -28,7 +28,7 @@ public class GetUniversityById : IEndpoint
                 var result = await sender.Send(new Application.Universities.GetUniversityById.GetUniversityId.Query(id, true));
                 return result.MatchOk();
             })
-            .AllowAnonymous()
+            .RequireAuthorization(Permissions.GetAdministrativeUniversities)
             .Produces<Page<GetUniversityId.ResponseItem>>()
             .WithTags(Tags.University);
     }

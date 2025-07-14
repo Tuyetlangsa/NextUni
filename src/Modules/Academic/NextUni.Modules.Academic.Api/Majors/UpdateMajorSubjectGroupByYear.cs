@@ -22,7 +22,7 @@ internal sealed class UpdateMajorSubjectGroupByYear : IEndpoint
                         new Application.Majors.UpdateMajorSubjectGroupsByYear.UpdateMajorSubjectGroupByYear.Command(
                             majorId, request.GroupIds, year));
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.CreateMajorGroup)
             .WithTags(Tags.Major);
     }
 

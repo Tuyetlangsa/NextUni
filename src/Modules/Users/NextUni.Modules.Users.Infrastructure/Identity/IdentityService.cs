@@ -52,4 +52,41 @@ internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILo
         }
         
     }
+    
+    
+    public async Task<Result> ResetPasswordAsync(string userId, string newPassword, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await keyCloakClient.ResetPasswordAsync(userId, newPassword, cancellationToken);
+            return Result.Success();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Reset password failed for userId: {UserId}", userId);
+            return Result.Failure(new Error("Identity.ResetPasswordFailed", "Unable to reset password.", ErrorType.Conflict));
+        }
+    }
+    
+    public async Task<Result> DeleteUserAsync(string identityId, CancellationToken cancellationToken = default)
+    {
+        
+        try
+        {
+            await keyCloakClient.DeleteUserAsync(identityId, cancellationToken);
+            return Result.Success();
+        }
+        catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.NotFound)
+        {
+            logger.LogError(exception, "User deletion failed for userId: {UserId}", identityId);
+            return Result.Failure(new Error("Identity.UserNotFound", "User not found.", ErrorType.NotFound));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "User deletion failed for userId: {UserId}", identityId);
+            return Result.Failure(new Error("Identity.UserDeletionFailed", "Unable to delete user.", ErrorType.Conflict));
+        }
+        
+    }
+    
 }

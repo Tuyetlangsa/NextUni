@@ -57,7 +57,7 @@ public class GetUniversityCounsellingArticles : IEndpoint
                             true, false));
                 return result.MatchOk();
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.GetAdministrativeUniversityArticles)
             .Produces<Page<Application.GetUniversityCounsellingArticles.GetUniversityCounsellingArticles.Response>>()
             .WithTags(Tags.UniversityContent);
         
@@ -85,7 +85,7 @@ public class GetUniversityCounsellingArticles : IEndpoint
                             false, true));
                 return result.MatchOk();
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.GetStaffUniversityArticles)
             .Produces<Page<Application.GetUniversityCounsellingArticles.GetUniversityCounsellingArticles.Response>>()
             .WithTags(Tags.UniversityContent);
         

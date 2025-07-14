@@ -19,7 +19,7 @@ internal sealed class CreateSubject : IEndpoint
                 Result<Guid> result = await sender.Send(new Application.Subjects.CreateSubject.CreateSubject.Command(request.Name));
                 return result.MatchCreated(id => $"/subjects/{id}");
             })
-            // .RequireAuthorization(Permissions.CreateSubject)
+            .RequireAuthorization(Permissions.CreateSubject)
             .WithTags(Tags.Major);
     }
 

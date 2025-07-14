@@ -14,7 +14,7 @@ public class GetEventsByUniversity : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("universities/{universityId}/events/{status}", async (
+        app.MapGet("/staff/universities/{universityId}/events/{status}", async (
                 [FromQuery] int pageNumber,
                 [FromQuery] int pageSize,
                 [FromRoute] string status,
@@ -23,18 +23,20 @@ public class GetEventsByUniversity : IEndpoint
             {
                 var queryStatus = status switch
                 {
-                    "Published" => Application.Events.GetEvents.GetEvents.QueryStatus.Published,
-                    "Completed" => Application.Events.GetEvents.GetEvents.QueryStatus.Completed,
-                    "Ongoing" => Application.Events.GetEvents.GetEvents.QueryStatus.Ongoing,
-                    "Cancelled" => Application.Events.GetEvents.GetEvents.QueryStatus.Canceled,
+                    "Pending" => Application.Events.GetEventsByUniversity.GetEventByUniversity.QueryStatus.Pending,
+                    "Published" => Application.Events.GetEventsByUniversity.GetEventByUniversity.QueryStatus.Published,
+                    "Completed" => Application.Events.GetEventsByUniversity.GetEventByUniversity.QueryStatus.Completed,
+                    "Ongoing" => Application.Events.GetEventsByUniversity.GetEventByUniversity.QueryStatus.Ongoing,
+                    "Cancelled" => Application.Events.GetEventsByUniversity.GetEventByUniversity.QueryStatus.Canceled,
+                    "Rejected" => Application.Events.GetEventsByUniversity.GetEventByUniversity.QueryStatus.Rejected,
                     _ => throw new NextUni.Common.Application.Exceptions.NextUniException("invalid status provided"),
                 };
                 var result =
                     await sender.Send(
-                        new Application.Events.GetEvents.GetEvents.Query(pageNumber, pageSize, queryStatus, false));
+                        new Application.Events.GetEventsByUniversity.GetEventByUniversity.Query(pageNumber, pageSize, universityId, queryStatus));
                 return result.MatchOk();
             })
-            .AllowAnonymous()
+            .RequireAuthorization(Permissions.GetStaffEvent)
             .Produces<Page<GetEventByUniversity.Response>>()
             .WithTags(Tags.Events);
     }

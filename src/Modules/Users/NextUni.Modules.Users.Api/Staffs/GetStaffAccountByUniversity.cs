@@ -17,7 +17,7 @@ public class GetStaffAccountByUniversity : IEndpoint
                 var result = await sender.Send(new Application.Staffs.GetStaffAccountByUniversity.GetStaffAccountByUniversity.Query(universityId));
                 return result.MatchOk();
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.GetStaffAccountByUniversity)
             .Produces<Application.Staffs.GetStaffAccountByUniversity.GetStaffAccountByUniversity.Response>()
             .WithTags(Tags.Users);
     }

@@ -20,7 +20,7 @@ namespace NextUni.Modules.Contents.Api.UniversityCounsellingArticles
                         new Application.SubmitUniversityCounsellingArticle.SubmitUniversityCounsellingArticle.Command(id));
                     return result.MatchCreated(id => $"/university-counselling-articles/submit/{id}");
                 })
-                .RequireAuthorization()
+                .RequireAuthorization(Permissions.ModifyUniversityArticle)
                 .WithTags(Tags.UniversityContent);
         }
     }

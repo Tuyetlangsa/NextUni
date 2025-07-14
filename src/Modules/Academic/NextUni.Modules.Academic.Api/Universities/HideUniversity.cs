@@ -20,7 +20,7 @@ namespace NextUni.Modules.Academic.Api.Universities
 
                 return result.MatchCreated(id => $"/universities/status/{id}");
             })
-                // .RequireAuthorization(Permissions.ModifyUniversity)
+                .RequireAuthorization(Permissions.ModifyUniversity)
                 .WithTags(Tags.University);
         }
     }

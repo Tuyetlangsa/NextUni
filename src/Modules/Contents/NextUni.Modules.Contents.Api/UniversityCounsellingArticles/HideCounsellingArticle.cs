@@ -20,7 +20,7 @@ namespace NextUni.Modules.Contents.Api.UniversityCounsellingArticles
                         new Application.HideCounsellingArticle.HideCounsellingArticle.Command(id));
                     return result.MatchCreated(id => $"/university-counselling-articles/hide-unhide/{id}");
                 })
-                .RequireAuthorization()
+                .RequireAuthorization(Permissions.HideArticle)
                 .WithTags(Tags.UniversityContent);
         }
     }

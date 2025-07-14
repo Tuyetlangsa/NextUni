@@ -8,6 +8,10 @@ public interface IIdentityProviderService
 {
     Task<Result<string>> RegisterUserAsync(UserModel user, CancellationToken cancellationToken = default);
     Task<Result<TokenResponse>> LoginUserAsync(string email, string password, CancellationToken cancellationToken = default);
+
+    public Task<Result> DeleteUserAsync(string identityId, CancellationToken cancellationToken = default);
+
+    
     public class TokenResponse
     {
         [JsonPropertyName("access_token")]

@@ -36,7 +36,7 @@ public class GetSubjectGroups : IEndpoint
                             true));
                 return result.MatchOk();
             })
-            // .RequireAuthorization(Permissions.GetAdministrativeSubjectGroups)
+            .RequireAuthorization(Permissions.GetAdministrativeSubjectGroups)
             .Produces<Page<Application.SubjectGroups.GetSubjectGroups.GetSubjectGroups.Response>>()
             .WithTags(Tags.SubjectGroup);
     }

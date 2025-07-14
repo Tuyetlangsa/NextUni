@@ -34,7 +34,7 @@ public class GetMasterCounsellingArticles : IEndpoint
                             pageSize, true));
                 return result.MatchOk();
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.GetAdministrativeMasterArticles)
             .Produces<Page<Application.GetMasterCounsellingArticles.GetMasterCounsellingArticles.Response>>()
             .WithTags(Tags.SystemContent);
     }

@@ -55,7 +55,7 @@ public class GetEvents : IEndpoint
                 var result = await sender.Send(new Application.Events.GetEvents.GetEvents.Query(pageNumber, pageSize, queryStatus , true));
                 return result.MatchOk();
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.GetAdministrativeEvents)
             .Produces<Page<Application.Events.GetEvents.GetEvents.Response>>()
             .WithTags(Tags.Events);
     }

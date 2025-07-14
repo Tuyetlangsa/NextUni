@@ -25,7 +25,7 @@ public class CreateEvent : IEndpoint
                         request.Content));
                 return result.MatchCreated(id => $"/events/{id}");
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.CreateEvent)
             .WithName("CreateEvent")
             .Produces<Request>()
             .WithTags(Tags.Events);

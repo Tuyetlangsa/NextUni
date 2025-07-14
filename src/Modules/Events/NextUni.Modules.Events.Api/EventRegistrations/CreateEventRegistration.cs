@@ -17,7 +17,7 @@ public class CreateEventRegistration : IEndpoint
                 var result = await sender.Send(new Application.EventRegistrations.CreateEventRegistration.CreateEventRegistration.Command(id));
                 return result.MatchCreated(id => $"/event-registrations/{id}");
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.RegisterEvent)
             .WithName("CreateEventRegistration")
             .WithTags(Tags.Events);
     }

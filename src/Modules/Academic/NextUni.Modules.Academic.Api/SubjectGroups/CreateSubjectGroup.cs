@@ -18,7 +18,7 @@ internal sealed class CreateSubjectGroup : IEndpoint
                 Result<Guid> result = await sender.Send(new Application.SubjectGroups.CreateSubjectGroup.CreateSubjectGroup.Command(request.Code, request.SubjectIds));
                 return result.MatchCreated(id => $"/subject-groups/{id}");
             })
-            // .RequireAuthorization(Permissions.CreateSubjectGroup)
+            .RequireAuthorization(Permissions.CreateSubjectGroup)
             .WithTags(Tags.SubjectGroup);
     }
 

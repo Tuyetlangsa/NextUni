@@ -28,7 +28,7 @@ internal sealed class GetUniversities : IEndpoint
                 var result = await sender.Send(new GetUniversity.Query(pageNumber,  pageSize, queryFilter, true));
                 return result.MatchOk();
             })
-            // .RequireAuthorization(Permissions.GetAdministrativeUniversities)
+            .RequireAuthorization(Permissions.GetAdministrativeUniversities)
             .Produces<Page<GetUniversity.ResponseItem>>()
             .WithTags(Tags.University);
     }

@@ -9,7 +9,7 @@ namespace NextUni.Modules.Academic.Api.Universities;
 
 
 
-public class StaffAccountCreatedIntegrationDomainEventHandler(ISender sender) : IntegrationEventHandler<StaffAccountCreatedIntegrationEvent>
+public class StaffAccountCreatedIntegrationEventHandler(ISender sender) : IntegrationEventHandler<StaffAccountCreatedIntegrationEvent>
 {
     public override async Task Handle(StaffAccountCreatedIntegrationEvent integrationEvent, CancellationToken cancellationToken = default)
     {

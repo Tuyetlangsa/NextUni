@@ -72,7 +72,7 @@ public class GetCounsellingArticlesByUniversity : IEndpoint
                             true));
                 return result.MatchOk();
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.GetAdministrativeUniversityArticles)
             .Produces<Page<Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.Response>>()
             .WithTags(Tags.UniversityContent);
     }

@@ -25,7 +25,7 @@ internal sealed class CreateStaffAccount : IEndpoint
 
                 return result.Match(Results.Ok, CustomResults.Problem);
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.CreateStaffAccount)
             .Produces<Request>()
             .WithTags(Tags.Users);
     }

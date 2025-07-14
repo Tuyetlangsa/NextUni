@@ -18,7 +18,7 @@ public class CancelEventRegistration : IEndpoint
                 var result = await sender.Send(new Application.EventRegistrations.CancelEventRegistration.CancelEventRegistration.Command(id));
                 return result.MatchOk();
             })
-            .RequireAuthorization()
+            .RequireAuthorization(Permissions.CancelEventRegistration)
             .WithName("CancelEventRegistration")
             .WithTags(Tags.Events);
     }
