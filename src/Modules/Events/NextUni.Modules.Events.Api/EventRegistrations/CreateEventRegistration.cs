@@ -14,7 +14,7 @@ public class CreateEventRegistration : IEndpoint
     {
         app.MapPost("event-registrations/{id}", async ([FromRoute] Guid id, ISender sender) =>
             {
-                var result = await sender.Send(new Application.EventRegistrations.CreateEventRegistration.Command(id));
+                var result = await sender.Send(new Application.EventRegistrations.CreateEventRegistration.CreateEventRegistration.Command(id));
                 return result.MatchCreated(id => $"/event-registrations/{id}");
             })
             .RequireAuthorization()

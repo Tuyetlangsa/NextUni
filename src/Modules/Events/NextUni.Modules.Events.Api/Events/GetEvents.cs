@@ -36,7 +36,7 @@ public class GetEvents : IEndpoint
             .WithTags(Tags.Events);
     
     
-        app.MapGet("/admin-staff/events/{status}", async (
+        app.MapGet("/admin/events/{status}", async (
                 [FromQuery] int pageNumber, 
                 [FromQuery] int pageSize, 
                 [FromRoute] string status, 

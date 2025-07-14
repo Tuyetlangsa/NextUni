@@ -15,7 +15,7 @@ public class CancelEventRegistration : IEndpoint
     {
         app.MapPut("event-registrations/{id}/cancel", async ([FromRoute] Guid id, ISender sender) =>
             {
-                var result = await sender.Send(new Application.CancelEventRegistration.CancelEventRegistration.Command(id));
+                var result = await sender.Send(new Application.EventRegistrations.CancelEventRegistration.CancelEventRegistration.Command(id));
                 return result.MatchOk();
             })
             .RequireAuthorization()

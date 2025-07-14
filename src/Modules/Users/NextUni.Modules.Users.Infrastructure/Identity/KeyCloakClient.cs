@@ -55,6 +55,7 @@ public class KeyCloakClient(HttpClient httpClient, ILogger<KeyCloakClient> logge
 
         var content = new FormUrlEncodedContent(formData);
 
+        
         var response = await httpClient.PostAsync(url, content, cancellationToken);
         response.EnsureSuccessStatusCode();
 

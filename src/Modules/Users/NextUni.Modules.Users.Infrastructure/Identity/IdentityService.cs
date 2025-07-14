@@ -38,6 +38,18 @@ internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILo
 
     public async Task<Result<IIdentityProviderService.TokenResponse>> LoginUserAsync(string email, string password, CancellationToken cancellationToken = default)
     {
-        return await  keyCloakClient.LoginUserAsync(email, password, cancellationToken);
+        try
+        {
+            var response = await  keyCloakClient.LoginUserAsync(email, password, cancellationToken);
+
+            return response;
+        }
+        catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            logger.LogError(exception, "User registration failed");
+
+            return Result.Failure<IIdentityProviderService.TokenResponse>(new Error("Identity.LoginFailed", "Login failed due to incorrect credentials.", ErrorType.UnAuthorized));
+        }
+        
     }
 }

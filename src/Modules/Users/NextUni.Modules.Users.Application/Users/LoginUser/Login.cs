@@ -19,6 +19,10 @@ public abstract class Login
         public async Task<Result<TokenResponse>> Handle(Command request, CancellationToken cancellationToken)
         {
             var token =  await indentityService.LoginUserAsync(request.Email, request.Password, cancellationToken);
+            if (token.IsFailure)
+            {
+                return Result.Failure<TokenResponse>(token.Error);
+            }
             var response = new TokenResponse(token.Value.AccessToken, token.Value.RefreshToken);
             return response;
         }

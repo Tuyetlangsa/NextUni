@@ -5,7 +5,7 @@ using NextUni.Common.Domain;
 using NextUni.Modules.Events.Application.Abstractions.Data;
 using NextUni.Modules.Events.Domain.Events;
 
-namespace NextUni.Modules.Events.Application.EventRegistrations;
+namespace NextUni.Modules.Events.Application.EventRegistrations.CreateEventRegistration;
 
 public abstract class CreateEventRegistration
 {
