@@ -56,6 +56,7 @@ public class GetEvents : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization()
+            .Produces<Page<Application.Events.GetEvents.GetEvents.Response>>()
             .WithTags(Tags.Events);
     }
 
