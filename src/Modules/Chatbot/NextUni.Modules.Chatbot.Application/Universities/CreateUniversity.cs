@@ -49,7 +49,6 @@ public abstract class CreateUniversity
             else {
                 return Result.Failure<Guid>(new Error("Failed to upsert university embedding", "UpsertError", ErrorType.Problem));
             }
-            
         }
     }
 }

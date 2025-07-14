@@ -32,7 +32,9 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
         //     Permission.GetTickets,
         //     Permission.CheckInTicket,
         //     Permission.GetEventStatistics);
-        builder.HasData(Permission.CreateUniversity);
+        builder.HasData(Permission.CreateMasterArticle);
+        builder.HasData(Permission.CreateEvent);
+        builder.HasData(Permission.GetMajors);
 
         builder
             .HasMany<Role>()
@@ -42,7 +44,10 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
                 joinBuilder.ToTable("role_permissions");
 
                 joinBuilder.HasData(
-                    CreateRolePermission(Role.Student, Permission.CreateUniversity));
+                    CreateRolePermission(Role.Administrator, Permission.CreateMasterArticle),
+                    CreateRolePermission(Role.Staff, Permission.CreateEvent),
+                    CreateRolePermission(Role.Student, Permission.GetMajors)
+                    );
             });
     }
 

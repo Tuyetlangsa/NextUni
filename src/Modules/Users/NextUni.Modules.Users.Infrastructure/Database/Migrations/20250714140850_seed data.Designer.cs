@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NextUni.Modules.Users.Infrastructure.Database;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NextUni.Modules.Users.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250714140850_seed data")]
+    partial class seeddata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,15 +147,11 @@ namespace NextUni.Modules.Users.Infrastructure.Database.Migrations
                     b.HasData(
                         new
                         {
-                            Code = "masterarticle:create"
+                            Code = "university:create"
                         },
                         new
                         {
                             Code = "event:create"
-                        },
-                        new
-                        {
-                            Code = "major:read"
                         });
                 });
 
@@ -246,18 +245,13 @@ namespace NextUni.Modules.Users.Infrastructure.Database.Migrations
                     b.HasData(
                         new
                         {
-                            PermissionCode = "masterarticle:create",
-                            RoleName = "Administrator"
+                            PermissionCode = "university:create",
+                            RoleName = "Student"
                         },
                         new
                         {
                             PermissionCode = "event:create",
                             RoleName = "Staff"
-                        },
-                        new
-                        {
-                            PermissionCode = "major:read",
-                            RoleName = "Student"
                         });
                 });
 

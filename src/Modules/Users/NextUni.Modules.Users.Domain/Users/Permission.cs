@@ -31,6 +31,7 @@ public sealed class Permission
     public static readonly Permission ModifyUniversityArticle = new("universityarticle:modify");
     public static readonly Permission HideArticle = new("article:hide");
     public static readonly Permission ProcessUniversityArticle = new("universityarticle:process");
+    public static readonly Permission CreateEvent = new("event:create");
 
     
     

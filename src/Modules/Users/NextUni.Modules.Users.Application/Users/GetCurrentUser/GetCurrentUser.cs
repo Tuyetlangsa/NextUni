@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Application.User;
 using NextUni.Common.Domain;
+using NextUni.Modules.Academic.PublicApi;
 using NextUni.Modules.Users.Application.Abstractions.Data;
 using NextUni.Modules.Users.Domain.Users;
 
@@ -17,23 +18,31 @@ public abstract class GetCurrentUser
         string FirstName,
         string LastName,
         string PhoneNumber,
-        Role Role
+        string Role,
+        Guid? UniversityId
     );
     
-    internal sealed class Handler(IUserDbContext dbContext, ICurrentUser currentUser) : IQueryHandler<Query, CurrentUser>
+    internal sealed class Handler(IUserDbContext dbContext, ICurrentUser currentUser, IUniversityApi publicApi) : IQueryHandler<Query, CurrentUser>
     {
         public async Task<Result<CurrentUser>> Handle(Query request, CancellationToken cancellationToken)
         {
             var userId = currentUser.UserId;
             
-            var user = await dbContext.Users.SingleAsync(u => u.Id == userId, cancellationToken); 
+            var user = await dbContext.Users.Include(u => u.Roles).SingleAsync(u => u.Id == userId, cancellationToken);
+            Guid? universityId = null;
+            if (user.Roles.First().Name == Role.Staff.Name)
+            {
+                 universityId = await publicApi.GetUniversityIdByStaffIdAsync(user.Id, cancellationToken);
+            }
             return new CurrentUser(
                 userId, 
                 user.Email, 
                 user.FirstName, 
                 user.LastName, 
                 user.PhoneNumber,
-                user.Roles.First());
+                user.Roles.First().Name,
+                universityId
+                );
         }
     }
 }
