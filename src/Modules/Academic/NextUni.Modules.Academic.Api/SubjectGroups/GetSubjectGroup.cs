@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;
+using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.SubjectGroups;
 
@@ -36,6 +37,7 @@ public class GetSubjectGroups : IEndpoint
                 return result.MatchOk();
             })
             // .RequireAuthorization(Permissions.GetAdministrativeSubjectGroups)
+            .Produces<Page<Application.SubjectGroups.GetSubjectGroups.GetSubjectGroups.Response>>()
             .WithTags(Tags.SubjectGroup);
     }
 }

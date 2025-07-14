@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;
+using NextUni.Common.Domain;
+using NextUni.Modules.Academic.Application.SubjectGroups.GetSubjectGroups;
 
 namespace NextUni.Modules.Academic.Api.Majors;
 
@@ -18,6 +20,7 @@ internal sealed class GetMajors : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
+            .Produces<Page<Application.Majors.GetMajors.GetMajors.MajorResponse>>()
             .WithTags(Tags.Major);
         
         app.MapGet("admin/universities/{universityId}/majors", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, Guid universityId, ISender sender) =>
@@ -26,6 +29,7 @@ internal sealed class GetMajors : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization()
+            .Produces<Page<Application.Majors.GetMajors.GetMajors.MajorResponse>>()
             .WithTags(Tags.Major);
     }
 }

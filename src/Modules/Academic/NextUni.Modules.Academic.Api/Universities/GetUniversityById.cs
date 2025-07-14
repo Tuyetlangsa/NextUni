@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;
+using NextUni.Common.Domain;
+using NextUni.Modules.Academic.Application.Universities.GetUniversityById;
 
 namespace NextUni.Modules.Academic.Api.Universities;
 
@@ -18,6 +20,7 @@ public class GetUniversityById : IEndpoint
                return result.MatchOk();
             })
             .AllowAnonymous()
+            .Produces<Page<GetUniversityId.ResponseItem>>()
             .WithTags(Tags.University);
         
         app.MapGet("/admin/universities/{id}", async ([FromRoute] Guid id, ISender sender) =>
@@ -26,6 +29,7 @@ public class GetUniversityById : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
+            .Produces<Page<GetUniversityId.ResponseItem>>()
             .WithTags(Tags.University);
     }
 }

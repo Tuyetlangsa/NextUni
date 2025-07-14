@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;
+using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.Subjects;
 
@@ -26,6 +27,7 @@ internal sealed class GetSubjects : IEndpoint
                 return result.MatchOk();
             })
             // .RequireAuthorization(Permissions.GetAdministrativeSubjects)
+            .Produces<Page<Application.Subjects.GetSubjects.GetSubjects.ResponseItem>>()
             .WithTags(Tags.Major);
     }
 }
