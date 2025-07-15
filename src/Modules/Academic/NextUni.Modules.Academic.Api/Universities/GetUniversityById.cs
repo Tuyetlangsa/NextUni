@@ -20,7 +20,7 @@ public class GetUniversityById : IEndpoint
                return result.MatchOk();
             })
             .AllowAnonymous()
-            .Produces<Page<GetUniversityId.ResponseItem>>()
+            .Produces<ApiResult<GetUniversityId.ResponseItem>>()
             .WithTags(Tags.University);
         
         app.MapGet("/admin/universities/{id}", async ([FromRoute] Guid id, ISender sender) =>
@@ -29,7 +29,7 @@ public class GetUniversityById : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetAdministrativeUniversities)
-            .Produces<Page<GetUniversityId.ResponseItem>>()
+            .Produces<ApiResult<GetUniversityId.ResponseItem>>()
             .WithTags(Tags.University);
     }
 }

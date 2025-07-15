@@ -20,7 +20,7 @@ internal sealed class GetMajors : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .Produces<Page<Application.Majors.GetMajors.GetMajors.MajorResponse>>()
+            .Produces<ApiResult<Page<Application.Majors.GetMajors.GetMajors.MajorResponse>>>()
             .WithTags(Tags.Major);
         
         app.MapGet("admin/universities/{universityId}/majors", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, Guid universityId, ISender sender) =>
@@ -29,7 +29,7 @@ internal sealed class GetMajors : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetAdministrativeMajors)
-            .Produces<Page<Application.Majors.GetMajors.GetMajors.MajorResponse>>()
+            .Produces<ApiResult<Page<Application.Majors.GetMajors.GetMajors.MajorResponse>>>()
             .WithTags(Tags.Major);
     }
 }

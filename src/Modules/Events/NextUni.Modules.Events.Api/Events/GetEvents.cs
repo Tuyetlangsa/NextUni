@@ -32,7 +32,7 @@ public class GetEvents : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .Produces<Page<Application.Events.GetEvents.GetEvents.Response>>()
+            .Produces<ApiResult<Page<Application.Events.GetEvents.GetEvents.Response>>>()
             .WithTags(Tags.Events);
     
     
@@ -56,7 +56,7 @@ public class GetEvents : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetAdministrativeEvents)
-            .Produces<Page<Application.Events.GetEvents.GetEvents.Response>>()
+            .Produces<ApiResult<Page<Application.Events.GetEvents.GetEvents.Response>>>()
             .WithTags(Tags.Events);
     }
 

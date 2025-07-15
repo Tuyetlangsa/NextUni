@@ -24,6 +24,7 @@ public class GetSubjectGroups : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
+            .Produces<ApiResult<Page<Application.SubjectGroups.GetSubjectGroups.GetSubjectGroups.Response>>>()
             .WithTags(Tags.SubjectGroup);
 
         app.MapGet("admin/subject-groups", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, ISender sender) =>
@@ -37,7 +38,7 @@ public class GetSubjectGroups : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetAdministrativeSubjectGroups)
-            .Produces<Page<Application.SubjectGroups.GetSubjectGroups.GetSubjectGroups.Response>>()
+            .Produces<ApiResult<Page<Application.SubjectGroups.GetSubjectGroups.GetSubjectGroups.Response>>>()
             .WithTags(Tags.SubjectGroup);
     }
 }

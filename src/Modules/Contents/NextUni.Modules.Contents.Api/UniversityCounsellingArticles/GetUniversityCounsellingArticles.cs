@@ -30,7 +30,7 @@ public class GetUniversityCounsellingArticles : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .Produces<Page<Application.GetUniversityCounsellingArticles.GetUniversityCounsellingArticles.Response>>()
+            .Produces<ApiResult<Page<Application.GetUniversityCounsellingArticles.GetUniversityCounsellingArticles.Response>>>()
             .WithTags(Tags.UniversityContent);
         
         
@@ -58,7 +58,7 @@ public class GetUniversityCounsellingArticles : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetAdministrativeUniversityArticles)
-            .Produces<Page<Application.GetUniversityCounsellingArticles.GetUniversityCounsellingArticles.Response>>()
+            .Produces<ApiResult<Page<Application.GetUniversityCounsellingArticles.GetUniversityCounsellingArticles.Response>>>()
             .WithTags(Tags.UniversityContent);
         
         app.MapGet("/staff/university-counselling-articles/{status}", async (
@@ -86,7 +86,7 @@ public class GetUniversityCounsellingArticles : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetStaffUniversityArticles)
-            .Produces<Page<Application.GetUniversityCounsellingArticles.GetUniversityCounsellingArticles.Response>>()
+            .Produces<ApiResult<Page<Application.GetUniversityCounsellingArticles.GetUniversityCounsellingArticles.Response>>>()
             .WithTags(Tags.UniversityContent);
         
     }

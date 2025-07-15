@@ -20,7 +20,7 @@ internal sealed class GetUniversities : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .Produces<Page<GetUniversity.ResponseItem>>()
+            .Produces<ApiResult<Page<GetUniversity.ResponseItem>>>()
             .WithTags(Tags.University);
         
         app.MapGet("admin/universities", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, [FromQuery] GetUniversity.QueryFilter queryFilter, ISender sender) =>
@@ -29,7 +29,7 @@ internal sealed class GetUniversities : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetAdministrativeUniversities)
-            .Produces<Page<GetUniversity.ResponseItem>>()
+            .Produces<ApiResult<Page<GetUniversity.ResponseItem>>>()
             .WithTags(Tags.University);
     }
 }

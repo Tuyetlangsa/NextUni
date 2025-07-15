@@ -42,7 +42,7 @@ public class GetCounsellingArticlesByUniversity : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .Produces<Page<Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.Response>>()
+            .Produces<ApiResult<Page<Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.Response>>>()
             .WithTags(Tags.UniversityContent);
         
         app.MapGet("admin/universities/{universityId}/university-counselling-articles/{status}", async (
@@ -73,7 +73,7 @@ public class GetCounsellingArticlesByUniversity : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetAdministrativeUniversityArticles)
-            .Produces<Page<Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.Response>>()
+            .Produces<ApiResult<Page<Application.GetCounsellingArticlesByUniversity.GetCounsellingArticlesByUniversity.Response>>>()
             .WithTags(Tags.UniversityContent);
     }
 }

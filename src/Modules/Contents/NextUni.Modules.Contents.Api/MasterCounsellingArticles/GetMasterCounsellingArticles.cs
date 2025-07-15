@@ -23,7 +23,7 @@ public class GetMasterCounsellingArticles : IEndpoint
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .Produces<Page<Application.GetMasterCounsellingArticles.GetMasterCounsellingArticles.Response>>()
+            .Produces<ApiResult<Page<Application.GetMasterCounsellingArticles.GetMasterCounsellingArticles.Response>>>()
             .WithTags(Tags.SystemContent);
         
         app.MapGet("admin/master-counselling-articles", async ([FromQuery] int pageNumber, [FromQuery] int pageSize, ISender sender) =>
@@ -35,7 +35,7 @@ public class GetMasterCounsellingArticles : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetAdministrativeMasterArticles)
-            .Produces<Page<Application.GetMasterCounsellingArticles.GetMasterCounsellingArticles.Response>>()
+            .Produces<ApiResult<Page<Application.GetMasterCounsellingArticles.GetMasterCounsellingArticles.Response>>>()
             .WithTags(Tags.SystemContent);
     }
 }

@@ -12,13 +12,13 @@ public class GetEventById : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("events-by-id/{id}", async ([FromRoute] Guid id, ISender sender) =>
+        app.MapGet("event-by-id/{id}", async ([FromRoute] Guid id, ISender sender) =>
             {
                 var result = await sender.Send(new Application.Events.GetEventById.GetEventById.Query(id));
                 return result.MatchOk();
             })
             .AllowAnonymous()
-            .Produces<Application.Events.GetEventById.GetEventById.Response>()
+            .Produces<ApiResult<Application.Events.GetEventById.GetEventById.Response>>()
             .WithTags(Tags.Events);
     }
 }

@@ -33,11 +33,12 @@ public class GetEventsByUniversity : IEndpoint
                 };
                 var result =
                     await sender.Send(
-                        new Application.Events.GetEventsByUniversity.GetEventByUniversity.Query(pageNumber, pageSize, universityId, queryStatus));
+                        new Application.Events.GetEventsByUniversity.GetEventByUniversity.Query(pageNumber, pageSize,
+                            universityId, queryStatus));
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.GetStaffEvent)
-            .Produces<Page<GetEventByUniversity.Response>>()
+            .Produces <ApiResult<Page<GetEventByUniversity.Response>>>()
             .WithTags(Tags.Events);
     }
 }
