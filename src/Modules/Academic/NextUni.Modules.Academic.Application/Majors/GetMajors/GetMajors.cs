@@ -52,7 +52,7 @@ public abstract class GetMajors
                 .ToDictionary(
                     g => g.Key, 
                     g => g
-                        .GroupBy(x => x.Year)
+                        .GroupBy(x => x.Year.Year)
                         .ToDictionary(
                         g1 => g1.Key, 
                         g1 => g1.Select(x => x.SubjectGroup).ToList()));
@@ -89,7 +89,7 @@ public abstract class GetMajors
         string Title,
         string Content,
         bool IsDeleted,
-        Dictionary<DateOnly, List<SubjectGroupResponse>> SubjectGroupByYear);
+        Dictionary<int, List<SubjectGroupResponse>> SubjectGroupByYear);
 
     public record SubjectGroupResponse(
         Guid Id,

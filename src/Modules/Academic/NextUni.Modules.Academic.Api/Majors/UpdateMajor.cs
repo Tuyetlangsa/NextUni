@@ -9,13 +9,13 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.Majors
 {
-    internal sealed class UpdateMajor : IEndpoint
+    internal sealed class UpdateMajorEndpoint : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPut("majors/{id}", async ([FromRoute] Guid id, [FromBody] Request request, ISender sender) =>
             {
-                Result<Guid> result = await sender.Send(
+                Result result = await sender.Send(
                     new Application.Majors.UpdateMajor.UpdateMajor.Command(
                         id,
                         request.Code,
@@ -27,6 +27,7 @@ namespace NextUni.Modules.Academic.Api.Majors
                 return result.MatchOk();
             })
                 .RequireAuthorization(Permissions.ModifyMajor)
+                .Produces<ApiResult<bool>>()
                 .WithTags(Tags.Major);
         }
 

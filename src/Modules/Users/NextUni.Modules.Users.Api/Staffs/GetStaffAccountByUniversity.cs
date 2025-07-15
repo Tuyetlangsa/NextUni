@@ -8,7 +8,7 @@ using NextUni.Common.Api.Results;
 
 namespace NextUni.Modules.Users.Api.Staffs;
 
-public class GetStaffAccountByUniversity : IEndpoint
+public class GetStaffAccountByUniversityEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

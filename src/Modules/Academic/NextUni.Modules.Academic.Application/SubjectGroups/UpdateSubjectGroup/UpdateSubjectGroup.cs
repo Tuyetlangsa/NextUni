@@ -9,11 +9,11 @@ namespace NextUni.Modules.Academic.Application.SubjectGroups.UpdateSubjectGroup
 {
     public abstract class UpdateSubjectGroup
     {
-        public record Command(Guid Id, string Code, List<Guid> SubjectIds) : ICommand<Guid>;
+        public record Command(Guid Id, string Code, List<Guid> SubjectIds) : ICommand;
 
-        internal class Handler(IAcademicDbContext dbContext) : ICommandHandler<Command, Guid>
+        internal class Handler(IAcademicDbContext dbContext) : ICommandHandler<Command>
         {
-            public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
+            public async Task<Result> Handle(Command command, CancellationToken cancellationToken)
             {
                 bool isExisted = await dbContext.SubjectGroups.AnyAsync(s => s.Code == command.Code && s.Id != command.Id, cancellationToken);
                 if (isExisted)
@@ -63,7 +63,7 @@ namespace NextUni.Modules.Academic.Application.SubjectGroups.UpdateSubjectGroup
                 dbContext.SubjectGroups.Update(subjectGroup);
                 await dbContext.SaveChangesAsync(cancellationToken);
 
-                return Result.Success(subjectGroup.Id);
+                return Result.Success();
             }
         }
 

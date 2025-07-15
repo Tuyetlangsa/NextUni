@@ -9,7 +9,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Events.Api.Events
 {
-    public class RejectEvent : IEndpoint
+    public class RejectEventEndpoint : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
@@ -20,7 +20,8 @@ namespace NextUni.Modules.Events.Api.Events
                 return result.MatchCreated(id => $"/events/reject/{id}");
             })
             .RequireAuthorization(Permissions.ProcessEvents)
-                .WithTags(Tags.Events);
+            .Produces<ApiResult<object>>()
+            .WithTags(Tags.Events);
         }
     }
 }

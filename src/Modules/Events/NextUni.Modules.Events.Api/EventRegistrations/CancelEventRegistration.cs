@@ -9,7 +9,7 @@ using NextUni.Modules.Events.Application.Users;
 
 namespace NextUni.Modules.Events.Api.EventRegistrations;
 
-public class CancelEventRegistration : IEndpoint
+public class CancelEventRegistrationEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -19,6 +19,7 @@ public class CancelEventRegistration : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.CancelEventRegistration)
+            .Produces<ApiResult<object>>()
             .WithName("CancelEventRegistration")
             .WithTags(Tags.Events);
     }

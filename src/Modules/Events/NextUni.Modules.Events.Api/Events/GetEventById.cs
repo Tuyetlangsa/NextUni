@@ -8,7 +8,7 @@ using NextUni.Common.Api.Results;
 
 namespace NextUni.Modules.Events.Api.Events;
 
-public class GetEventById : IEndpoint
+public class GetEventByIdEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

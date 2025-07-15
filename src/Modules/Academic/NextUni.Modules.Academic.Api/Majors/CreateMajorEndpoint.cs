@@ -9,7 +9,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.Majors;
 
-internal sealed class CreateMajor : IEndpoint
+internal sealed class CreateMajorEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -26,6 +26,7 @@ internal sealed class CreateMajor : IEndpoint
                 return result.MatchCreated(id => $"/majors/{id}");
             })
             .RequireAuthorization(Permissions.CreateMajor)
+            .Produces<ApiResult<Guid>>()
             .WithTags(Tags.Major);
     }
 

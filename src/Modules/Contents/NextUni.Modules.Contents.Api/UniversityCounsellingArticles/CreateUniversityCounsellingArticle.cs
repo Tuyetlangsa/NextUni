@@ -9,7 +9,7 @@ using NextUni.Modules.Academic.Api;
 
 namespace NextUni.Modules.Contents.Api.UniversityCounsellingArticles;
 
-public class CreateUniversityCounsellingArticle : IEndpoint
+public class CreateUniversityCounsellingArticleEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -24,7 +24,7 @@ public class CreateUniversityCounsellingArticle : IEndpoint
                 return result.MatchCreated(id => $"/university-counselling-articles/{id}");
             })
             .RequireAuthorization(Permissions.CreateUniversityArticle)
-            .Produces<Request>()
+            .Produces<ApiResult<Guid>>()
             .WithTags(Tags.UniversityContent);
     }
     

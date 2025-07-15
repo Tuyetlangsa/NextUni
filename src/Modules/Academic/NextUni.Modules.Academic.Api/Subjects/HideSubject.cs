@@ -9,7 +9,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.Subjects;
 
-internal sealed class HideSubject : IEndpoint
+internal sealed class HideSubjectEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -19,6 +19,7 @@ internal sealed class HideSubject : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.ModifySubject)
+            .Produces<ApiResult<bool>>()
             .WithTags(Tags.Major);
     }
 

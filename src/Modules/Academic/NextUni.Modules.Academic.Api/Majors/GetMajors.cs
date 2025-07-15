@@ -10,7 +10,7 @@ using NextUni.Modules.Academic.Application.SubjectGroups.GetSubjectGroups;
 
 namespace NextUni.Modules.Academic.Api.Majors;
 
-internal sealed class GetMajors : IEndpoint
+internal sealed class GetMajorsEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

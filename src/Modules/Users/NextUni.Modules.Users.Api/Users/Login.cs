@@ -8,7 +8,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Users.Api.Users;
 
-public class Login : IEndpoint
+public class LoginEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -19,7 +19,7 @@ public class Login : IEndpoint
                 return result.MatchOk();
             })
         .AllowAnonymous()
-        .Produces<Application.Users.LoginUser.Login.TokenResponse>()
+        .Produces<ApiResult<Application.Users.LoginUser.Login.TokenResponse>>()
         .WithTags(Tags.Users);
     }
 

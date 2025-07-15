@@ -10,7 +10,7 @@ namespace NextUni.Modules.Academic.Application.Majors.UpdateMajorSubjectGroupsBy
 
 public abstract class UpdateMajorSubjectGroupByYear
 {
-    public record Command(Guid MajorId, List<Guid> GroupIds, DateOnly Year) : ICommand;
+    public record Command(Guid MajorId, List<Guid> GroupIds, int Year) : ICommand;
     
     internal sealed class Handler(IAcademicDbContext dbContext) : ICommandHandler<Command>
     {
@@ -43,17 +43,19 @@ public abstract class UpdateMajorSubjectGroupByYear
             }
 
             var existingRelations = await dbContext.MajorSubjectGroupByYear
-                .Where(x => x.MajorId == request.MajorId && x.Year.Year == request.Year.Year)
+                .Where(x => x.MajorId == request.MajorId && x.Year.Year == request.Year)
                 .ToListAsync(cancellationToken);
 
             dbContext.MajorSubjectGroupByYear.RemoveRange(existingRelations);
+
+            var year = new DateOnly(request.Year, 1, 1);
 
             // 4. Add new relations
             var newRelations = request.GroupIds.Select(groupId => new MajorSubjectGroupByYear
             {
                 MajorId = request.MajorId,
                 SubjectGroupId = groupId,
-                Year = request.Year
+                Year = year
             }).ToList();
 
             await dbContext.MajorSubjectGroupByYear.AddRangeAsync(newRelations, cancellationToken);

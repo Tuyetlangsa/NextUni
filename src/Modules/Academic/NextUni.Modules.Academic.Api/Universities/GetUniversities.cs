@@ -10,7 +10,7 @@ using NextUni.Modules.Academic.Application.Universities.GetUniversities;
 
 namespace NextUni.Modules.Academic.Api.Universities;
 
-internal sealed class GetUniversities : IEndpoint
+internal sealed class GetUniversitiesEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

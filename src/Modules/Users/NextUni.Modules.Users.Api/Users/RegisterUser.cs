@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace NextUni.Modules.Users.Api.Users;
 
-internal sealed class RegisterUser : IEndpoint
+internal sealed class RegisterUserEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -22,9 +22,10 @@ internal sealed class RegisterUser : IEndpoint
                 request.LastName,
                 request.PhoneNumber));
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return result.MatchCreated(id => $"/users/{id}");
         })
         .AllowAnonymous()
+        .Produces<ApiResult<Guid>>()
         .WithTags(Tags.Users);
     }
 

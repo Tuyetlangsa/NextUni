@@ -17,11 +17,11 @@ namespace NextUni.Modules.Academic.Application.Majors.UpdateMajor
         string Name,
         // Guid UniversityId,
         string Title,
-        string Content) : ICommand<Guid>;
+        string Content) : ICommand;
 
-        internal class Handler(IAcademicDbContext dbContext) : ICommandHandler<Command, Guid>
+        internal class Handler(IAcademicDbContext dbContext) : ICommandHandler<Command>
         {
-            public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
+            public async Task<Result> Handle(Command command, CancellationToken cancellationToken)
             {
                 // bool isUniversityExisted = await dbContext.Universities
                 //     .AnyAsync(u => u.Id == command.UniversityId, cancellationToken);
@@ -59,7 +59,7 @@ namespace NextUni.Modules.Academic.Application.Majors.UpdateMajor
                 major.Raise(new MajorUpdatedDomainEvent(major.Id, introductionBlog.Id, command.Title, command.Content));
                 dbContext.Majors.Update(major);
                 await dbContext.SaveChangesAsync(cancellationToken);
-                return major.Id;
+                return Result.Success();
             }
         }
 

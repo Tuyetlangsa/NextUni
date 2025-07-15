@@ -10,7 +10,7 @@ using NextUni.Common.Domain;
 namespace NextUni.Modules.Events.Api.Events;
 
 
-public class GetEvents : IEndpoint
+public class GetEventsEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

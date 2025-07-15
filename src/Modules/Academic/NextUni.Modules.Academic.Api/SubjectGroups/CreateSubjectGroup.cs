@@ -9,7 +9,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.SubjectGroups;
 
-internal sealed class CreateSubjectGroup : IEndpoint
+internal sealed class CreateSubjectGroupEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -19,6 +19,7 @@ internal sealed class CreateSubjectGroup : IEndpoint
                 return result.MatchCreated(id => $"/subject-groups/{id}");
             })
             .RequireAuthorization(Permissions.CreateSubjectGroup)
+            .Produces<ApiResult<Guid>>()
             .WithTags(Tags.SubjectGroup);
     }
 

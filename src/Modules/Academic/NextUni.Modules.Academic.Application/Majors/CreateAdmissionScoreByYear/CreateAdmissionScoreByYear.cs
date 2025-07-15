@@ -10,17 +10,17 @@ namespace NextUni.Modules.Academic.Application.Majors.CreateAdmissionScoreByYear
 public abstract class CreateAdmissionScoreByYear
 {
     public record Command(
-        DateOnly Year,
-        Dictionary<Guid, AdmissionScore> AdmissionScores) : ICommand;
+        int Year,
+        List<AdmissionScore> AdmissionScores) : ICommand;
 
-    public record AdmissionScore(float GpaScore, float ExamScore);
+    public record AdmissionScore(Guid MajorId, float GpaScore, float ExamScore);
     
     internal sealed class Handler(IAcademicDbContext dbContext) : ICommandHandler<Command>
     {
         public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
             
-            var majorIds = request.AdmissionScores.Keys.ToList();
+            var majorIds = request.AdmissionScores.Select(a => a.MajorId).ToList();
 
             var existingMajorIds = await dbContext.Majors
                 .Where(m => majorIds.Contains(m.Id))
@@ -38,28 +38,41 @@ public abstract class CreateAdmissionScoreByYear
             }
             
             var existingScores = await dbContext.AdmissionScores
-                .Where(a => a.Year.Year == request.Year.Year && majorIds.Contains(a.MajorId))
+                .Where(a => a.Year.Year == request.Year && majorIds.Contains(a.MajorId))
                 .ToListAsync(cancellationToken);
 
-            var duplicatedMajorIds = existingScores.Select(x => x.MajorId).Distinct().ToList();
-
-            if (duplicatedMajorIds.Count > 0)
+            foreach (var existingScore in existingScores)
             {
-                return Result.Failure(new Error(
-                    "AdmissionScore.Existed", 
-                    $"Admission scores for majors already exist for year {request.Year.Year}: {string.Join(", ", duplicatedMajorIds)}", 
-                    ErrorType.Conflict));
+                var updatedScore = request.AdmissionScores.FirstOrDefault(x => x.MajorId == existingScore.MajorId);
+                if (updatedScore != null)
+                {
+                    existingScore.GpaScore = updatedScore.GpaScore;
+                    existingScore.ExamScore = updatedScore.ExamScore;
+                }
             }
 
-            var newAdmissionScores = request.AdmissionScores.Select(kv =>
-                new Domain.Majors.AdmissionScore
+            var majorIdsHaveScore = existingScores.Select(s => s.MajorId).ToList();
+
+            // var newAdmissionScores = request.AdmissionScores.Select(admissionScore =>
+            //     new Domain.Majors.AdmissionScore
+            //     {
+            //         Id = Guid.NewGuid(),
+            //         MajorId = admissionScore.MajorId,
+            //         Year =  new DateOnly(request.Year, 1, 1),
+            //         GpaScore = admissionScore.GpaScore,
+            //         ExamScore = admissionScore.ExamScore
+            //     }).ToList();
+            
+            var newAdmissionScores = request.AdmissionScores
+                .Where(admissionScore => !majorIdsHaveScore.Contains(admissionScore.MajorId))
+                .Select(admissionScore => new Domain.Majors.AdmissionScore
                 {
                     Id = Guid.NewGuid(),
-                    MajorId = kv.Key,
-                    Year = request.Year,
-                    GpaScore = kv.Value.GpaScore,
-                    ExamScore = kv.Value.ExamScore
-                });
+                    MajorId = admissionScore.MajorId,
+                    Year = new DateOnly(request.Year, 1, 1),
+                    GpaScore = admissionScore.GpaScore,
+                    ExamScore = admissionScore.ExamScore
+                }).ToList();
 
             dbContext.AdmissionScores.AddRange(newAdmissionScores);
             await dbContext.SaveChangesAsync(cancellationToken);
@@ -81,17 +94,17 @@ public abstract class CreateAdmissionScoreByYear
             RuleForEach(c => c.AdmissionScores)
                 .ChildRules(admissionScore =>
                 {
-                    admissionScore.RuleFor(x => x.Value.GpaScore)
+                    admissionScore.RuleFor(x => x.GpaScore)
                         .GreaterThan(0).WithMessage("GPA Score must be greater than 0.");
 
-                    admissionScore.RuleFor(x => x.Value.ExamScore)
+                    admissionScore.RuleFor(x => x.ExamScore)
                         .GreaterThan(0).WithMessage("Exam Score must be greater than 0.");
                 });
         }
 
-        private bool HaveUniqueMajorIds(Dictionary<Guid, AdmissionScore> admissionScores)
+        private bool HaveUniqueMajorIds(List<AdmissionScore> admissionScores)
         {
-            return admissionScores.Keys.Distinct().Count() == admissionScores.Count;
+            return admissionScores.Select(a => a.MajorId).Distinct().Count() == admissionScores.Count;
         }
     }
 }

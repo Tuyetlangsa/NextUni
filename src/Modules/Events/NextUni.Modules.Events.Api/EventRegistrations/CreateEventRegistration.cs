@@ -8,7 +8,7 @@ using NextUni.Common.Api.Results;
 
 namespace NextUni.Modules.Events.Api.EventRegistrations;
 
-public class CreateEventRegistration : IEndpoint
+public class CreateEventRegistrationEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -18,6 +18,7 @@ public class CreateEventRegistration : IEndpoint
                 return result.MatchCreated(id => $"/event-registrations/{id}");
             })
             .RequireAuthorization(Permissions.RegisterEvent)
+            .Produces<ApiResult<Guid>>()
             .WithName("CreateEventRegistration")
             .WithTags(Tags.Events);
     }

@@ -8,11 +8,11 @@ using NextUni.Common.Api.Results;
 
 namespace NextUni.Modules.Academic.Api.Majors;
 
-internal sealed class GetAdmissionScoreByYear : IEndpoint
+internal sealed class GetAdmissionScoreByYearEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/universities/{universityId}/majors/admission-scores/{year}", async ([FromRoute] DateOnly year,[FromRoute] Guid universityId, ISender sender) =>
+        app.MapGet("/universities/{universityId}/majors/admission-scores/{year}", async ([FromRoute] int year,[FromRoute] Guid universityId, ISender sender) =>
             {
                 var result =
                     await sender.Send(

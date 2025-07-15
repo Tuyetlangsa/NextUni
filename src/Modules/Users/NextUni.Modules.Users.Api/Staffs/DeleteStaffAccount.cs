@@ -8,7 +8,7 @@ using NextUni.Common.Api.Results;
 
 namespace NextUni.Modules.Users.Api.Staffs;
 
-internal sealed class DeleteStaffAccount : IEndpoint
+internal sealed class DeleteStaffAccountEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -18,6 +18,7 @@ internal sealed class DeleteStaffAccount : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.DeleteStaffAccount)
+            .Produces<ApiResult<object>>()
             .WithTags(Tags.Users);
     }
 }

@@ -4,16 +4,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using NextUni.Common.Api.Endpoints;
+using NextUni.Common.Api.Results;
 
 namespace NextUni.Modules.Academic.Api.Majors;
 
-internal sealed class UpdateMajorSubjectGroupByYear : IEndpoint
+internal sealed class UpdateMajorSubjectGroupByYearEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("majors/{majorId}/subject-groups/{year}", async (
                 [FromRoute] Guid majorId, 
-                [FromRoute] DateOnly year, 
+                [FromRoute] int year, 
                 [FromBody] Request request, 
                 ISender sender) =>
             {
@@ -21,8 +22,10 @@ internal sealed class UpdateMajorSubjectGroupByYear : IEndpoint
                     await sender.Send(
                         new Application.Majors.UpdateMajorSubjectGroupsByYear.UpdateMajorSubjectGroupByYear.Command(
                             majorId, request.GroupIds, year));
+                return result.MatchOk();
             })
             .RequireAuthorization(Permissions.CreateMajorGroup)
+            .Produces<ApiResult<bool>>()
             .WithTags(Tags.Major);
     }
 

@@ -8,7 +8,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Events.Api.Events;
 
-public class CreateEvent : IEndpoint
+public class CreateEventEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -27,7 +27,7 @@ public class CreateEvent : IEndpoint
             })
             .RequireAuthorization(Permissions.CreateEvent)
             .WithName("CreateEvent")
-            .Produces<Request>()
+            .Produces<ApiResult<Guid>>()
             .WithTags(Tags.Events);
     }
 

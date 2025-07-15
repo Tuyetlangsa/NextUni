@@ -10,7 +10,7 @@ using NextUni.Modules.Academic.Domain.Universities;
 
 namespace NextUni.Modules.Academic.Api.Universities;
 
-internal sealed class CreateUniversity : IEndpoint
+internal sealed class CreateUniversityEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -32,6 +32,7 @@ internal sealed class CreateUniversity : IEndpoint
                 return result.MatchCreated(id => $"/universities/{id}");
             })
             .RequireAuthorization(Permissions.CreateUniversity)
+            .Produces<ApiResult<Guid>>()
             .WithName("CreateUniversity")
             .WithTags(Tags.University);
     }

@@ -9,21 +9,22 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.SubjectGroups
 {
-    internal sealed class UpdateSubjectGroup : IEndpoint
+    internal sealed class UpdateSubjectGroupEndpoint : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPut("subject-groups/{id}", async ([FromRoute] Guid id, [FromBody] Request request, ISender sender) =>
             {
-                Result<Guid> result = await sender.Send(
+                Result result = await sender.Send(
                     new Application.SubjectGroups.UpdateSubjectGroup.UpdateSubjectGroup.Command(
                         id,
                         request.Code,
                         request.SubjectIds));
 
-                return result.MatchCreated(id => $"/subject-groups/update/{id}");
+                return result.MatchOk();
             })
                 .RequireAuthorization(Permissions.ModifySubjectGroup)
+                .Produces<ApiResult<bool>>()
                 .WithTags(Tags.SubjectGroup);
         }
 

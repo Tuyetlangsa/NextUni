@@ -9,7 +9,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.SubjectGroups;
 
-public class GetSubjectGroups : IEndpoint
+public class GetSubjectGroupsEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

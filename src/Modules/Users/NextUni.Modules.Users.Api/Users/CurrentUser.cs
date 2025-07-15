@@ -8,7 +8,7 @@ using NextUni.Modules.Users.Application.Users.GetCurrentUser;
 
 namespace NextUni.Modules.Users.Api.Users;
 
-public class CurrentUser : IEndpoint
+public class CurrentUserEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -18,7 +18,7 @@ public class CurrentUser : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization()
-            .Produces<Application.Users.GetCurrentUser.GetCurrentUser.Response>()
+            .Produces <ApiResult<Application.Users.GetCurrentUser.GetCurrentUser.Response>>()
             .WithTags(Tags.Users);
     }
 }

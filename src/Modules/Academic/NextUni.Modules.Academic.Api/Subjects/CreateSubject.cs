@@ -10,7 +10,7 @@ using NextUni.Common.Domain;
 namespace NextUni.Modules.Academic.Api.Subjects;
 
 
-internal sealed class CreateSubject : IEndpoint
+internal sealed class CreateSubjectEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -20,6 +20,7 @@ internal sealed class CreateSubject : IEndpoint
                 return result.MatchCreated(id => $"/subjects/{id}");
             })
             .RequireAuthorization(Permissions.CreateSubject)
+            .Produces<ApiResult<Guid>>()
             .WithTags(Tags.Major);
     }
 

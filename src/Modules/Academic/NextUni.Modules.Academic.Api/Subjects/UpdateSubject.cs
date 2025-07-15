@@ -9,7 +9,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.Subjects
 {
-    internal sealed class UpdateSubject : IEndpoint
+    internal sealed class UpdateSubjectEndpoint : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
@@ -23,6 +23,7 @@ namespace NextUni.Modules.Academic.Api.Subjects
                 return result.MatchCreated(id => $"/subjects/update/{id}");
             })
                 .RequireAuthorization(Permissions.ModifySubject)
+                .Produces<ApiResult<bool>>()
                 .WithTags(Tags.Major);
         }
 

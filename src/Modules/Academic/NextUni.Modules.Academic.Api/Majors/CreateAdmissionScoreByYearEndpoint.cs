@@ -8,38 +8,38 @@ using NextUni.Common.Api.Results;
 
 namespace NextUni.Modules.Academic.Api.Majors;
 
-internal sealed class CreateAdmissionScoreByYear : IEndpoint
+internal sealed class CreateAdmissionScoreByYearEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("majors/admission-scores", async ([FromBody]Request request, ISender sender) =>
+        app.MapPost("majors/admission-scores/{year}", async ([FromBody]Request request,[FromRoute] int year, ISender sender) =>
             {
                 var command = new Application.Majors.CreateAdmissionScoreByYear.CreateAdmissionScoreByYear.Command(
-                    request.Year,
-                    request.AdmissionScores.ToDictionary(
-                        kv => kv.Key,
-                        kv => new Application.Majors.CreateAdmissionScoreByYear.CreateAdmissionScoreByYear.AdmissionScore(
-                            kv.Value.GpaScore,
-                            kv.Value.ExamScore
+                    year,
+                    request.AdmissionScores.Select(a => new Application.Majors.CreateAdmissionScoreByYear.CreateAdmissionScoreByYear.AdmissionScore(
+                            a.MajorId,
+                            a.GpaScore,
+                            a.ExamScore
                         )
-                    )
+                    ).ToList()
                 );
 
                 var result = await sender.Send(command);
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.CreateAdmissionScoreByYear)
+            .Produces<ApiResult<bool>>()
             .WithTags(Tags.Major);
     }
 
     internal sealed class Request
     { 
-        public DateOnly Year { get; set; }
-        public Dictionary<Guid, AdmissionScore> AdmissionScores { get; set; } = new Dictionary<Guid, AdmissionScore>();
+        public List<AdmissionScore> AdmissionScores { get; set; } = new List<AdmissionScore>();
     }
 
     public class AdmissionScore
     {
+        public Guid MajorId { get; set; }
         public float GpaScore { get; set; }
         public float ExamScore { get; set; }
     };

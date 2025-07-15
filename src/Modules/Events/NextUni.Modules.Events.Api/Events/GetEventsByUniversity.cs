@@ -10,7 +10,7 @@ using NextUni.Modules.Events.Application.Events.GetEventsByUniversity;
 
 namespace NextUni.Modules.Events.Api.Events;
 
-public class GetEventsByUniversity : IEndpoint
+public class GetEventsByUniversityEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

@@ -9,7 +9,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.Universities
 {
-    internal sealed class HideUniversity : IEndpoint
+    internal sealed class HideUniversityEndpoint : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
@@ -21,6 +21,7 @@ namespace NextUni.Modules.Academic.Api.Universities
                 return result.MatchCreated(id => $"/universities/status/{id}");
             })
                 .RequireAuthorization(Permissions.ModifyUniversity)
+                .Produces<ApiResult<bool>>()
                 .WithTags(Tags.University);
         }
     }

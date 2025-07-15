@@ -11,7 +11,7 @@ using NextUni.Modules.Academic.Api;
 
 namespace NextUni.Modules.Contents.Api.UniversityCounsellingArticles;
 
-public class GetUniversityCounsellingArticles : IEndpoint
+public class GetUniversityCounsellingArticlesEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

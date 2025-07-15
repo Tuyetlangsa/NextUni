@@ -7,24 +7,16 @@ namespace NextUni.Modules.Academic.Application.Majors.GetAdmissionScoresByYear;
 
 public abstract class GetAdmissionScoreByYear
 {
-    public record Query(DateOnly Year, Guid UniversityId) : IQuery<Dictionary<Guid, AdmissionScore>>;
+    public record Query(int Year, Guid UniversityId) : IQuery<List<AdmissionScore>>;
 
-    internal sealed class Handler(IAcademicDbContext dbContext) : IQueryHandler<Query, Dictionary<Guid, AdmissionScore>>
+    internal sealed class Handler(IAcademicDbContext dbContext) : IQueryHandler<Query, List<AdmissionScore>>
     {
-        public async Task<Result<Dictionary<Guid, AdmissionScore>>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<List<AdmissionScore>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            // var result = await dbContext.AdmissionScores
-            //     .Where(s => s.Year.Year == request.Year.Year)
-            //     .Include(a => a.Major)
-            //     .ToDictionaryAsync(
-            //         g => g.MajorId, 
-            //         g => new AdmissionScore( g.Major.Name, g.GpaScore, g.ExamScore), cancellationToken: cancellationToken);
-            // return result;
-
-            var result = await dbContext.Majors
+            var entities  = await dbContext.Majors
                 .Where(m => m.UniversityId == request.UniversityId)
                 .GroupJoin(
-                    dbContext.AdmissionScores.Where(s => s.Year.Year == request.Year.Year),
+                    dbContext.AdmissionScores.Where(s => s.Year.Year == request.Year),
                     major => major.Id,
                     score => score.MajorId,
                     (major, scores) => new
@@ -34,19 +26,20 @@ public abstract class GetAdmissionScoreByYear
                         Score = scores.FirstOrDefault()
                     }
                 )
-                .ToDictionaryAsync(
-                    x => x.MajorId,
-                    x => new AdmissionScore(
-                        x.MajorName,
-                        x.Score?.GpaScore ?? 0,  
-                        x.Score?.ExamScore ?? 0
-                    ),
-                    cancellationToken
-                );
+                .ToListAsync(cancellationToken);
+
+
+            var result = entities.Select(x => new AdmissionScore(
+                x.MajorId,
+                x.MajorName,
+                x.Score?.GpaScore ?? 0,
+                x.Score?.ExamScore ?? 0
+            )).ToList();
+            
             
             return result;
         }
     }
 
-    public record AdmissionScore(string MajorName, float GpaScore, float ExamScore);
+    public record AdmissionScore(Guid MajorId, string MajorName, float GpaScore, float ExamScore);
 }

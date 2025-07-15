@@ -10,7 +10,7 @@ using NextUni.Modules.Academic.Api;
 
 namespace NextUni.Modules.Contents.Api.UniversityCounsellingArticles;
 
-public class GetCounsellingArticlesByUniversity : IEndpoint
+public class GetCounsellingArticlesByUniversityEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

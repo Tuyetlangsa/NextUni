@@ -9,7 +9,7 @@ using NextUni.Common.Domain;
 namespace NextUni.Modules.Users.Api.Staffs;
 
 
-internal sealed class CreateStaffAccount : IEndpoint
+internal sealed class CreateStaffAccountEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -26,7 +26,7 @@ internal sealed class CreateStaffAccount : IEndpoint
                 return result.Match(Results.Ok, CustomResults.Problem);
             })
             .RequireAuthorization(Permissions.CreateStaffAccount)
-            .Produces<Request>()
+            .Produces<ApiResult<Guid>>()
             .WithTags(Tags.Users);
     }
 

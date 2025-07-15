@@ -9,7 +9,7 @@ using NextUni.Common.Domain;
 
 namespace NextUni.Modules.Academic.Api.Majors
 {
-    internal sealed class HideMajor : IEndpoint
+    internal sealed class HideMajorEndpoint : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
@@ -21,6 +21,7 @@ namespace NextUni.Modules.Academic.Api.Majors
                 return result.MatchOk();
             })
                 .RequireAuthorization(Permissions.ModifyMajor)
+                .Produces<ApiResult<bool>>()
                 .WithTags(Tags.Major);
         }
     }

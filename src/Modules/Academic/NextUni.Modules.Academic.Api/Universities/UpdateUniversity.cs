@@ -10,7 +10,7 @@ using NextUni.Modules.Academic.Domain.Universities;
 
 namespace NextUni.Modules.Academic.Api.Universities;
 
-internal sealed class UpdateUniversity : IEndpoint
+internal sealed class UpdateUniversityEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -32,6 +32,7 @@ internal sealed class UpdateUniversity : IEndpoint
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.ModifyUniversity)
+            .Produces<ApiResult<bool>>()
             .WithName("UpdateUniversity")
             .WithTags(Tags.University);
     }
