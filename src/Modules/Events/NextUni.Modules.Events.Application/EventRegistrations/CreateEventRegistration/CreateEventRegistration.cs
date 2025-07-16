@@ -29,6 +29,13 @@ public abstract class CreateEventRegistration
                 return Result.Failure<Guid>(new Error("Event.NotExisted",
                     $"The Event with Id {request.EventId} does not exist.", ErrorType.NotFound));
             }
+            var isRegistered = await dbContext.EventRegistrations
+                .AnyAsync(x => x.EventId == request.EventId && x.UserId == userId, cancellationToken);
+            if (isRegistered)
+            {
+                return Result.Failure<Guid>(new Error("EventRegistration.AlreadyRegistered",
+                    $"The User with Id {userId} has already registered for the Event with Id {request.EventId}.", ErrorType.Conflict));
+            }
             var eventEntity = await dbContext.Events.FirstOrDefaultAsync(x => x.Id == request.EventId);
             if (eventEntity is null)
             {
