@@ -25,9 +25,7 @@ internal sealed class CreateUniversityEndpoint : IEndpoint
                     request.Address,
                     request.Email,
                     request.WebsiteUrl,
-                    request.FacebookUrl,
-                    request.Title,
-                    request.Content));
+                    request.FacebookUrl));
                 
                 return result.MatchCreated(id => $"/universities/{id}");
             })
@@ -47,7 +45,5 @@ internal sealed class CreateUniversityEndpoint : IEndpoint
         public string Email { get; set; }
         public string WebsiteUrl { get; set; }
         public string FacebookUrl { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
     }
 }

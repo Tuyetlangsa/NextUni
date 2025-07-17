@@ -8,7 +8,6 @@ using NextUni.Common.Application.EventBus;
 using NextUni.Common.Infrastructure.Inbox;
 using NextUni.Common.Infrastructure.Serialization;
 using NextUni.Modules.Events.Infrastructure.Database;
-using NextUni.Modules.Users.Infrastructure.Inbox;
 using Quartz;
 
 namespace NextUni.Modules.Events.Infrastructure.Inbox;

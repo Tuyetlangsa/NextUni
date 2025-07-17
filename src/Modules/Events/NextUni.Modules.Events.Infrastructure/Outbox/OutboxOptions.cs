@@ -1,4 +1,4 @@
-﻿namespace NextUni.Modules.Users.Infrastructure.Outbox;
+﻿namespace NextUni.Modules.Events.Infrastructure.Outbox;
 
 internal sealed class OutboxOptions
 {

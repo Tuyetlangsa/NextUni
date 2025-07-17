@@ -19,9 +19,7 @@ internal sealed class CreateMajorEndpoint : IEndpoint
                     new Application.Majors.CreateMajor.CreateMajor.Command(
                         request.Code, 
                         request.Name, 
-                        request.UniversityId, 
-                        request.Title, 
-                        request.Content));
+                        request.UniversityId));
                 
                 return result.MatchCreated(id => $"/majors/{id}");
             })
@@ -35,7 +33,5 @@ internal sealed class CreateMajorEndpoint : IEndpoint
         public string Code { get; set; }
         public string Name { get; set; }
         public Guid UniversityId  { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
     }
 }

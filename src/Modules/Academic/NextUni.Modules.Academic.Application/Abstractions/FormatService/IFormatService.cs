@@ -10,4 +10,10 @@ public interface IFormatService
         string email,
         string websiteUrl,
         string facebookUrl);
+    
+    Task<string> FormatMajorAsync(
+        string universityName,
+        string majorName,
+        string majorCode
+        );
 }

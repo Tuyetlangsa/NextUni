@@ -66,10 +66,10 @@ public class UniversityCreatedDomainEventHandler(ISender sender, IEventBus bus, 
             university.FacebookUrl
         );
 
-        var createBlogTask = sender.Send(new CreateUniversityIntroductionBlog.Command(
-            university.Id,
-            domainEvent.Title,
-            domainEvent.Content), cancellationToken);
+        // var createBlogTask = sender.Send(new CreateUniversityIntroductionBlog.Command(
+        //     university.Id,
+        //     domainEvent.Title,
+        //     domainEvent.Content), cancellationToken);
 
         var publishIntegrationEventTask = formattedContentTask.ContinueWith(async formatted =>
         {
@@ -82,12 +82,12 @@ public class UniversityCreatedDomainEventHandler(ISender sender, IEventBus bus, 
             await bus.PublishAsync(integrationEvent, cancellationToken);
         }).Unwrap(); 
 
-        await Task.WhenAll(createBlogTask, publishIntegrationEventTask);
+        await Task.WhenAll( publishIntegrationEventTask);
 
-        if (createBlogTask.Result.IsFailure)
-        {
-            throw new NextUniException("Failed to create university introduction blog", createBlogTask.Result.Error);
-        }
+        // if (createBlogTask.Result.IsFailure)
+        // {
+        //     throw new NextUniException("Failed to create university introduction blog", createBlogTask.Result.Error);
+        // }
         
     }
 }

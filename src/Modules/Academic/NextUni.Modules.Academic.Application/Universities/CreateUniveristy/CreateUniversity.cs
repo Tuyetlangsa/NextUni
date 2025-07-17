@@ -17,9 +17,7 @@ public abstract class CreateUniversity
         string Address, 
         string Email, 
         string WebsiteUrl, 
-        string FacebookUrl,
-        string Title,
-        string Content) : ICommand<Guid>;
+        string FacebookUrl) : ICommand<Guid>;
 
     
     internal class Handler(
@@ -48,7 +46,7 @@ public abstract class CreateUniversity
                 FacebookUrl = command.FacebookUrl,
             };
             
-            university.Raise(new UniversityCreatedDomainEvent(university.Id, command.Title, command.Content));
+            university.Raise(new UniversityCreatedDomainEvent(university.Id));
             
             dbContext.Universities.Add(university);
             await dbContext.SaveChangesAsync(cancellationToken);
@@ -68,8 +66,8 @@ public abstract class CreateUniversity
             RuleFor(c => c.Email).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.WebsiteUrl).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.FacebookUrl).NotNull().NotEmpty().MaximumLength(255);
-            RuleFor(c => c.Title).NotNull().NotEmpty().MaximumLength(500);
-            RuleFor(c => c.Content).NotNull().NotEmpty();
+            // RuleFor(c => c.Title).NotNull().NotEmpty().MaximumLength(500);
+            // RuleFor(c => c.Content).NotNull().NotEmpty();
             RuleFor(c => c.Type).NotNull().IsInEnum();
         }
     }

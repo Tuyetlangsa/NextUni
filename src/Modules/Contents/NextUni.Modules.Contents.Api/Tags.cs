@@ -1,4 +1,4 @@
-﻿namespace NextUni.Modules.Academic.Api;
+﻿namespace NextUni.Modules.Contents.Api;
 
 internal static class Tags
 {

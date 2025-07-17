@@ -51,16 +51,16 @@ public abstract class GetMajorById
                     g => g.Key, 
                     g => g.Select(x => x.SubjectGroup).ToList());
 
-            var introductionBlog = await dbContext.IntroductionBlogs
-                .FirstOrDefaultAsync(b => b.TargetId == request.MajorId && b.IntroductionType == IntroductionType.Major,
-                    cancellationToken: cancellationToken);
-            
+            // var introductionBlog = await dbContext.IntroductionBlogs
+            //     .FirstOrDefaultAsync(b => b.TargetId == request.MajorId && b.IntroductionType == IntroductionType.Major,
+            //         cancellationToken: cancellationToken);
+            //
             var response = new MajorResponse(
                 major.Id,
                 major.Code,
                 major.Name,
-                introductionBlog?.Title ?? string.Empty,
-                introductionBlog?.Content ?? string.Empty,
+                // introductionBlog?.Title ?? string.Empty,
+                // introductionBlog?.Content ?? string.Empty,
                 major.IsDeleted,
                 subjectGroupsByYear);
 
@@ -72,8 +72,8 @@ public abstract class GetMajorById
         Guid Id,
         string Code,
         string Name,
-        string Title,
-        string Content,
+        // string Title,
+        // string Content,
         bool IsDeleted,
         Dictionary<int, List<SubjectGroupResponse>> SubjectGroupByYear);
 

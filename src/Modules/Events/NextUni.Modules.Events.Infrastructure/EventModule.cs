@@ -12,8 +12,6 @@ using NextUni.Modules.Events.Application.Abstractions.Data;
 using NextUni.Modules.Events.Infrastructure.Database;
 using NextUni.Modules.Events.Infrastructure.Inbox;
 using NextUni.Modules.Events.Infrastructure.Outbox;
-using NextUni.Modules.Users.Infrastructure.Inbox;
-using NextUni.Modules.Users.Infrastructure.Outbox;
 using NextUni.Modules.Users.IntegrationEvents;
 
 namespace NextUni.Modules.Events.Infrastructure;

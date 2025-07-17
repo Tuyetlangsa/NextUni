@@ -57,22 +57,22 @@ public abstract class GetMajors
                         g1 => g1.Key, 
                         g1 => g1.Select(x => x.SubjectGroup).ToList()));
 
-            var majorIdToIntroductionBlog = await dbContext.IntroductionBlogs
-                .Where(b => majorIds.Contains(b.TargetId)
-                            && b.IntroductionType == IntroductionType.Major)
-                .ToDictionaryAsync(b => b.TargetId, b => b, cancellationToken: cancellationToken);
+            // var majorIdToIntroductionBlog = await dbContext.IntroductionBlogs
+            //     .Where(b => majorIds.Contains(b.TargetId)
+            //                 && b.IntroductionType == IntroductionType.Major)
+            //     .ToDictionaryAsync(b => b.TargetId, b => b, cancellationToken: cancellationToken);
             
             
             var result = paginated.Select(m =>
             {
                 subjectGroupsByMajorId.TryGetValue(m.Id, out var yearGroups);
-                majorIdToIntroductionBlog.TryGetValue(m.Id, out var introduction);
+                // majorIdToIntroductionBlog.TryGetValue(m.Id, out var introduction);
                 return new MajorResponse(
                     m.Id,
                     m.Code,
                     m.Name,
-                    introduction!.Title,
-                    introduction.Content,
+                    // introduction!.Title,
+                    // introduction.Content,
                     m.IsDeleted,
                     yearGroups!);
             })
@@ -86,8 +86,8 @@ public abstract class GetMajors
         Guid Id,
         string Code,
         string Name,
-        string Title,
-        string Content,
+        // string Title,
+        // string Content,
         bool IsDeleted,
         Dictionary<int, List<SubjectGroupResponse>> SubjectGroupByYear);
 

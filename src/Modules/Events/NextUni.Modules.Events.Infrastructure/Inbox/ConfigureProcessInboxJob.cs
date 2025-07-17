@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Options;
-using NextUni.Modules.Users.Infrastructure.Inbox;
 using Quartz;
 
 namespace NextUni.Modules.Events.Infrastructure.Inbox;

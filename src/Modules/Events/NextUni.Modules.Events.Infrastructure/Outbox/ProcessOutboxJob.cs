@@ -11,7 +11,6 @@ using NextUni.Common.Application.Messaging;
 using NextUni.Common.Domain;
 using NextUni.Common.Infrastructure.Outbox;
 using NextUni.Common.Infrastructure.Serialization;
-using NextUni.Modules.Users.Infrastructure.Outbox;
 using Quartz;
 
 namespace NextUni.Modules.Events.Infrastructure.Outbox;

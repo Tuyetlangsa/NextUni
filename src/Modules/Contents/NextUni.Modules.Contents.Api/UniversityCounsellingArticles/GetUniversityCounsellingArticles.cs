@@ -7,7 +7,6 @@ using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;
 using NextUni.Common.Application.Exceptions;
 using NextUni.Common.Domain;
-using NextUni.Modules.Academic.Api;
 
 namespace NextUni.Modules.Contents.Api.UniversityCounsellingArticles;
 

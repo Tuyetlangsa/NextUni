@@ -42,6 +42,5 @@ public abstract class GetSubjectGroups
     
     public record Subject(
         Guid Id,
-        
         string Name);
 }

@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
-using NextUni.Modules.Events.Infrastructure.Outbox;
 using Quartz;
 
-namespace NextUni.Modules.Users.Infrastructure.Outbox;
+namespace NextUni.Modules.Events.Infrastructure.Outbox;
 
 internal sealed class ConfigureProcessOutboxJob(IOptions<OutboxOptions> outboxOptions)
     : IConfigureOptions<QuartzOptions>

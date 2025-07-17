@@ -1,4 +1,4 @@
-﻿namespace NextUni.Modules.Users.Infrastructure.Inbox;
+﻿namespace NextUni.Modules.Events.Infrastructure.Inbox;
 
 internal sealed class InboxOptions
 {

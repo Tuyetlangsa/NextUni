@@ -22,7 +22,7 @@ public abstract class Chatbot
             var points = await qdrantClient.SearchAsync(
                 "semantic_embeddings",
                 queryVector,
-                limit: 5);
+                limit: 20);
 
             var contextTexts = points
                 .Select(p => p.Payload != null && p.Payload.TryGetValue("origin_text", out var textObj) ? textObj?.ToString() : null)

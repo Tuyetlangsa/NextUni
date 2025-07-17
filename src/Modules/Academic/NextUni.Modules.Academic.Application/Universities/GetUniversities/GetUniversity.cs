@@ -56,25 +56,25 @@ public abstract class GetUniversity
                 university.FacebookUrl,
                 university.IsDeleted)).ToListAsync(cancellationToken);
             
-            var universityIds = responses.Select(u => u.Id).ToList();
-            var universityIdToIntroductionBlog = await dbContext.IntroductionBlogs
-                .Where(b => universityIds.Contains(b.TargetId)
-                            && b.IntroductionType == IntroductionType.University)
-                .ToDictionaryAsync(b => b.TargetId, b => b, cancellationToken: cancellationToken);
-
-            foreach (var response in responses)
-            {
-                if (universityIdToIntroductionBlog.TryGetValue(response.Id, out var intro))
-                {
-                    response.Title = intro.Title;
-                    response.Content = intro.Content;
-                }
-                else
-                {
-                    response.Title = string.Empty;
-                    response.Content = string.Empty;
-                }
-            }
+            // var universityIds = responses.Select(u => u.Id).ToList();
+            // var universityIdToIntroductionBlog = await dbContext.IntroductionBlogs
+            //     .Where(b => universityIds.Contains(b.TargetId)
+            //                 && b.IntroductionType == IntroductionType.University)
+            //     .ToDictionaryAsync(b => b.TargetId, b => b, cancellationToken: cancellationToken);
+            //
+            // foreach (var response in responses)
+            // {
+            //     if (universityIdToIntroductionBlog.TryGetValue(response.Id, out var intro))
+            //     {
+            //         response.Title = intro.Title;
+            //         response.Content = intro.Content;
+            //     }
+            //     else
+            //     {
+            //         response.Title = string.Empty;
+            //         response.Content = string.Empty;
+            //     }
+            // }
             
             return new Page<ResponseItem>(responses, count, request.PageNumber, request.PageSize);
         }
@@ -93,7 +93,7 @@ public abstract class GetUniversity
         bool IsDeleted
     )
     {
-        public string Title { get; set; } = null!;
-        public string Content { get; set; } = null!;
+        // public string Title { get; set; } = null!;
+        // public string Content { get; set; } = null!;
     };
 }

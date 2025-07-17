@@ -8,11 +8,6 @@ using NextUni.Common.Api.Results;
 
 namespace NextUni.Modules.Academic.Api.Majors;
 
-public class GetMajorById
-{
-    
-}
-
 internal sealed class GetMajorByIdEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)

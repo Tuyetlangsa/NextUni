@@ -14,9 +14,7 @@ public abstract class CreateMajor
     public record Command(
         string Code,
         string Name,
-        Guid UniversityId,
-        string Title,
-        string Content) : ICommand<Guid>;
+        Guid UniversityId) : ICommand<Guid>;
 
 
     internal class Handler(
@@ -48,7 +46,7 @@ public abstract class CreateMajor
                 Name = command.Name,
                 UniversityId = command.UniversityId,
             };
-            major.Raise(new MajorCreatedDomainEvent(major.Id, command.Title, command.Content));
+            major.Raise(new MajorCreatedDomainEvent(major.Id));
             dbContext.Majors.Add(major);
             await dbContext.SaveChangesAsync(cancellationToken);
             return major.Id;
