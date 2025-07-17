@@ -23,7 +23,7 @@ internal sealed class CreateStaffAccountEndpoint : IEndpoint
                     request.PhoneNumber,
                     request.UniversityId));
 
-                return result.MatchOk();
+                return result.MatchCreated(id => $"staffs/{id}");
             })
             .RequireAuthorization(Permissions.CreateStaffAccount)
             .Produces<ApiResult<Guid>>()
