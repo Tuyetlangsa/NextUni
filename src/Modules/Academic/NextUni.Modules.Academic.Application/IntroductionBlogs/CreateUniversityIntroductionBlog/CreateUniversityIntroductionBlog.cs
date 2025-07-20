@@ -27,7 +27,19 @@ public abstract class CreateUniversityIntroductionBlog
             {
                 return Result.Failure<Guid>(UniversityErrors.NotFound(command.UniversityId));
             }
+            
+            var introductionBlog = await dbContext.IntroductionBlogs
+                .FirstOrDefaultAsync(b => b.TargetId == command.UniversityId && 
+                                          b.IntroductionType == IntroductionType.University, cancellationToken);
 
+            if (introductionBlog != null)
+            {
+                introductionBlog.Title = command.Title;
+                introductionBlog.Content = command.Content;
+                await dbContext.SaveChangesAsync(cancellationToken);
+                return introductionBlog.Id;
+            }
+            
             IntroductionBlog blog = new()
             {
                 Id = Guid.NewGuid(),

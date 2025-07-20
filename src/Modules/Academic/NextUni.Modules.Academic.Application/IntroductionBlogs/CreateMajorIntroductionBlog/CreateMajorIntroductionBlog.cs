@@ -28,6 +28,18 @@ public abstract class CreateMajorIntroductionBlog
                 return Result.Failure<Guid>(MajorErrors.NotFound(command.MajorId));
             }
 
+            var introductionBlog = await dbContext.IntroductionBlogs
+                .FirstOrDefaultAsync(b => b.TargetId == command.MajorId && 
+                                          b.IntroductionType == IntroductionType.University, cancellationToken);
+
+            if (introductionBlog != null)
+            {
+                introductionBlog.Title = command.Title;
+                introductionBlog.Content = command.Content;
+                await dbContext.SaveChangesAsync(cancellationToken);
+                return introductionBlog.Id;
+            }
+
             IntroductionBlog blog = new()
             {
                 Id = Guid.NewGuid(),
