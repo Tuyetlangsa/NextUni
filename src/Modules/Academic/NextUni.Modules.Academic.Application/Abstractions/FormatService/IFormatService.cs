@@ -1,3 +1,5 @@
+using NextUni.Modules.Academic.Domain.Majors;
+
 namespace NextUni.Modules.Academic.Application.Abstractions.FormatService;
 
 public interface IFormatService
@@ -16,5 +18,10 @@ public interface IFormatService
         string universityName,
         List<string> majorNames
         );
+    
+    Task<string> FormatAdmissionScoresAsync(
+        string universityName,
+        List<Major> majors,
+        int year);
 
 }

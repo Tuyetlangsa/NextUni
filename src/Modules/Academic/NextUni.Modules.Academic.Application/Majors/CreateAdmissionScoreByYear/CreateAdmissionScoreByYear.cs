@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Domain;
 using NextUni.Modules.Academic.Application.Abstractions.Data;
+using NextUni.Modules.Academic.Domain.Majors;
 
 namespace NextUni.Modules.Academic.Application.Majors.CreateAdmissionScoreByYear;
 
@@ -19,13 +20,19 @@ public abstract class CreateAdmissionScoreByYear
     {
         public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
         {
-            
             var majorIds = request.AdmissionScores.Select(a => a.MajorId).ToList();
 
-            var existingMajorIds = await dbContext.Majors
+            var existingMajors =  await dbContext.Majors
                 .Where(m => majorIds.Contains(m.Id))
-                .Select(m => m.Id)
                 .ToListAsync(cancellationToken);
+            
+            var universityId = existingMajors
+                .Select(m => m.UniversityId)
+                .FirstOrDefault();
+            
+            var existingMajorIds = existingMajors
+                .Select(m => m.Id)
+                .ToList();
 
             var notFoundIds = majorIds.Except(existingMajorIds).ToList();
 
@@ -64,6 +71,7 @@ public abstract class CreateAdmissionScoreByYear
                     GpaScore = admissionScore.GpaScore,
                     ExamScore = admissionScore.ExamScore
                 }).ToList();
+            newAdmissionScores.First().Raise(new AdmissionScoreByYearCreatedDomainEvent(universityId, request.Year));
             dbContext.AdmissionScores.AddRange(newAdmissionScores);
             await dbContext.SaveChangesAsync(cancellationToken);
 

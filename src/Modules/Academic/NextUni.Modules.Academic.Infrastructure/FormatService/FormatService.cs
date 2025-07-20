@@ -1,4 +1,5 @@
 using NextUni.Modules.Academic.Application.Abstractions.FormatService;
+using NextUni.Modules.Academic.Domain.Majors;
 
 namespace NextUni.Modules.Academic.Infrastructure.FormatService;
 
@@ -39,5 +40,10 @@ public class FormatService : IFormatService
         }
 
         return $"Trường Đại học {universityName} có đào tạo các ngành {formattedMajors}.";
+    }
+
+    public Task<string> FormatAdmissionScoresAsync(string universityName, List<Major> majors, int year)
+    {
+        throw new NotImplementedException();
     }
 }

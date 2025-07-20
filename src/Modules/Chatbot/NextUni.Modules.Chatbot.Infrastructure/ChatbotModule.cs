@@ -56,6 +56,7 @@ public static class ChatbotModule
     {
         registrationConfigurator.AddConsumer<IntegrationEventConsumer<UniversityCreatedIntegrationEvent>>();
         registrationConfigurator.AddConsumer<IntegrationEventConsumer<MajorCreatedIntegrationEvent>>();
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<AdmissionScoreByYearCreatedIntegrationEvent>>();
     }
 
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
