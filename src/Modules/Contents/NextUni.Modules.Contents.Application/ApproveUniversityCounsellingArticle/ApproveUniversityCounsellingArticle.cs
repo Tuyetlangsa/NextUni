@@ -17,7 +17,7 @@ namespace NextUni.Modules.Contents.Application.ApproveUniversityCounsellingArtic
         {
             public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
             {
-                var article = await dbContext.CounsellingArticles.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
+                var article = await dbContext.CounsellingArticles.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
                 if (article is null)
                 {
                     return Result.Failure<Guid>(CounsellingArticleErrors.NotFound(command.Id));
