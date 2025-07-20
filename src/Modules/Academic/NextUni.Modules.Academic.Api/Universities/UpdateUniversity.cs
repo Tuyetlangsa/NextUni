@@ -26,9 +26,7 @@ internal sealed class UpdateUniversityEndpoint : IEndpoint
                         request.Address,
                         request.Email,
                         request.WebsiteUrl,
-                        request.FacebookUrl,
-                        request.Title,
-                        request.Content));
+                        request.FacebookUrl));
                 return result.MatchOk();
             })
             .RequireAuthorization(Permissions.ModifyUniversity)
@@ -48,7 +46,5 @@ internal sealed class UpdateUniversityEndpoint : IEndpoint
         public string Email { get; set; }
         public string WebsiteUrl { get; set; }
         public string FacebookUrl { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
     }
 }

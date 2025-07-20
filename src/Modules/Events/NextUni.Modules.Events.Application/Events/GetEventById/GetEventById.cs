@@ -26,7 +26,7 @@ public class GetEventById
     {
         public async Task<Result<Response>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var eventEntity = await dbContext.Events.FirstOrDefaultAsync(e => e.Id == request.Id, cancellationToken);
+            var eventEntity = await dbContext.Events.IgnoreQueryFilters().FirstOrDefaultAsync(e => e.Id == request.Id, cancellationToken);
 
             if (eventEntity is null)
             {

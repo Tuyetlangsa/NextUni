@@ -34,6 +34,7 @@ public abstract class GetUniversityCounsellingArticles
         public async Task<Result<Page<Response>>> Handle(Query request, CancellationToken cancellationToken)
         {
             var query = dbContext.CounsellingArticles
+                .Where(c => c.Type == CounsellingArticleType.University)
                 .OrderByDescending(c => c.PublishAt)
                 .AsQueryable();
 

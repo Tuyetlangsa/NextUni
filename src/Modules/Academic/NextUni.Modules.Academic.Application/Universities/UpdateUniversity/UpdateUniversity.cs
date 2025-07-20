@@ -18,9 +18,7 @@ public abstract class UpdateUniversity
         string Address, 
         string Email, 
         string WebsiteUrl, 
-        string FacebookUrl,
-        string Title,
-        string Content) : ICommand;
+        string FacebookUrl) : ICommand;
     
     
     internal sealed class Handler(IAcademicDbContext dbContext) : ICommandHandler<Command>
@@ -52,7 +50,6 @@ public abstract class UpdateUniversity
             university.Email = request.Email;
             university.WebsiteUrl = request.WebsiteUrl;
             university.FacebookUrl = request.FacebookUrl;
-            university.Raise(new UniversityUpdatedDomainEvent(university.Id, request.Title, request.Content));
             university.Raise(new UniversityCreatedDomainEvent(university.Id));
             await dbContext.SaveChangesAsync(cancellationToken);
             return Result.Success(); 
@@ -70,8 +67,6 @@ public abstract class UpdateUniversity
             RuleFor(c => c.Email).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.WebsiteUrl).NotNull().NotEmpty().MaximumLength(255);
             RuleFor(c => c.FacebookUrl).NotNull().NotEmpty().MaximumLength(255);
-            RuleFor(c => c.Title).NotNull().NotEmpty().MaximumLength(500);
-            RuleFor(c => c.Content).NotNull().NotEmpty();
             RuleFor(c => c.Type).NotNull().IsInEnum();
         }
     }

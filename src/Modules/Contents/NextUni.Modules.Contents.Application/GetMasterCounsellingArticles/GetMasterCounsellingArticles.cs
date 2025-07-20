@@ -16,6 +16,7 @@ public abstract class GetMasterCounsellingArticles
         public async Task<Result<Page<Response>>> Handle(Query request, CancellationToken cancellationToken)
         {
             var query = dbContext.CounsellingArticles
+                .Where(c => c.Type == CounsellingArticleType.System)
                 .OrderByDescending(c => c.PublishAt)
                 .AsQueryable();
             

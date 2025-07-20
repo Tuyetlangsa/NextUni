@@ -19,10 +19,10 @@ public abstract class GetSubjects
                 .Applypagination(request.PageNumber, request.PageSize)
                 .Select(subject => new ResponseItem(subject.Id, subject.Name, subject.IsDeleted));
             
-            if (request.IsAdmin)
-            {
-                query = query.IgnoreQueryFilters();
-            }
+            // if (request.IsAdmin)
+            // {
+            //     query = query.IgnoreQueryFilters();
+            // }
             
             List<ResponseItem> subjects = await query
                 .ToListAsync(cancellationToken);

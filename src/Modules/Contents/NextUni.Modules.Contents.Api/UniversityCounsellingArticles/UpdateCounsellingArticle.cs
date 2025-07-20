@@ -13,7 +13,7 @@ public class UpdateCounsellingArticleEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut("university-counselling-articles", async ([FromBody] Request request, ISender sender) =>
+        app.MapPut("counselling-articles", async ([FromBody] Request request, ISender sender) =>
             {
                 Result result = await sender.Send(
                     new Application.UpdateCounsellingArticle.UpdateCounsellingArticle.Command(

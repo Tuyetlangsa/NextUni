@@ -13,11 +13,11 @@ internal sealed class CreateUniversityIntroductionBlog : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("universities/introduction-blog", async ([FromBody]Request request, ISender sender) =>
+        app.MapPost("universities/{id}/introduction-blog", async ([FromRoute] Guid id, [FromBody]Request request, ISender sender) =>
             {
                 Result<Guid> result = await sender.Send(
                     new Application.IntroductionBlogs.CreateUniversityIntroductionBlog.CreateUniversityIntroductionBlog.Command(
-                        request.UnviersityId,
+                        id,
                         request.Title, 
                         request.Content));
                 
@@ -30,7 +30,6 @@ internal sealed class CreateUniversityIntroductionBlog : IEndpoint
 
     internal sealed class Request
     { 
-        public Guid UnviersityId  { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
     }

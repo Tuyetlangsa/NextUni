@@ -41,7 +41,8 @@ public abstract class CreateUniversityCounsellingArticle
                 Title = request.Title,
                 Content = request.Content,
                 Status = CounsellingArticleStatus.Draft,
-                PublishAt = dateTimeProvider.UtcNow
+                PublishAt = dateTimeProvider.UtcNow,
+                Type = CounsellingArticleType.University,
             };
             
             dbContext.CounsellingArticles.Add(article);
