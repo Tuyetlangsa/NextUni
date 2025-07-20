@@ -18,9 +18,9 @@ public abstract class CreateUniversity
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
             var collections = await client.ListCollectionsAsync(cancellationToken);
-            if (!collections.Contains("semantic_embeddings"))
+            if (!collections.Contains("university"))
             {
-                await client.CreateCollectionAsync("semantic_embeddings", new VectorParams()
+                await client.CreateCollectionAsync("university", new VectorParams()
                 {
                     Size = 768,
                     Distance = Distance.Cosine 
@@ -41,7 +41,7 @@ public abstract class CreateUniversity
                 }
             };
 
-            var updateResult = await client.UpsertAsync("semantic_embeddings", [point], cancellationToken: cancellationToken);
+            var updateResult = await client.UpsertAsync("university", [point], cancellationToken: cancellationToken);
             if (updateResult.Status == UpdateStatus.Completed)
             {
                 return Result.Success(command.Id);    

@@ -1,12 +1,13 @@
+
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Domain;
 using NextUni.Modules.Chatbot.Application.Abstractions.EmbeddingGenerator;
 using Qdrant.Client;
 using Qdrant.Client.Grpc;
 
-namespace NextUni.Modules.Chatbot.Application.Majors;
+namespace NextUni.Modules.Chatbot.Application.AdmissionScoreByYear;
 
-public abstract class CreateMajor
+public abstract class CreateAdmissionScoreByYear
 {
     public record Command(
         Guid Id,
@@ -18,17 +19,16 @@ public abstract class CreateMajor
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
             var collections = await client.ListCollectionsAsync(cancellationToken);
-            if (!collections.Contains("majorsofuniversity"))
+            if (!collections.Contains("admissionscoreofuniversitybyyear"))
             {
-                await client.CreateCollectionAsync("majorsofuniversity", new VectorParams()
+                await client.CreateCollectionAsync("admissionscoreofuniversitybyyear", new VectorParams()
                 {
                     Size = 768,
                     Distance = Distance.Cosine 
                 }, cancellationToken: cancellationToken);
             }
             
-            //upsert the embedding cho toi
-            
+                        
             var embedding = await generator.GenerateAsync(command.FormattedText);
             var point = new PointStruct()
             {
@@ -36,18 +36,18 @@ public abstract class CreateMajor
                 Vectors = embedding,
                 Payload = 
                 {
-                    ["entity_type"] = "majors",
-                    ["origin_text"] = command.FormattedText
+                    ["entity_type"] = "admissionscoreofuniversitybyyear",
+                    ["origin_text"] = command.FormattedText,
                 }
             };
 
-            var updateResult = await client.UpsertAsync("majorsofuniversity", [point], cancellationToken: cancellationToken);
+            var updateResult = await client.UpsertAsync("admissionscoreofuniversitybyyear", [point], cancellationToken: cancellationToken);
             if (updateResult.Status == UpdateStatus.Completed)
             {
                 return Result.Success(command.Id);    
             }
             else {
-                return Result.Failure<Guid>(new Error("Failed to upsert major embedding", "UpsertError", ErrorType.Problem));
+                return Result.Failure<Guid>(new Error("Failed to upsert admission score  embedding", "UpsertError", ErrorType.Problem));
             }
         }
     }

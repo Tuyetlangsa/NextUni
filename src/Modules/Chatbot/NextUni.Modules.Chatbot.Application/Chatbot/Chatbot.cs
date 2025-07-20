@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.Extensions.AI;
 using NextUni.Common.Application.Messaging;
 using NextUni.Common.Domain;
@@ -10,27 +11,52 @@ public abstract class Chatbot
 {
     public record Query(string Prompt) : IQuery<string>;
     
+    public enum QueryKey
+    {
+        University,
+        MajorsOfUniversity,
+        SubjectGroupOfMajor,
+        AdmissionScoreOfUniversityByYear
+    }
+    
     internal sealed class Handler(
         IEmbeddingGenerator embeddingGenerator,
         QdrantClient qdrantClient,
         IChatClient chatClient) : IQueryHandler<Query, string>
     {
+        private const string CLASSIFICATION_SYSTEM_PROMPT = @"
+                            You are a query classifier for an educational information system. Your task is to analyze user questions and return the appropriate QueryKey classification.
+
+                            Available QueryKey Categories:
+                            1. University - Questions about universities in general, specific university information, university details, rankings, locations, etc.
+                            2. MajorsOfUniversity - Questions about majors/programs offered by a specific university or universities
+                            3. SubjectGroupOfMajor - Questions about subject groups or courses within a specific major/program
+                            4. AdmissionScoreOfUniversityByYear - Questions about admission scores, entrance requirements, cutoff scores by year for universities
+        
+                            Instructions: Analyze the user's question and respond with ONLY the appropriate QueryKey enum value. Do not provide explanations or additional text.";
+        
         public async Task<Result<string>> Handle(Query request, CancellationToken cancellationToken)
         {
+            ChatResponse queryKey = await chatClient.GetResponseAsync<QueryKey>(
+                [
+                    new ChatMessage(ChatRole.System, CLASSIFICATION_SYSTEM_PROMPT),
+                    new ChatMessage(ChatRole.User, request.Prompt)]);
             
             var queryVector = await embeddingGenerator.GenerateAsync(request.Prompt);
+            var json = JsonDocument.Parse(queryKey.Text);
+            var collectionName = json.RootElement.GetProperty("data").GetString()?.ToLowerInvariant();
+            
             var points = await qdrantClient.SearchAsync(
-                "semantic_embeddings",
+                collectionName,
                 queryVector,
-                limit: 20);
-
+                limit: 10);
             var contextTexts = points
-                .Select(p => p.Payload != null && p.Payload.TryGetValue("origin_text", out var textObj) ? textObj?.ToString() : null)
+                .Select(p => p.Payload != null 
+                             && p.Payload.TryGetValue("origin_text", out var textObj) ? textObj?.ToString() : null)
                 .Where(text => !string.IsNullOrWhiteSpace(text))
                 .ToList();
-            
             var context = string.Join("\n", contextTexts);
-
+        
             ChatResponse response = await chatClient.GetResponseAsync(
                 [
                 new(ChatRole.System, $"""
@@ -47,7 +73,7 @@ public abstract class Chatbot
                                       - Tránh suy đoán hoặc thêm thông tin ngoài ngữ cảnh.
                                       """),
                 new (ChatRole.User, request.Prompt)]);
-
+        
             return response.Text;
         }
     }

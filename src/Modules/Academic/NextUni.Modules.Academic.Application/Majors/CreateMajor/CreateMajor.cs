@@ -1,4 +1,3 @@
-
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using NextUni.Common.Application.Messaging;
@@ -32,7 +31,7 @@ public abstract class CreateMajor
             
             bool isMajorExisted = await dbContext.Majors
                 .IgnoreQueryFilters()
-                .AnyAsync(m => m.Code == command.Code, cancellationToken);
+                .AnyAsync(m => m.Code == command.Code && m.UniversityId == command.UniversityId, cancellationToken);
 
             if (isMajorExisted)
             {
@@ -46,7 +45,7 @@ public abstract class CreateMajor
                 Name = command.Name,
                 UniversityId = command.UniversityId,
             };
-            major.Raise(new MajorCreatedDomainEvent(major.Id));
+            major.Raise(new MajorCreatedDomainEvent(major.UniversityId));
             dbContext.Majors.Add(major);
             await dbContext.SaveChangesAsync(cancellationToken);
             return major.Id;

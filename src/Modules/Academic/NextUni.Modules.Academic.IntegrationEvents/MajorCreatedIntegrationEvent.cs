@@ -8,14 +8,14 @@ public class MajorCreatedIntegrationEvent : IntegrationEvent
     public MajorCreatedIntegrationEvent
         (Guid id, 
         DateTime occurredOnUtc,
-        Guid majorId,
+        Guid universityId,
         string textFormatted) 
         : base(id, occurredOnUtc)
     {
-        MajorId = majorId;
+        UniversityId = universityId;
         TextFormatted = textFormatted;
     }
     
-    public Guid MajorId { get; } 
+    public Guid UniversityId { get; } 
     public string TextFormatted { get; }
 }

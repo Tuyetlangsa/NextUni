@@ -52,16 +52,7 @@ public abstract class CreateAdmissionScoreByYear
             }
 
             var majorIdsHaveScore = existingScores.Select(s => s.MajorId).ToList();
-
-            // var newAdmissionScores = request.AdmissionScores.Select(admissionScore =>
-            //     new Domain.Majors.AdmissionScore
-            //     {
-            //         Id = Guid.NewGuid(),
-            //         MajorId = admissionScore.MajorId,
-            //         Year =  new DateOnly(request.Year, 1, 1),
-            //         GpaScore = admissionScore.GpaScore,
-            //         ExamScore = admissionScore.ExamScore
-            //     }).ToList();
+            
             
             var newAdmissionScores = request.AdmissionScores
                 .Where(admissionScore => !majorIdsHaveScore.Contains(admissionScore.MajorId))
@@ -73,7 +64,6 @@ public abstract class CreateAdmissionScoreByYear
                     GpaScore = admissionScore.GpaScore,
                     ExamScore = admissionScore.ExamScore
                 }).ToList();
-
             dbContext.AdmissionScores.AddRange(newAdmissionScores);
             await dbContext.SaveChangesAsync(cancellationToken);
 

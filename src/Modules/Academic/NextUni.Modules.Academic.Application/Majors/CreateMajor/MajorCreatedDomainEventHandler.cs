@@ -15,24 +15,24 @@ public class MajorCreatedDomainEventHandler(ISender sender, IEventBus bus, IAcad
 {
     public override async Task Handle(MajorCreatedDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
-        // var createIntroductionBlogTask =  sender.Send(new CreateMajorIntroductionBlog.Command(
-        //     domainEvent.MajorId, 
-        //     domainEvent.Title, 
-        //     domainEvent.Content));
+        var university = await dbContext.Universities
+            .Include(u => u.Majors)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == domainEvent.UniversityId, cancellationToken);
         
-        var major = await dbContext.Majors
-            .Include(m => m.University)
-            .FirstOrDefaultAsync(m => m.Id == domainEvent.MajorId, cancellationToken);
-        
-        if (major is null)
+        if (university is null)
         {
-            throw new NextUniException($"University with ID: '{domainEvent.MajorId}' not found.");
+            throw new NextUniException($"University with ID: '{domainEvent.UniversityId}' not found.");
         }
 
+        var listMajorNames = university.Majors
+            .Select(m => m.Name)
+            .ToList();
+        
         var formattedContentTask = formatService.FormatMajorAsync(
-                major.University.Name,
-                major.Name,
-                major.Code
+            domainEvent.UniversityId,
+            university.Name,
+            listMajorNames
         ); 
 
         var publishIntegrationEventTask = formattedContentTask.ContinueWith(async formatted =>
@@ -40,17 +40,12 @@ public class MajorCreatedDomainEventHandler(ISender sender, IEventBus bus, IAcad
             var integrationEvent = new MajorCreatedIntegrationEvent(
                 domainEvent.Id,
                 domainEvent.OccurredOnUtc,
-                major.Id,
+                domainEvent.UniversityId,
                 formatted.Result);
 
             await bus.PublishAsync(integrationEvent, cancellationToken);
         }).Unwrap(); 
 
         await Task.WhenAll(publishIntegrationEventTask);
-
-        // if (createIntroductionBlogTask.Result.IsFailure)
-        // {
-        //     throw new NextUniException("Failed to create university introduction blog", createIntroductionBlogTask.Result.Error);
-        // }
     }
 }

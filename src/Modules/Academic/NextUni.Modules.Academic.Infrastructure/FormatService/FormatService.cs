@@ -13,26 +13,31 @@ public class FormatService : IFormatService
 
 
     public async Task<string> FormatMajorAsync(
+        Guid universityId,
         string universityName,
-        string majorName,
-        string majorCode)
+        List<string> majorNames)
     {
-        // Basic validation
         if (string.IsNullOrWhiteSpace(universityName))
             throw new ArgumentException("University name cannot be null or empty", nameof(universityName));
-    
-        if (string.IsNullOrWhiteSpace(majorName))
-            throw new ArgumentException("Major name cannot be null or empty", nameof(majorName));
-    
-        // Simulate async operation if needed
-        await Task.Delay(1);
-    
-        // Format with major code if provided
-        if (!string.IsNullOrWhiteSpace(majorCode))
+
+        if (majorNames == null || majorNames.Count == 0)
+            throw new ArgumentException("Major names list cannot be null or empty", nameof(majorNames));
+
+        string formattedMajors;
+        if (majorNames.Count == 1)
         {
-            return $"Trường Đại học {universityName} có đào tạo ngành {majorName} ({majorCode})";
+            formattedMajors = majorNames[0];
         }
-    
-        return $"Trường Đại học {universityName} có đào tạo ngành {majorName}";
+        else if (majorNames.Count == 2)
+        {
+            formattedMajors = $"{majorNames[0]} và {majorNames[1]}";
+        }
+        else
+        {
+            formattedMajors = string.Join(", ", majorNames.Take(majorNames.Count - 1)) +
+                              $" và {majorNames.Last()}";
+        }
+
+        return $"Trường Đại học {universityName} có đào tạo các ngành {formattedMajors}.";
     }
 }

@@ -53,6 +53,7 @@ public abstract class UpdateUniversity
             university.WebsiteUrl = request.WebsiteUrl;
             university.FacebookUrl = request.FacebookUrl;
             university.Raise(new UniversityUpdatedDomainEvent(university.Id, request.Title, request.Content));
+            university.Raise(new UniversityCreatedDomainEvent(university.Id));
             await dbContext.SaveChangesAsync(cancellationToken);
             return Result.Success(); 
         }

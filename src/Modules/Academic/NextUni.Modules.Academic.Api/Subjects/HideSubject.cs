@@ -22,9 +22,5 @@ internal sealed class HideSubjectEndpoint : IEndpoint
             .Produces<ApiResult<bool>>()
             .WithTags(Tags.Major);
     }
-
-    internal sealed class Request
-    {
-        public Guid Id { get; set; }
-    }
+    
 }

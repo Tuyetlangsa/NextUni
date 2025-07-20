@@ -12,8 +12,9 @@ public interface IFormatService
         string facebookUrl);
     
     Task<string> FormatMajorAsync(
+        Guid universityId,
         string universityName,
-        string majorName,
-        string majorCode
+        List<string> majorNames
         );
+
 }

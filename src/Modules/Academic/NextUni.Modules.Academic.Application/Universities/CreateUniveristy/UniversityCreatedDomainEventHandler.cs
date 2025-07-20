@@ -15,41 +15,6 @@ public class UniversityCreatedDomainEventHandler(ISender sender, IEventBus bus, 
 {
     public override async Task Handle(UniversityCreatedDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
-        // var result = await sender.Send(new CreateUniversityIntroductionBlog.Command(
-        //     domainEvent.UniversityId, 
-        //     domainEvent.Title, 
-        //     domainEvent.Content));
-        //
-        // if (result.IsFailure)
-        // {
-        //     throw new NextUniException("Handle UniversityCreatedDomainEvent failed", result.Error);
-        // }
-        //
-        // var university = await dbContext.Universities
-        //     .FindAsync( domainEvent.UniversityId , cancellationToken);
-        // if (university is null)
-        // {
-        //     throw new NextUniException("Handle UniversityCreatedDomainEvent failed", result.Error);
-        // }
-        //
-        // var formattedContent = await formatService.FormateUniversityAsync(
-        //     university.Name,
-        //     university.Region.ToString(),
-        //     university.UniversityType.ToString(),
-        //     university.Address,
-        //     university.Email,
-        //     university.WebsiteUrl,
-        //     university.FacebookUrl);
-        //
-        // var intgrationEvent = new UniversityCreatedIntegrationEvent(
-        //     domainEvent.Id, 
-        //     domainEvent.OccurredOnUtc, 
-        //     domainEvent.UniversityId, 
-        //     formattedContent);
-        //
-        // await bus.PublishAsync(intgrationEvent, cancellationToken);
-        
-        
         var university = await dbContext.Universities.FindAsync(domainEvent.UniversityId, cancellationToken);
         if (university is null)
         {
@@ -65,12 +30,7 @@ public class UniversityCreatedDomainEventHandler(ISender sender, IEventBus bus, 
             university.WebsiteUrl,
             university.FacebookUrl
         );
-
-        // var createBlogTask = sender.Send(new CreateUniversityIntroductionBlog.Command(
-        //     university.Id,
-        //     domainEvent.Title,
-        //     domainEvent.Content), cancellationToken);
-
+        
         var publishIntegrationEventTask = formattedContentTask.ContinueWith(async formatted =>
         {
             var integrationEvent = new UniversityCreatedIntegrationEvent(
@@ -83,11 +43,5 @@ public class UniversityCreatedDomainEventHandler(ISender sender, IEventBus bus, 
         }).Unwrap(); 
 
         await Task.WhenAll( publishIntegrationEventTask);
-
-        // if (createBlogTask.Result.IsFailure)
-        // {
-        //     throw new NextUniException("Failed to create university introduction blog", createBlogTask.Result.Error);
-        // }
-        
     }
 }

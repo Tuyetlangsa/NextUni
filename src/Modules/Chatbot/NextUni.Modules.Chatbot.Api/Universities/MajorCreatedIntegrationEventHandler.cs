@@ -12,7 +12,7 @@ public class MajorCreatedIntegrationEventHandler(ISender sender) : IntegrationEv
     {
         var result = await sender.Send(
             new CreateMajor.Command(
-                integrationEvent.MajorId,
+                integrationEvent.UniversityId,
                 integrationEvent.TextFormatted),
             cancellationToken);
         
