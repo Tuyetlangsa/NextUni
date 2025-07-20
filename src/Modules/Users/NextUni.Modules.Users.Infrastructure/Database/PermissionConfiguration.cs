@@ -93,6 +93,7 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
                     CreateRolePermission(Role.Staff, Permission.GetStaffUniversityArticles),
                     CreateRolePermission(Role.Staff, Permission.HideArticle),
                     CreateRolePermission(Role.Staff, Permission.CreateEvent),
+                    CreateRolePermission(Role.Staff, Permission.ProcessEvents),
                     CreateRolePermission(Role.Staff, Permission.GetStaffEvent),
                     CreateRolePermission(Role.Student, Permission.RegisterEvent),
                     CreateRolePermission(Role.Student, Permission.CancelEventRegistration)

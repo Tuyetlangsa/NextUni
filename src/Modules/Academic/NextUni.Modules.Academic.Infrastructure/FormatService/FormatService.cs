@@ -1,3 +1,4 @@
+using System.Text;
 using NextUni.Modules.Academic.Application.Abstractions.FormatService;
 using NextUni.Modules.Academic.Domain.Majors;
 
@@ -42,8 +43,26 @@ public class FormatService : IFormatService
         return $"Trường Đại học {universityName} có đào tạo các ngành {formattedMajors}.";
     }
 
-    public Task<string> FormatAdmissionScoresAsync(string universityName, List<Major> majors, int year)
+    public async Task<string> FormatAdmissionScoresAsync(string universityName, List<Major> majors, int year)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(universityName))
+            throw new ArgumentException("University name cannot be null or empty", nameof(universityName));
+
+        if (majors == null || majors.Count == 0)
+            throw new ArgumentException("Majors list cannot be null or empty", nameof(majors));
+
+        var sb = new StringBuilder();
+        sb.AppendLine($"Admission scores of {universityName} in {year}:");
+        
+        foreach (var major in majors)
+        {
+            var admissionScore = major.AdmissionScore.FirstOrDefault(s => s.Year.Year == year);
+            if (admissionScore != null)
+            {
+                sb.AppendLine($"- {major.Name} (Code: {major.Code}): GPA Score = {admissionScore.GpaScore}, Exam Score = {admissionScore.ExamScore}");
+            }
+        }
+
+        return sb.ToString();
     }
 }
