@@ -14,6 +14,7 @@ public class EventRegistrationConfiguration : IEntityTypeConfiguration<EventRegi
         builder.Property(e => e.EventId)
             .IsRequired();
         builder.Property(e => e.UserId).IsRequired();
-        // builder.Property(e => e.Status).IsRequired().HasDefaultValue(true);
+        builder.HasOne(r => r.Event).WithMany()
+            .HasForeignKey(r => r.EventId);
     }
 }

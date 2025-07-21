@@ -71,6 +71,11 @@ public abstract class Chatbot
                                       ### Hướng dẫn:
                                       - Trả lời ngắn gọn, chính xác và đúng trọng tâm.
                                       - Tránh suy đoán hoặc thêm thông tin ngoài ngữ cảnh.
+                                      - Trả lời bằng tiếng việt.
+                                      - Nếu câu hỏi không liên quan đến thông tin trong ngữ cảnh, hãy trả lời rằng bạn không có dữ liệu phù hợp để trả lời câu hỏi.
+                                      - Trả lời theo đúng định dạng của câu hỏi.
+                                      - Đừng suy luận quá nhiều, chỉ cần trả lời dựa trên thông tin đã cho.
+                                      - Không cần tìm kiếm data ngoài ngữ cảnh đã cung cấp.
                                       """),
                 new (ChatRole.User, request.Prompt)]);
         

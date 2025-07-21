@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using NextUni.Common.Api.Endpoints;
 using NextUni.Common.Api.Results;
@@ -11,11 +12,17 @@ public class Chatbot : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/chatbot", async (ISender sender, string prompt) =>
+        app.MapPost("/chatbot", async ([FromBody] Request request, ISender sender) =>
             {
-                var result = await sender.Send(new Application.Chatbot.Chatbot.Query(prompt));
+                var result = await sender.Send(new Application.Chatbot.Chatbot.Query(request.Prompt));
                 return result.MatchOk();
             })
             .WithTags("Chatbot");
+    }
+
+    public class Request
+    {
+        public string Prompt { get; set; }
+
     }
 }

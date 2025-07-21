@@ -71,7 +71,14 @@ public abstract class CreateAdmissionScoreByYear
                     GpaScore = admissionScore.GpaScore,
                     ExamScore = admissionScore.ExamScore
                 }).ToList();
-            newAdmissionScores.First().Raise(new AdmissionScoreByYearCreatedDomainEvent(universityId, request.Year));
+            if (newAdmissionScores.Count != 0)
+            {
+                newAdmissionScores.First().Raise(new AdmissionScoreByYearCreatedDomainEvent(universityId, request.Year));
+            }
+            else
+            {
+                existingScores.First().Raise(new AdmissionScoreByYearCreatedDomainEvent(universityId, request.Year));
+            }
             dbContext.AdmissionScores.AddRange(newAdmissionScores);
             await dbContext.SaveChangesAsync(cancellationToken);
 
