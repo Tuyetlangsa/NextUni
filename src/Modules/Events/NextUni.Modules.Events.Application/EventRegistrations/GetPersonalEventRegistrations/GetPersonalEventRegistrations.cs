@@ -15,6 +15,7 @@ public abstract class GetPersonalEventRegistrations
     public class Response : List<ResponseItem>;
 
     public record ResponseItem(
+        Guid EventRegistrationId,
         Guid EventId,
         string EventName,
         DateOnly EventDate,
@@ -39,6 +40,7 @@ public abstract class GetPersonalEventRegistrations
             foreach (var reg in registrations)
             {
                 response.Add(new ResponseItem(
+                    reg.Id,
                     reg.EventId,
                     reg.Event.Name,
                     reg.Event.StartDate,
